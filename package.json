@@ -12,6 +12,7 @@
         "axios": "^1.8.3",
         "howlongtobeat": "github:Mythic1x/howlongtobeat#master",
         "next": "15.2.2",
+        "p-limit": "^6.2.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0"
     },

@@ -1,15 +1,17 @@
 import { HowLongToBeatEntry, HowLongToBeatService } from 'howlongtobeat';
-import checkDifferentVersions from './checkDifferentVersions';
+import checkDifferentVersions from './helpers/checkDifferentVersions';
+import getTitleDate from './helpers/getTitleDate';
 
-export default async function gameIsCompleted(
+export default async function checkHltbData(
     gameName: string,
-    playtime: number,
-    releaseDate?: string
+    playtime: number
 ) {
     const hltbService = new HowLongToBeatService();
 
-    if (releaseDate) {
-        return await checkDifferentVersions(gameName, playtime, releaseDate);
+    const titleHasDate = getTitleDate(gameName); //For remakes, eg: Resident Evil (2005), Resident Evil (2023).
+
+    if (titleHasDate) {
+        return await checkDifferentVersions(gameName, playtime, titleHasDate);
     }
 
     const data: HowLongToBeatEntry = await hltbService
