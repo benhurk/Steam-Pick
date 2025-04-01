@@ -22,12 +22,10 @@ export default async function Recommendations({ searchParams }: Props) {
         playedGames,
         recentlyPlayed
     );
-    const { genres, keywords, themes } = await getIgdbData(
+    const { completedGamesData, droppedGamesData } = await getIgdbData(
         completedGames,
         droppedGames
     );
-
-    console.log(keywords);
 
     return <div>Teste</div>;
 }

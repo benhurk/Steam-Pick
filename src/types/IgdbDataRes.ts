@@ -4,8 +4,3 @@ export type DataResponse = {
     keywords: number[];
     themes: number[];
 }[];
-
-export type KeywordsResponse = {
-    id: number;
-    name: string;
-}[];

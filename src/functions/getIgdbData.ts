@@ -1,6 +1,5 @@
-import { DataResponse, KeywordsResponse } from '@/types/IgdbDataRes';
+import { DataResponse } from '@/types/IgdbDataRes';
 import getIgdbToken from './helpers/getIgdbToken';
-import chunckArray from './utils/chunckArray';
 
 export default async function getIgdbData(
     completedGames: Set<string>,
@@ -14,7 +13,8 @@ export default async function getIgdbData(
         'Content-Type': 'application/json',
     };
 
-    const data = await fetch('https://api.igdb.com/v4/games/', {
+    //Completed games data
+    const completedGamesFetch = await fetch('https://api.igdb.com/v4/games/', {
         method: 'POST',
         headers: headers,
         body: `fields genres, keywords, themes; where name = ("${[
@@ -24,51 +24,28 @@ export default async function getIgdbData(
         .then((res) => res.json())
         .then((data: DataResponse) => data);
 
-    const keywordsIds = chunckArray(
-        data
-            .map((d) => d.keywords)
-            .filter((kw) => kw != undefined)
-            .flat(),
-        500
-    );
-    const themesIds = data.map((d) => d.themes).flat();
-    const genresIds = data.map((d) => d.genres).flat();
+    const completedGamesData = {
+        keywordsIds: completedGamesFetch.map((d) => d.keywords || []).flat(),
+        themesIds: completedGamesFetch.map((d) => d.themes || []).flat(),
+        genresIds: completedGamesFetch.map((d) => d.genres || []).flat(),
+    };
 
-    //igdb keywords
-    const keywords = await fetch('https://api.igdb.com/v4/keywords', {
+    //Dropped games data
+    const droppedGamesFetch = await fetch('https://api.igdb.com/v4/games/', {
         method: 'POST',
         headers: headers,
-        body: `fields name; where id = (${[
-            ...keywordsIds,
-        ].join()}); limit 500;`,
+        body: `fields genres, keywords, themes; where name = ("${[
+            ...droppedGames,
+        ].join('", "')}"); limit 500;`,
     })
         .then((res) => res.json())
-        .then((data: KeywordsResponse) => {
-            console.log(data);
-            return new Set(data.map((kw) => kw.name));
-        });
+        .then((data: DataResponse) => data);
 
-    //igdb themes
-    const themes = await fetch('https://api.igdb.com/v4/themes', {
-        method: 'POST',
-        headers: headers,
-        body: `fields name; where id = (${themesIds});`,
-    })
-        .then((res) => res.json())
-        .then(
-            (data: KeywordsResponse) => new Set(data.map((theme) => theme.name))
-        );
+    const droppedGamesData = {
+        keywordsIds: droppedGamesFetch.map((d) => d.keywords || []).flat(),
+        themesIds: droppedGamesFetch.map((d) => d.themes || []).flat(),
+        genresIds: droppedGamesFetch.map((d) => d.genres || []).flat(),
+    };
 
-    //igdb genres
-    const genres = await fetch('https://api.igdb.com/v4/genres', {
-        method: 'POST',
-        headers: headers,
-        body: `fields name; where id = (${genresIds});`,
-    })
-        .then((res) => res.json())
-        .then(
-            (data: KeywordsResponse) => new Set(data.map((genre) => genre.name))
-        );
-
-    return { genres, keywords, themes };
+    return { completedGamesData, droppedGamesData };
 }

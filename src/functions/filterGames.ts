@@ -19,7 +19,7 @@ export default async function filterGames(
 
             if (gameIsCompleted) {
                 completedGames.add(gameName);
-            } else if (!recentlyPlayed.has(gameName) && playtime < 720) {
+            } else if (!recentlyPlayed.has(gameName) && playtime < 600) {
                 droppedGames.add(gameName);
             }
         })
