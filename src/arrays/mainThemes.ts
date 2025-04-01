@@ -1,0 +1,18 @@
+export const mainThemes = [
+    'Action',
+    'Adventure',
+    'Horror',
+    'Fantasy',
+    'Strategy',
+    'Science fiction',
+    'Thriller',
+    'Historical',
+    'Comedy',
+    'Drama',
+    'Mystery',
+    'Warfare',
+    'post-apocalyptic',
+    'cyberpunk',
+    'superhero',
+    'zombie',
+];

@@ -32,7 +32,6 @@ export const mainGenres = [
     'stealth',
     'walking simulator',
     'deck-building',
-    'erotic',
     'grand strategy',
     'cinematic',
     'fighting',
