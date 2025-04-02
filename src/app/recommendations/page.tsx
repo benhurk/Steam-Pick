@@ -1,3 +1,4 @@
+import filterGamesData from '@/functions/filterGamesData';
 import filterGames from '@/functions/filterGames';
 import getIgdbData from '@/functions/getIgdbData';
 import getSteamGames from '@/functions/getSteamGames';
@@ -26,6 +27,8 @@ export default async function Recommendations({ searchParams }: Props) {
         completedGames,
         droppedGames
     );
+
+    filterGamesData(completedGamesData, droppedGamesData);
 
     return <div>Teste</div>;
 }

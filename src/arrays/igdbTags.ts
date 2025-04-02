@@ -1,4 +1,4 @@
-export const mainGenres = new Set([
+export const mainGenres = [
     { id: 2, name: 'Point-and-click' },
     { id: 4, name: 'Fighting' },
     { id: 7, name: 'Music' },
@@ -6,21 +6,18 @@ export const mainGenres = new Set([
     { id: 10, name: 'Racing' },
     { id: 11, name: 'Real Time Strategy (RTS)' },
     { id: 12, name: 'Role-playing (RPG)' },
-    { id: 13, name: 'Simulator' },
     { id: 14, name: 'Sport' },
     { id: 24, name: 'Tactical' },
     { id: 25, name: "Hack and slash/Beat 'em up" },
     { id: 33, name: 'Arcade' },
     { id: 34, name: 'Visual Novel' },
     { id: 35, name: 'Card & Board Game' },
-]);
+];
 
-export const mainThemes = new Set([
+export const mainThemes = [
     { id: 17, name: 'Fantasy' },
     { id: 18, name: 'Science fiction' },
-    { id: 19, name: 'Horror' },
     { id: 20, name: 'Thriller' },
-    { id: 21, name: 'Survival' },
     { id: 22, name: 'Historical' },
     { id: 31, name: 'Drama' },
     { id: 33, name: 'Sandbox' },
@@ -33,9 +30,9 @@ export const mainThemes = new Set([
     { id: 28, name: 'Business' },
     { id: 43, name: 'Mystery' },
     { id: 44, name: 'Romance' },
-]);
+];
 
-export const mainKeywords = new Set([
+export const mainKeywords = [
     { id: 166, name: "shoot 'em up" },
     { id: 477, name: 'metroidvania' },
     { id: 521, name: 'jrpg' },
@@ -96,4 +93,4 @@ export const mainKeywords = new Set([
     { id: 77, name: 'tower defense' },
     { id: 1493, name: 'walking simulator' },
     { id: 17326, name: 'soulslike' },
-]);
+];
