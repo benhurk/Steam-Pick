@@ -2,10 +2,14 @@ import { DataResponse } from '@/types/IgdbDataRes';
 import getIgdbToken from './helpers/getIgdbToken';
 import getNamesFromIds from './utils/getNamesFromIds';
 import { mainGenres, mainKeywords, mainThemes } from '@/arrays/igdbTags';
+import { SteamGame } from '@/types/gamesData';
+import pLimit from 'p-limit';
+
+const limit = pLimit(1);
 
 export default async function getIgdbData(
-    completedGames: Set<string>,
-    droppedGames: Set<string>
+    completedGames: Set<Omit<SteamGame, 'playtime'>>,
+    droppedGames: Set<Omit<SteamGame, 'playtime'>>
 ) {
     const IGDB_TOKEN = await getIgdbToken();
 
@@ -16,17 +20,24 @@ export default async function getIgdbData(
     };
 
     //Completed games data
-    const completedGamesFetch = await fetch('https://api.igdb.com/v4/games/', {
-        method: 'POST',
-        headers: headers,
-        body: `fields name, genres, keywords, themes; where name = ("${[
-            ...completedGames,
-        ].join(
-            '", "'
-        )}") & version_parent = null & release_dates.platform = 6; limit 500;`,
-    })
-        .then((res) => res.json())
-        .then((data: DataResponse) => data);
+    const completedGamesRequests = [...completedGames].map((game) =>
+        limit(async () => {
+            const gameData = await fetch('https://api.igdb.com/v4/games/', {
+                method: 'POST',
+                headers: headers,
+                body: `fields name, genres, keywords, themes;
+                        where external_games.external_game_source = 1 & 
+                        external_games.uid = "${game.appid}";`,
+            })
+                .then((res) => res.json())
+                .then((data: DataResponse) => data);
+            return gameData;
+        })
+    );
+
+    const completedGamesFetch = (
+        await Promise.all(completedGamesRequests)
+    ).flat();
 
     const completedGamesData = {
         keywordsIds: completedGamesFetch.map((d) => d.keywords || []).flat(),
@@ -35,17 +46,23 @@ export default async function getIgdbData(
     };
 
     //Dropped games data
-    const droppedGamesFetch = await fetch('https://api.igdb.com/v4/games/', {
-        method: 'POST',
-        headers: headers,
-        body: `fields name, genres, keywords, themes; where name = ("${[
-            ...droppedGames,
-        ].join(
-            '", "'
-        )}") & version_parent = null & release_dates.platform = 6; limit 500;`,
-    })
-        .then((res) => res.json())
-        .then((data: DataResponse) => data);
+    const droppedGamesRequests = [...droppedGames].map((game) =>
+        limit(async () => {
+            const gameData = await fetch('https://api.igdb.com/v4/games/', {
+                method: 'POST',
+                headers: headers,
+                body: `fields name, genres, keywords, themes; 
+                        where external_games.external_game_source = 1 & 
+                        external_games.uid = "${game.appid}" &;`,
+            })
+                .then((res) => res.json())
+                .then((data: DataResponse) => data);
+
+            return gameData;
+        })
+    );
+
+    const droppedGamesFetch = (await Promise.all(droppedGamesRequests)).flat();
 
     const droppedGamesData = {
         keywordsIds: droppedGamesFetch.map((d) => d.keywords || []).flat(),
@@ -53,6 +70,7 @@ export default async function getIgdbData(
         genresIds: droppedGamesFetch.map((d) => d.genres || []).flat(),
     };
 
+    //Log
     const log = completedGamesFetch.map((game) => {
         return {
             name: game.name,

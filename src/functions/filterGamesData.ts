@@ -1,9 +1,9 @@
 import { mainGenres, mainKeywords, mainThemes } from '@/arrays/igdbTags';
-import GamesData from '@/types/gamesData';
+import { GamesTags } from '@/types/gamesData';
 
 export default function filterGamesData(
-    completedGamesData: GamesData,
-    droppedGamesData: GamesData
+    completedGamesData: GamesTags,
+    droppedGamesData: GamesTags
 ) {
     const igdbMainGenresIds = mainGenres.map((genre) => genre.id);
     const igdbMainThemesIds = mainThemes.map((theme) => theme.id);

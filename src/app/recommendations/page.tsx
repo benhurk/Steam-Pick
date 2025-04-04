@@ -19,10 +19,12 @@ export default async function Recommendations({ searchParams }: Props) {
     }
 
     const { playedGames, recentlyPlayed } = await getSteamGames(steamId);
+
     const { completedGames, droppedGames } = await filterGames(
         playedGames,
         recentlyPlayed
     );
+
     const { completedGamesData, droppedGamesData } = await getIgdbData(
         completedGames,
         droppedGames

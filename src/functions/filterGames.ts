@@ -1,14 +1,15 @@
 import pLimit from 'p-limit';
 import checkHltbData from './checkHltbData';
+import { SteamGame } from '@/types/gamesData';
 
 const limit = pLimit(10);
 
 export default async function filterGames(
-    playedGames: { name: string; playtime: number }[],
+    playedGames: SteamGame[],
     recentlyPlayed: Set<string>
 ) {
-    const completedGames: Set<string> = new Set();
-    const droppedGames: Set<string> = new Set();
+    const completedGames = new Set<Omit<SteamGame, 'playtime'>>();
+    const droppedGames = new Set<Omit<SteamGame, 'playtime'>>();
 
     const hltbRequests = playedGames.map((game) =>
         limit(async () => {
@@ -18,9 +19,15 @@ export default async function filterGames(
             const gameIsCompleted = await checkHltbData(gameName, playtime);
 
             if (gameIsCompleted) {
-                completedGames.add(gameName);
+                completedGames.add({
+                    appid: game.appid,
+                    name: gameName,
+                });
             } else if (!recentlyPlayed.has(gameName) && playtime < 600) {
-                droppedGames.add(gameName);
+                droppedGames.add({
+                    appid: game.appid,
+                    name: gameName,
+                });
             }
         })
     );
