@@ -25,7 +25,10 @@ export default async function Recommendations({ searchParams }: Props) {
         recentlyPlayed
     );
 
-    await getGamesTags(completedGames, droppedGames);
+    const { completedGamesTags, droppedGamesTags } = await getGamesTags(
+        completedGames,
+        droppedGames
+    );
 
     // filterGamesData(completedGamesData, droppedGamesData);
 
