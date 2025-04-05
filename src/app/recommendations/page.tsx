@@ -1,9 +1,9 @@
 import filterGamesData from '@/functions/filterGamesData';
 import filterGames from '@/functions/filterGames';
-import getIgdbData from '@/functions/getIgdbData';
 import getSteamGames from '@/functions/getSteamGames';
 
 import { redirect } from 'next/navigation';
+import getGamesTags from '@/functions/getGamesTags';
 
 type Props = {
     searchParams: {
@@ -25,12 +25,9 @@ export default async function Recommendations({ searchParams }: Props) {
         recentlyPlayed
     );
 
-    const { completedGamesData, droppedGamesData } = await getIgdbData(
-        completedGames,
-        droppedGames
-    );
+    await getGamesTags(completedGames, droppedGames);
 
-    filterGamesData(completedGamesData, droppedGamesData);
+    // filterGamesData(completedGamesData, droppedGamesData);
 
     return <div>Teste</div>;
 }
