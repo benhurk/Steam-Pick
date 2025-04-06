@@ -1,6 +1,8 @@
 import { SteamGame } from '@/types/gamesData';
 import SteamSpyDataRes from '@/types/steamSpyDataRes';
 import pLimit from 'p-limit';
+import logGamesData from './utils/logGamesData';
+import filterGamesData from './helpers/filterGamesData';
 
 const limit = pLimit(2);
 
@@ -24,7 +26,7 @@ export default async function getGamesTags(
         await Promise.all(completedGamesRequests)
     ).flat();
 
-    const completedGamesTags = completedGamesFetch.map((data) => data.tags);
+    const completedGamesTags = filterGamesData(completedGamesFetch);
 
     //Dropped games tags
     const droppedGamesRequests = [...droppedGames].map((game) =>
@@ -39,7 +41,9 @@ export default async function getGamesTags(
     );
 
     const droppedGamesFetch = (await Promise.all(droppedGamesRequests)).flat();
-    const droppedGamesTags = droppedGamesFetch.map((data) => data.tags);
 
+    const droppedGamesTags = filterGamesData(droppedGamesFetch);
+
+    logGamesData(completedGamesFetch, droppedGamesFetch);
     return { completedGamesTags, droppedGamesTags };
 }

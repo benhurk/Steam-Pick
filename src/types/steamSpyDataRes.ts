@@ -17,7 +17,7 @@ type SteamSpyDataRes = {
     discount: string;
     ccu: number;
     languages: string;
-    genre: string;
+    genre: string[];
     tags: {
         [key: string]: number;
     };

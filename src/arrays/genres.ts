@@ -7,6 +7,7 @@ export const broadGenres = [
     'Horror',
     'Survival',
     'Shooter',
+    'FPS',
 ];
 
 export const specificGenres = [
@@ -25,7 +26,6 @@ export const specificGenres = [
     'MOBA',
     'Trivia',
     'Visual Novel',
-    'Point & Click',
     'Life Sim',
     'Board Game',
     'City Builder',
@@ -37,7 +37,6 @@ export const specificGenres = [
     'Racing',
     'Battle Royale',
     'Sports',
-    'FPS',
     "Shoot 'Em Up",
     'Idler',
     'Metroidvania',
@@ -46,10 +45,10 @@ export const specificGenres = [
     'Souls-like',
     'Fighting',
     'Open World Survival Craft',
-    'Farming',
     'Management',
     'Survival Horror',
-    'Psychological Horror',
     '3D Platformer',
-    'Pary Game',
+    'Party Game',
+    'Party-Based RPG',
+    'Hero Shooter',
 ];

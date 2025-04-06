@@ -1,5 +1,4 @@
 export const gameplayStyles = [
-    'Action',
     'Stealth',
     'Turn-Based',
     'Building',
@@ -18,6 +17,13 @@ export const gameplayStyles = [
     'Arcade',
     'Narration',
     'Detective',
+    'Dungeon Crawler',
+    'Base Building',
+    'Crafting',
+    '2D Platformer',
+    'Fast-Paced',
+    'Clicker',
+    'Point & Click',
 ];
 
 export const themes = [
@@ -35,9 +41,7 @@ export const themes = [
     'Medieval',
     'Space',
     'Futuristic',
-    'Dark',
     'Post-apocalyptic',
-    'Western',
     'Superhero',
     'Sci-fi',
     'Romance',
@@ -46,16 +50,21 @@ export const themes = [
     'Mystery',
     'Dark Fantasy',
     'Comedy',
+    'Satire',
+    'Family Friendly',
+    'Psychological Horror',
+    'Anime',
 ];
 
 export const moods = [
     'Atmospheric',
     'Relaxing',
-    'Fast-Paced',
-    'Casual',
-    'Difficult',
     'Funny',
     'Emotional',
     'Psychological',
     'Violent',
+    'Dark',
+    'Cinematic',
 ];
+
+export const difficulties = ['Casual', 'Difficult'];

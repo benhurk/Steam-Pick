@@ -3,9 +3,3 @@ export type SteamGame = {
     name: string;
     playtime: number;
 };
-
-export type GamesTags = {
-    keywordsIds: number[];
-    themesIds: number[];
-    genresIds: number[];
-};
