@@ -14,7 +14,8 @@ export default async function getGamesTags(
     const completedGamesRequests = [...completedGames].map((game) =>
         limit(async () => {
             const gameData = await fetch(
-                `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`
+                `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`,
+                { next: { revalidate: 86400 } }
             )
                 .then((res) => res.json())
                 .then((data: SteamSpyDataRes) => data);
@@ -32,7 +33,8 @@ export default async function getGamesTags(
     const droppedGamesRequests = [...droppedGames].map((game) =>
         limit(async () => {
             const gameData = await fetch(
-                `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`
+                `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`,
+                { next: { revalidate: 86400 } }
             )
                 .then((res) => res.json())
                 .then((data: SteamSpyDataRes) => data);

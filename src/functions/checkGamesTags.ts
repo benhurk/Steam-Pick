@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import getDislikedTags from './helpers/getDislikedTags';
+import getDislikedGenres from './helpers/getDislikedGenres';
 import getTagsCount from './helpers/getTagsCount';
 
 export default function checkGamesTags(
@@ -7,9 +7,7 @@ export default function checkGamesTags(
     droppedGamesTags: string[]
 ) {
     const completedTagsCount = getTagsCount(completedGamesTags);
-    const droppedTagsCount = getTagsCount(droppedGamesTags);
 
-    //Top tags
     const topGenres = [...completedTagsCount.genresCount.entries()]
         .sort((a, b) => b[1] - a[1])
         .filter(([tag, count]) => count > 3)
@@ -19,17 +17,17 @@ export default function checkGamesTags(
         ...completedTagsCount.gameplayStylesCount.entries(),
     ]
         .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count > 3)
+        .filter(([tag, count]) => count >= 3)
         .slice(0, 5);
 
     const topThemes = [...completedTagsCount.themesCount.entries()]
         .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count > 3)
+        .filter(([tag, count]) => count >= 3)
         .slice(0, 5);
 
     const topMoods = [...completedTagsCount.moodsCount.entries()]
         .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count > 3)
+        .filter(([tag, count]) => count >= 3)
         .slice(0, 5);
 
     const topDifficulty = [
@@ -42,5 +40,16 @@ export default function checkGamesTags(
     console.log('Favorite moods:', topMoods);
     console.log('Prefered difficulty:', topDifficulty);
 
-    getDislikedTags(droppedGamesTags, completedGamesTags);
+    const dislikedGenres = getDislikedGenres(
+        droppedGamesTags,
+        completedGamesTags
+    );
+
+    return {
+        topGenres,
+        topGameplayStyles,
+        topThemes,
+        topMoods,
+        dislikedGenres,
+    };
 }

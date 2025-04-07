@@ -5,7 +5,8 @@ const BASE_URL = 'http://api.steampowered.com/IPlayerService';
 
 export default async function getSteamGames(steamId: string) {
     const playedGames: SteamGame[] = await fetch(
-        `${BASE_URL}/GetOwnedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&include_appinfo=true&include_played_free_games&format=json`
+        `${BASE_URL}/GetOwnedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&include_appinfo=true&include_played_free_games&format=json`,
+        { next: { revalidate: 86400 } }
     )
         .then((res) => res.json())
         .then((data: OwnedGamesRes) =>
@@ -22,7 +23,8 @@ export default async function getSteamGames(steamId: string) {
 
     //Get recently played games names
     const recentlyPlayed = await fetch(
-        `${BASE_URL}/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&format=json`
+        `${BASE_URL}/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&format=json`,
+        { next: { revalidate: 86400 } }
     )
         .then((res) => res.json())
         .then(
