@@ -1,10 +1,10 @@
 import pLimit from 'p-limit';
-import checkHltbData from './checkHltbData';
+import checkHltbData from './helpers/checkHltbData';
 import { SteamGame } from '@/types/gamesData';
 
 const limit = pLimit(10);
 
-export default async function filterGames(
+export default async function checkPlaytime(
     playedGames: SteamGame[],
     recentlyPlayed: Set<string>
 ) {

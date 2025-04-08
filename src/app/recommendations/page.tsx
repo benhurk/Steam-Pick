@@ -1,4 +1,4 @@
-import filterGames from '@/functions/filterGames';
+import checkPlaytime from '@/functions/checkPlaytime';
 import getSteamGames from '@/functions/getSteamGames';
 
 import { redirect } from 'next/navigation';
@@ -20,7 +20,7 @@ export default async function Recommendations({ searchParams }: Props) {
 
     const { playedGames, recentlyPlayed } = await getSteamGames(steamId);
 
-    const { completedGames, droppedGames } = await filterGames(
+    const { completedGames, droppedGames } = await checkPlaytime(
         playedGames,
         recentlyPlayed
     );

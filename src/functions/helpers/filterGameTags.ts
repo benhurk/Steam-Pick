@@ -7,7 +7,7 @@ import {
 import { broadGenres, specificGenres } from '@/arrays/genres';
 import SteamSpyDataRes from '@/types/steamSpyDataRes';
 
-export default function filterGamesData(data: SteamSpyDataRes) {
+export default function filterGameTags(data: SteamSpyDataRes) {
     const filteredGamesData = data.map((game) => {
         let filteredTags: string[] = [];
 
