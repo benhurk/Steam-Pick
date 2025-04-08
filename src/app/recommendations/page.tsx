@@ -1,9 +1,10 @@
-import checkPlaytime from '@/functions/checkPlaytime';
-import getSteamGames from '@/functions/getSteamGames';
-
 import { redirect } from 'next/navigation';
-import getGamesTags from '@/functions/getGamesTags';
+
+import checkPlaytimes from '@/functions/checkPlaytimes';
+import getSteamGames from '@/functions/getSteamGames';
+import getGamesData from '@/functions/getGamesData';
 import checkGamesTags from '@/functions/checkGamesTags';
+import getRecomendations from '@/functions/getRecommendations';
 
 type Props = {
     searchParams: {
@@ -18,19 +19,38 @@ export default async function Recommendations({ searchParams }: Props) {
         redirect('/');
     }
 
-    const { playedGames, recentlyPlayed } = await getSteamGames(steamId);
+    const { ownedGames, playedGames, unplayedGames, recentlyPlayed } =
+        await getSteamGames(steamId);
 
-    const { completedGames, droppedGames } = await checkPlaytime(
+    const { completedGames, droppedGames } = await checkPlaytimes(
         playedGames,
         recentlyPlayed
     );
 
-    const { completedGamesTags, droppedGamesTags } = await getGamesTags(
-        completedGames,
-        droppedGames
-    );
+    const { completedGamesTags, droppedGamesTags, unplayedGamesData } =
+        await getGamesData(
+            ownedGames,
+            completedGames,
+            droppedGames,
+            unplayedGames
+        );
 
-    checkGamesTags(completedGamesTags, droppedGamesTags);
+    const {
+        topGenres,
+        topGameplayStyles,
+        topThemes,
+        topMoods,
+        dislikedGenres,
+    } = checkGamesTags(completedGamesTags, droppedGamesTags);
+
+    await getRecomendations(
+        topGenres,
+        topGameplayStyles,
+        topThemes,
+        topMoods,
+        dislikedGenres,
+        unplayedGamesData
+    );
 
     return <div>Teste</div>;
 }

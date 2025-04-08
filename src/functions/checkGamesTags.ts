@@ -10,25 +10,29 @@ export default function checkGamesTags(
 
     const topGenres = [...completedTagsCount.genresCount.entries()]
         .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count > 3)
-        .slice(0, 5);
+        .filter(([tag, count]) => count >= 3)
+        .slice(0, 4)
+        .map(([tag, count]) => tag);
 
     const topGameplayStyles = [
         ...completedTagsCount.gameplayStylesCount.entries(),
     ]
         .sort((a, b) => b[1] - a[1])
         .filter(([tag, count]) => count >= 3)
-        .slice(0, 5);
+        .slice(0, 4)
+        .map(([tag, count]) => tag);
 
     const topThemes = [...completedTagsCount.themesCount.entries()]
         .sort((a, b) => b[1] - a[1])
         .filter(([tag, count]) => count >= 3)
-        .slice(0, 5);
+        .slice(0, 4)
+        .map(([tag, count]) => tag);
 
     const topMoods = [...completedTagsCount.moodsCount.entries()]
         .sort((a, b) => b[1] - a[1])
         .filter(([tag, count]) => count >= 3)
-        .slice(0, 5);
+        .slice(0, 4)
+        .map(([tag, count]) => tag);
 
     const topDifficulty = [
         ...completedTagsCount.difficultyCount.entries(),
