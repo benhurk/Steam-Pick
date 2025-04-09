@@ -1,5 +1,5 @@
-import { SteamGame } from '@/types/gamesData';
-import { OwnedGamesRes, RecentlyPlayedRes } from '@/types/getGamesRes';
+import { SteamGame } from '@/types/SteamGame';
+import { OwnedGamesRes, RecentlyPlayedRes } from '@/types/SteamDataRes';
 
 const BASE_URL = 'http://api.steampowered.com/IPlayerService';
 

@@ -1,4 +1,4 @@
-import { SteamGame } from '@/types/gamesData';
+import { SteamGame } from '@/types/SteamGame';
 import SteamSpyDataRes from '@/types/steamSpyDataRes';
 import pLimit from 'p-limit';
 import filterGameTags from './helpers/filterGameTags';
@@ -38,9 +38,6 @@ export default async function getGamesData(
     const unplayedGamesData = ownedGamesData.filter((game) =>
         unplayedGames.has(game.name)
     );
-
-    console.log(unplayedGames);
-    console.log(unplayedGamesData);
 
     const completedGamesTags = filterGameTags(completedGamesData);
     const droppedGamesTags = filterGameTags(droppedGamesData);

@@ -1,6 +1,6 @@
 import pLimit from 'p-limit';
 import checkHltbData from './helpers/checkHltbData';
-import { SteamGame } from '@/types/gamesData';
+import { SteamGame } from '@/types/SteamGame';
 
 const limit = pLimit(10);
 
@@ -19,6 +19,7 @@ export default async function checkPlaytimes(
             const gameIsCompleted = await checkHltbData(gameName, playtime);
 
             if (gameIsCompleted) {
+                console.log(gameName);
                 completedGames.add(gameName);
             } else if (!recentlyPlayed.has(gameName) && playtime < 600) {
                 droppedGames.add(gameName);

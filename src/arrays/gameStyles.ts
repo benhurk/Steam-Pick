@@ -5,7 +5,6 @@ export const gameplayStyles = [
     'Procedural Generation',
     'Tactical',
     'Open World',
-    'Sandbox',
     'Bullet Hell',
     'Walking Simulator',
     'Auto Battler',
@@ -51,7 +50,6 @@ export const themes = [
     'Dark Fantasy',
     'Comedy',
     'Satire',
-    'Family Friendly',
     'Psychological Horror',
     'Anime',
 ];

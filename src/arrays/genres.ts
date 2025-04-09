@@ -12,8 +12,8 @@ export const broadGenres = [
 
 export const specificGenres = [
     'Puzzle',
-    'Roguelike',
-    'Roguelite',
+    'Rogue-like',
+    'Rogue-lite',
     'Turn-Based Strategy',
     'Dating Sim',
     'JRPG',

@@ -41,6 +41,7 @@ export default async function Recommendations({ searchParams }: Props) {
         topThemes,
         topMoods,
         dislikedGenres,
+        unexploredGenres,
     } = checkGamesTags(completedGamesTags, droppedGamesTags);
 
     await getRecomendations(
@@ -49,7 +50,8 @@ export default async function Recommendations({ searchParams }: Props) {
         topThemes,
         topMoods,
         dislikedGenres,
-        unplayedGamesData
+        unplayedGamesData,
+        unexploredGenres
     );
 
     return <div>Teste</div>;

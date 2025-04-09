@@ -13,8 +13,6 @@ export default function getDislikedGenres(
         const droppedCount = droppedTags.filter((dt) => dt === tag).length;
         const completedCount = completedTags.filter((ct) => ct === tag).length;
 
-        console.log({ tag, completedCount, droppedCount });
-
         if (droppedCount >= 3 && droppedCount > completedCount) {
             return tag;
         }

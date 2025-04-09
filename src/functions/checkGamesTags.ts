@@ -1,38 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import { broadGenres } from '@/arrays/genres';
 import getDislikedGenres from './helpers/getDislikedGenres';
 import getTagsCount from './helpers/getTagsCount';
+import getTopTags from './helpers/getTopTags';
 
 export default function checkGamesTags(
     completedGamesTags: string[],
     droppedGamesTags: string[]
 ) {
     const completedTagsCount = getTagsCount(completedGamesTags);
+    const allTagsCount = getTagsCount([
+        ...droppedGamesTags,
+        ...completedGamesTags,
+    ]);
 
-    const topGenres = [...completedTagsCount.genresCount.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count >= 3)
-        .slice(0, 4)
-        .map(([tag, count]) => tag);
+    const topGenres = getTopTags([...completedTagsCount.genresCount.entries()]);
 
-    const topGameplayStyles = [
+    const topGameplayStyles = getTopTags([
         ...completedTagsCount.gameplayStylesCount.entries(),
-    ]
-        .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count >= 3)
-        .slice(0, 4)
-        .map(([tag, count]) => tag);
+    ]);
 
-    const topThemes = [...completedTagsCount.themesCount.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count >= 3)
-        .slice(0, 4)
-        .map(([tag, count]) => tag);
+    const topThemes = getTopTags([...completedTagsCount.themesCount.entries()]);
 
-    const topMoods = [...completedTagsCount.moodsCount.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .filter(([tag, count]) => count >= 3)
-        .slice(0, 4)
-        .map(([tag, count]) => tag);
+    const topMoods = getTopTags([...completedTagsCount.moodsCount.entries()]);
 
     const topDifficulty = [
         ...completedTagsCount.difficultyCount.entries(),
@@ -49,11 +38,19 @@ export default function checkGamesTags(
         completedGamesTags
     );
 
+    const unexploredGenres = [...allTagsCount.genresCount.entries()]
+        .filter(
+            ([tag, count]) =>
+                count <= 2 && !broadGenres.some((genre) => genre === tag)
+        )
+        .map(([tag]) => tag);
+
     return {
         topGenres,
         topGameplayStyles,
         topThemes,
         topMoods,
         dislikedGenres,
+        unexploredGenres,
     };
 }
