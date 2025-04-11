@@ -1,3 +1,3 @@
-# Todo
+# Ideas
 
--   To Fix: Some games aren't being grouped.
+-   Add optional tag categories (difficulties, gameplay features, family friendly, perspective, graphic styles).

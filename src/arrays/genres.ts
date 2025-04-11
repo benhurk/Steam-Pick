@@ -1,13 +1,13 @@
 export const broadGenres = [
     'Simulation',
     'Strategy',
-    'Adventure',
     'RPG',
     'Platformer',
     'Horror',
     'Survival',
     'Shooter',
     'FPS',
+    'Action-Adventure',
 ];
 
 export const specificGenres = [
@@ -51,4 +51,6 @@ export const specificGenres = [
     'Party Game',
     'Party-Based RPG',
     'Hero Shooter',
+    'Interactive Fiction',
+    'Top-Down Shooter',
 ];

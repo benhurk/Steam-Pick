@@ -1,6 +1,7 @@
 export const gameplayStyles = [
     'Stealth',
     'Turn-Based',
+    'Turn-Based Combat',
     'Building',
     'Procedural Generation',
     'Tactical',
@@ -23,6 +24,13 @@ export const gameplayStyles = [
     'Fast-Paced',
     'Clicker',
     'Point & Click',
+    'Physics',
+    'Parkour',
+    'Permadeath',
+    'Real Time Tactics',
+    'Time Management',
+    'Turn-Based Tactics',
+    'Driving',
 ];
 
 export const themes = [
@@ -52,6 +60,7 @@ export const themes = [
     'Satire',
     'Psychological Horror',
     'Anime',
+    'Crime',
 ];
 
 export const moods = [
@@ -63,6 +72,7 @@ export const moods = [
     'Violent',
     'Dark',
     'Cinematic',
+    'Wholesome',
 ];
 
 export const difficulties = ['Casual', 'Difficult'];
