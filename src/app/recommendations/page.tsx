@@ -1,10 +1,9 @@
 import { redirect } from 'next/navigation';
 
-import checkPlaytimes from '@/functions/checkPlaytimes';
-import getSteamGames from '@/functions/getSteamGames';
 import getGamesData from '@/functions/getGamesData';
 import checkGamesTags from '@/functions/checkGamesTags';
 import getRecomendations from '@/functions/getRecommendations';
+import getUserGames from '@/functions/helpers/getUserGames';
 
 type Props = {
     searchParams: {
@@ -19,36 +18,35 @@ export default async function Recommendations({ searchParams }: Props) {
         redirect('/');
     }
 
-    const { ownedGames, playedGames, unplayedGames, recentlyPlayed } =
-        await getSteamGames(steamId);
+    //Get the user's games
+    const { ownedGames, completedGames, droppedGames, unplayedGames } =
+        await getUserGames(steamId);
 
-    const { completedGames, droppedGames } = await checkPlaytimes(
-        playedGames,
-        recentlyPlayed
-    );
-
+    //Get tags or other necessary data
     const { completedGamesTags, droppedGamesTags, unplayedGamesData } =
         await getGamesData(
             ownedGames,
-            completedGames,
-            droppedGames,
+            new Set(completedGames),
+            new Set(droppedGames),
             unplayedGames
         );
 
+    //Get user's taste and unexplored genres
     const {
-        topGenres,
-        topGameplayStyles,
-        topThemes,
-        topMoods,
+        favoriteGenres,
+        favoriteGameplay,
+        favoriteThemes,
+        favoriteMoods,
         dislikedGenres,
         unexploredGenres,
     } = checkGamesTags(completedGamesTags, droppedGamesTags);
 
-    await getRecomendations(
-        topGenres,
-        topGameplayStyles,
-        topThemes,
-        topMoods,
+    //Get recommendations
+    getRecomendations(
+        favoriteGenres,
+        favoriteGameplay,
+        favoriteThemes,
+        favoriteMoods,
         dislikedGenres,
         unplayedGamesData,
         unexploredGenres

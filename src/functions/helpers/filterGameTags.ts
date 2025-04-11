@@ -5,7 +5,7 @@ import {
     themes,
 } from '@/arrays/gameStyles';
 import { broadGenres, specificGenres } from '@/arrays/genres';
-import SteamSpyDataRes from '@/types/steamSpyDataRes';
+import SteamSpyDataRes from '@/types/SteamSpyDataRes';
 
 export default function filterGameTags(data: SteamSpyDataRes) {
     const filteredGamesData = data.map((game) => {

@@ -13,25 +13,21 @@ export default function checkGamesTags(
         ...completedGamesTags,
     ]);
 
-    const topGenres = getTopTags([...completedTagsCount.genresCount.entries()]);
+    const favoriteGenres = getTopTags([
+        ...completedTagsCount.genresCount.entries(),
+    ]);
 
-    const topGameplayStyles = getTopTags([
+    const favoriteGameplay = getTopTags([
         ...completedTagsCount.gameplayStylesCount.entries(),
     ]);
 
-    const topThemes = getTopTags([...completedTagsCount.themesCount.entries()]);
+    const favoriteThemes = getTopTags([
+        ...completedTagsCount.themesCount.entries(),
+    ]);
 
-    const topMoods = getTopTags([...completedTagsCount.moodsCount.entries()]);
-
-    const topDifficulty = [
-        ...completedTagsCount.difficultyCount.entries(),
-    ].sort((a, b) => b[1] - a[1])[0];
-
-    console.log('Favorite genres:', topGenres);
-    console.log('Favorite gameplay styles:', topGameplayStyles);
-    console.log('Favorite themes:', topThemes);
-    console.log('Favorite moods:', topMoods);
-    console.log('Prefered difficulty:', topDifficulty);
+    const favoriteMoods = getTopTags([
+        ...completedTagsCount.moodsCount.entries(),
+    ]);
 
     const dislikedGenres = getDislikedGenres(
         droppedGamesTags,
@@ -41,15 +37,22 @@ export default function checkGamesTags(
     const unexploredGenres = [...allTagsCount.genresCount.entries()]
         .filter(
             ([tag, count]) =>
-                count <= 2 && !broadGenres.some((genre) => genre === tag)
+                count <= 1 && !broadGenres.some((genre) => genre === tag)
         )
         .map(([tag]) => tag);
 
+    console.log('Favorite genres:', favoriteGenres);
+    console.log('Favorite gameplay styles:', favoriteGameplay);
+    console.log('Favorite themes:', favoriteThemes);
+    console.log('Favorite moods:', favoriteMoods);
+    console.log('Disliked genres:', dislikedGenres);
+    console.log('Unexplored genres:', unexploredGenres);
+
     return {
-        topGenres,
-        topGameplayStyles,
-        topThemes,
-        topMoods,
+        favoriteGenres,
+        favoriteGameplay,
+        favoriteThemes,
+        favoriteMoods,
         dislikedGenres,
         unexploredGenres,
     };

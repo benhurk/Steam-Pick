@@ -6,8 +6,7 @@ const BASE_URL = 'http://api.steampowered.com/IPlayerService';
 export default async function getSteamGames(steamId: string) {
     //Get owned games
     const ownedGames: SteamGame[] = await fetch(
-        `${BASE_URL}/GetOwnedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&include_appinfo=true&include_played_free_games&format=json`,
-        { next: { revalidate: 86400 } }
+        `${BASE_URL}/GetOwnedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&include_appinfo=true&include_played_free_games&format=json`
     )
         .then((res) => res.json())
         .then((data: OwnedGamesRes) =>
@@ -22,8 +21,7 @@ export default async function getSteamGames(steamId: string) {
 
     //Get recently played games names
     const recentlyPlayed = await fetch(
-        `${BASE_URL}/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&format=json`,
-        { next: { revalidate: 86400 } }
+        `${BASE_URL}/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&format=json`
     )
         .then((res) => res.json())
         .then(
@@ -37,14 +35,8 @@ export default async function getSteamGames(steamId: string) {
     const playedGames = ownedGames.filter((game) => game.playtime >= 120);
 
     //Get unplayed games
-    const unplayedGames = new Set(
-        ownedGames
-            .filter(
-                (game) =>
-                    game.playtime < 120 &&
-                    !recentlyPlayed.has(game.name.toLowerCase())
-            )
-            .map((game) => game.name.toLowerCase())
+    const unplayedGames = ownedGames.filter(
+        (g) => g.playtime < 120 && !recentlyPlayed.has(g.name.toLowerCase())
     );
 
     return {

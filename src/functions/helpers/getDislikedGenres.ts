@@ -18,6 +18,5 @@ export default function getDislikedGenres(
         }
     });
 
-    console.log('Disliked genres:', dislikedGenres);
     return dislikedGenres;
 }

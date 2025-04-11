@@ -8,8 +8,8 @@ export default async function checkPlaytimes(
     playedGames: SteamGame[],
     recentlyPlayed: Set<string>
 ) {
-    const completedGames = new Set<string>();
-    const droppedGames = new Set<string>();
+    const completedGames: string[] = [];
+    const droppedGames: string[] = [];
 
     const hltbRequests = playedGames.map((game) =>
         limit(async () => {
@@ -19,16 +19,16 @@ export default async function checkPlaytimes(
             const gameIsCompleted = await checkHltbData(gameName, playtime);
 
             if (gameIsCompleted) {
-                completedGames.add(gameName);
+                completedGames.push(gameName);
             } else if (!recentlyPlayed.has(gameName) && playtime < 600) {
-                droppedGames.add(gameName);
+                droppedGames.push(gameName);
             }
         })
     );
 
     await Promise.all(hltbRequests);
 
-    console.log(completedGames);
+    const result = { completedGames, droppedGames };
 
-    return { completedGames, droppedGames };
+    return result;
 }

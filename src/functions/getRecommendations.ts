@@ -1,6 +1,6 @@
-import SteamSpyDataRes from '@/types/steamSpyDataRes';
+import SteamSpyDataRes from '@/types/SteamSpyDataRes';
 
-export default async function getRecomendations(
+export default function getRecomendations(
     favoriteGenres: [string, number][],
     favoriteGameplay: [string, number][],
     favoriteThemes: [string, number][],
