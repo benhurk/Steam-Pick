@@ -6,19 +6,25 @@ export default function logGamesData(
     unplayedGamesData: SteamSpyDataRes
 ) {
     const completedLog = completedGamesData
-        .filter((game) => Object.keys(game.tags).some((tag) => tag === 'MOBA'))
+        .filter((game) =>
+            Object.keys(game.tags).some((tag) => tag === 'Comedy')
+        )
         .map((game) => {
             return { name: game.name, tags: Object.keys(game.tags) };
         });
 
     const droppedLog = droppedGamesData
-        .filter((game) => Object.keys(game.tags).some((tag) => tag === 'MOBA'))
+        .filter((game) =>
+            Object.keys(game.tags).some((tag) => tag === 'Comedy')
+        )
         .map((game) => {
             return { name: game.name, tags: Object.keys(game.tags) };
         });
 
     const unplayedLog = unplayedGamesData
-        .filter((game) => Object.keys(game.tags).some((tag) => tag === 'MOBA'))
+        .filter((game) =>
+            Object.keys(game.tags).some((tag) => tag === 'Comedy')
+        )
         .map((game) => {
             return { name: game.name, tags: Object.keys(game.tags) };
         });

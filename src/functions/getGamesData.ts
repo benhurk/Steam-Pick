@@ -28,15 +28,15 @@ export default async function getGamesData(
     const ownedGamesData = (await Promise.all(steamSpyRequests)).flat();
 
     const completedGamesData = ownedGamesData.filter((game) =>
-        completedGames.has(game.name)
+        completedGames.has(game.name.toLowerCase())
     );
 
     const droppedGamesData = ownedGamesData.filter((game) =>
-        droppedGames.has(game.name)
+        droppedGames.has(game.name.toLowerCase())
     );
 
     const unplayedGamesData = ownedGamesData.filter((game) =>
-        unplayedGames.has(game.name)
+        unplayedGames.has(game.name.toLowerCase())
     );
 
     const completedGamesTags = filterGameTags(completedGamesData);

@@ -14,7 +14,7 @@ export default async function getSteamGames(steamId: string) {
             data.response.games.map((game) => {
                 return {
                     appid: game.appid,
-                    name: game.name,
+                    name: game.name.toLowerCase(),
                     playtime: game.playtime_forever,
                 };
             })
@@ -28,7 +28,9 @@ export default async function getSteamGames(steamId: string) {
         .then((res) => res.json())
         .then(
             (data: RecentlyPlayedRes) =>
-                new Set(data.response.games.map((game) => game.name))
+                new Set(
+                    data.response.games.map((game) => game.name.toLowerCase())
+                )
         );
 
     //Get played games
@@ -38,9 +40,11 @@ export default async function getSteamGames(steamId: string) {
     const unplayedGames = new Set(
         ownedGames
             .filter(
-                (game) => game.playtime < 120 && !recentlyPlayed.has(game.name)
+                (game) =>
+                    game.playtime < 120 &&
+                    !recentlyPlayed.has(game.name.toLowerCase())
             )
-            .map((game) => game.name)
+            .map((game) => game.name.toLowerCase())
     );
 
     return {

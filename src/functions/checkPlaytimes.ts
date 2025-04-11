@@ -19,7 +19,6 @@ export default async function checkPlaytimes(
             const gameIsCompleted = await checkHltbData(gameName, playtime);
 
             if (gameIsCompleted) {
-                console.log(gameName);
                 completedGames.add(gameName);
             } else if (!recentlyPlayed.has(gameName) && playtime < 600) {
                 droppedGames.add(gameName);
@@ -28,6 +27,8 @@ export default async function checkPlaytimes(
     );
 
     await Promise.all(hltbRequests);
+
+    console.log(completedGames);
 
     return { completedGames, droppedGames };
 }
