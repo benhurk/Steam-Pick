@@ -24,7 +24,6 @@ export const gameplayStyles = [
     'Fast-Paced',
     'Clicker',
     'Point & Click',
-    'Physics',
     'Parkour',
     'Permadeath',
     'Real Time Tactics',
@@ -74,5 +73,3 @@ export const moods = [
     'Cinematic',
     'Wholesome',
 ];
-
-export const difficulties = ['Casual', 'Difficult'];

@@ -1,4 +1,6 @@
 import SteamSpyDataRes from '@/types/SteamSpyDataRes';
+import getMatchingTags from './helpers/getMatchingTags';
+import recommendConditions from './utils/recommendConditions';
 
 export default function getRecomendations(
     favoriteGenres: [string, number][],
@@ -15,21 +17,18 @@ export default function getRecomendations(
     unplayedGamesData.forEach((game) => {
         const gameTags = Object.keys(game.tags);
 
-        const matchingGenres = gameTags.filter((tag) =>
-            favoriteGenres.some(([genre]) => genre === tag)
-        ).length;
-
-        const matchingGameplay = gameTags.filter((tag) =>
-            favoriteGameplay.some(([gp]) => gp === tag)
-        ).length;
-
-        const matchingThemes = gameTags.filter((tag) =>
-            favoriteThemes.some(([theme]) => theme === tag)
-        ).length;
-
-        const matchingMoods = gameTags.filter((tag) =>
-            favoriteMoods.some(([mood]) => mood === tag)
-        ).length;
+        const {
+            matchingGenres,
+            matchingGameplay,
+            matchingThemes,
+            matchingMoods,
+        } = getMatchingTags(
+            gameTags,
+            favoriteGenres,
+            favoriteGameplay,
+            favoriteThemes,
+            favoriteMoods
+        );
 
         const hasDislikedGenre =
             gameTags.filter((tag) =>
@@ -39,21 +38,24 @@ export default function getRecomendations(
         const nonGenreMatchingTags =
             matchingGameplay + matchingThemes + matchingMoods;
 
-        const matchingTags = matchingGenres + nonGenreMatchingTags;
+        const matchingTags = matchingGenres.count + nonGenreMatchingTags;
 
         if (
-            matchingGenres > 0 &&
-            matchingGameplay > 0 &&
-            nonGenreMatchingTags > 2 &&
-            !hasDislikedGenre
+            recommendConditions(
+                matchingGenres.count,
+                matchingGameplay,
+                nonGenreMatchingTags,
+                hasDislikedGenre,
+                matchingGenres.tags
+            )
         ) {
             unplayedOwnedMap.set(game.name, matchingTags);
         }
     });
 
-    const unplayedOwnedRecommendation = [...unplayedOwnedMap.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .map(([game]) => game);
+    const unplayedOwnedRecommendation = [...unplayedOwnedMap.entries()].sort(
+        (a, b) => b[1] - a[1]
+    );
 
     console.log(
         'Already owned game recommendation:',
@@ -66,25 +68,22 @@ export default function getRecomendations(
     unplayedGamesData.forEach((game) => {
         const gameTags = Object.keys(game.tags);
 
-        const matchingFavoriteGenres = gameTags.filter((tag) =>
-            favoriteGenres.some(([genre]) => genre === tag)
-        ).length;
-
         const matchingUnexploredGenres = gameTags.filter((tag) =>
             unexploredGenres.some((genre) => genre === tag)
         ).length;
 
-        const matchingGameplay = gameTags.filter((tag) =>
-            favoriteGameplay.some(([gp]) => gp === tag)
-        ).length;
-
-        const matchingThemes = gameTags.filter((tag) =>
-            favoriteThemes.some(([theme]) => theme === tag)
-        ).length;
-
-        const matchingMoods = gameTags.filter((tag) =>
-            favoriteMoods.some(([mood]) => mood === tag)
-        ).length;
+        const {
+            matchingGenres,
+            matchingGameplay,
+            matchingThemes,
+            matchingMoods,
+        } = getMatchingTags(
+            gameTags,
+            favoriteGenres,
+            favoriteGameplay,
+            favoriteThemes,
+            favoriteMoods
+        );
 
         const hasDislikedGenre =
             gameTags.filter((tag) =>
@@ -98,8 +97,8 @@ export default function getRecomendations(
 
         if (
             matchingUnexploredGenres > 0 &&
-            matchingFavoriteGenres === 0 &&
-            matchingGameplay > 0 &&
+            matchingGenres.count === 0 &&
+            matchingGameplay > 1 &&
             nonGenreMatchingTags > 2 &&
             !hasDislikedGenre
         ) {
@@ -107,9 +106,9 @@ export default function getRecomendations(
         }
     });
 
-    const unexploredOwnedRecommendation = [...unexploredOwnedMap.entries()]
-        .sort((a, b) => b[1] - a[1])
-        .map(([game]) => game);
+    const unexploredOwnedRecommendation = [
+        ...unexploredOwnedMap.entries(),
+    ].sort((a, b) => b[1] - a[1]);
 
     console.log(
         'Unexplored genre, already owned game recommendation:',

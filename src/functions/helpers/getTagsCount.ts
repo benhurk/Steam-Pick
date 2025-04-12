@@ -1,9 +1,4 @@
-import {
-    difficulties,
-    gameplayStyles,
-    moods,
-    themes,
-} from '@/arrays/gameStyles';
+import { gameplayStyles, moods, themes } from '@/arrays/gameStyles';
 import { broadGenres, specificGenres } from '@/arrays/genres';
 
 export default function getTagsCount(tagsArray: string[]) {
@@ -11,7 +6,6 @@ export default function getTagsCount(tagsArray: string[]) {
     const gameplayStylesCount = new Map<string, number>();
     const themesCount = new Map<string, number>();
     const moodsCount = new Map<string, number>();
-    const difficultyCount = new Map<string, number>();
 
     broadGenres.forEach((genre) => {
         const count = tagsArray.filter((tag) => tag === genre).length;
@@ -38,16 +32,10 @@ export default function getTagsCount(tagsArray: string[]) {
         moodsCount.set(mood, count);
     });
 
-    difficulties.forEach((difficulty) => {
-        const count = tagsArray.filter((tag) => tag === difficulty).length;
-        difficultyCount.set(difficulty, count);
-    });
-
     return {
         genresCount,
         gameplayStylesCount,
         themesCount,
         moodsCount,
-        difficultyCount,
     };
 }
