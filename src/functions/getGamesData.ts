@@ -1,6 +1,6 @@
 import pLimit from 'p-limit';
 
-import filterGameTags from './helpers/filterGameTags';
+import filterGameTags from './utils/filterGameTags';
 import logGamesData from './utils/logGamesData';
 
 import { SteamGame } from '@/types/SteamGame';

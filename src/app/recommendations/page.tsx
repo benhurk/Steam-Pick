@@ -4,6 +4,7 @@ import getGamesData from '@/functions/getGamesData';
 import checkGamesTags from '@/functions/checkGamesTags';
 import getRecomendations from '@/functions/getRecommendations';
 import getUserGames from '@/functions/helpers/getUserGames';
+import GameRecommendationCard from '@/components/GameRecommendationCard';
 
 type Props = {
     searchParams: {
@@ -42,15 +43,22 @@ export default async function Recommendations({ searchParams }: Props) {
     } = checkGamesTags(completedGamesTags, droppedGamesTags);
 
     //Get recommendations
-    getRecomendations(
-        favoriteGenres,
-        favoriteGameplay,
-        favoriteThemes,
-        favoriteMoods,
-        dislikedGenres,
-        unplayedGamesData,
-        unexploredGenres
-    );
+    const { unplayedOwnedRecommendations, unexploredOwnedRecommendations } =
+        getRecomendations(
+            favoriteGenres,
+            favoriteGameplay,
+            favoriteThemes,
+            favoriteMoods,
+            dislikedGenres,
+            unplayedGamesData,
+            unexploredGenres
+        );
 
-    return <div>Teste</div>;
+    return (
+        <main>
+            <GameRecommendationCard
+                recommendationsArray={unplayedOwnedRecommendations}
+            />
+        </main>
+    );
 }

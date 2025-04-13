@@ -12,7 +12,11 @@ export default function getRecomendations(
     unexploredGenres: string[]
 ) {
     //Already owned recommendation
-    const unplayedOwnedMap = new Map<string, number>();
+    const unplayedOwned: {
+        name: string;
+        id: number;
+        matchingTags: number;
+    }[] = [];
 
     unplayedGamesData.forEach((game) => {
         const gameTags = Object.keys(game.tags);
@@ -49,21 +53,29 @@ export default function getRecomendations(
                 matchingGenres.tags
             )
         ) {
-            unplayedOwnedMap.set(game.name, matchingTags);
+            unplayedOwned.push({
+                name: game.name,
+                id: game.appid,
+                matchingTags,
+            });
         }
     });
 
-    const unplayedOwnedRecommendation = [...unplayedOwnedMap.entries()].sort(
-        (a, b) => b[1] - a[1]
+    const unplayedOwnedRecommendations = unplayedOwned.sort(
+        (a, b) => b.matchingTags - a.matchingTags
     );
 
     console.log(
         'Already owned game recommendation:',
-        unplayedOwnedRecommendation
+        unplayedOwnedRecommendations
     );
 
     //Unexplored genre recommendation
-    const unexploredOwnedMap = new Map<string, number>();
+    const unexploredOwned: {
+        name: string;
+        id: number;
+        matchingTags: number;
+    }[] = [];
 
     unplayedGamesData.forEach((game) => {
         const gameTags = Object.keys(game.tags);
@@ -102,18 +114,22 @@ export default function getRecomendations(
             nonGenreMatchingTags > 2 &&
             !hasDislikedGenre
         ) {
-            unexploredOwnedMap.set(game.name, matchingTags);
+            unexploredOwned.push({
+                name: game.name,
+                id: game.appid,
+                matchingTags,
+            });
         }
     });
 
-    const unexploredOwnedRecommendation = [
-        ...unexploredOwnedMap.entries(),
-    ].sort((a, b) => b[1] - a[1]);
+    const unexploredOwnedRecommendations = unexploredOwned.sort(
+        (a, b) => b.matchingTags - a.matchingTags
+    );
 
     console.log(
         'Unexplored genre, already owned game recommendation:',
-        unexploredOwnedRecommendation
+        unexploredOwnedRecommendations
     );
 
-    return { unplayedOwnedRecommendation };
+    return { unplayedOwnedRecommendations, unexploredOwnedRecommendations };
 }
