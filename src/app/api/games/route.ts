@@ -3,8 +3,9 @@ import getSteamGames from '@/functions/getSteamGames';
 import GamesApiResponse from '@/types/GamesApiResponse';
 import { NextResponse } from 'next/server';
 
-export async function POST(req: Request) {
-    const { steamId } = await req.json();
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url);
+    const steamId = searchParams.get('steamid');
 
     if (!steamId) {
         return NextResponse.json(

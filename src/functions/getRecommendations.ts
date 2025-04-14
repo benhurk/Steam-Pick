@@ -1,6 +1,7 @@
 import SteamSpyDataRes from '@/types/SteamSpyDataRes';
 import getMatchingTags from './helpers/getMatchingTags';
 import recommendConditions from './utils/recommendConditions';
+import { RecommendationsArray } from '@/types/Recommendations';
 
 export default function getRecomendations(
     favoriteGenres: [string, number][],
@@ -12,11 +13,7 @@ export default function getRecomendations(
     unexploredGenres: string[]
 ) {
     //Already owned recommendation
-    const unplayedOwned: {
-        name: string;
-        id: number;
-        matchingTags: number;
-    }[] = [];
+    const unplayed: RecommendationsArray = [];
 
     unplayedGamesData.forEach((game) => {
         const gameTags = Object.keys(game.tags);
@@ -53,7 +50,7 @@ export default function getRecomendations(
                 matchingGenres.tags
             )
         ) {
-            unplayedOwned.push({
+            unplayed.push({
                 name: game.name,
                 id: game.appid,
                 matchingTags,
@@ -61,21 +58,12 @@ export default function getRecomendations(
         }
     });
 
-    const unplayedOwnedRecommendations = unplayedOwned.sort(
-        (a, b) => b.matchingTags - a.matchingTags
-    );
+    unplayed.sort((a, b) => b.matchingTags - a.matchingTags);
 
-    console.log(
-        'Already owned game recommendation:',
-        unplayedOwnedRecommendations
-    );
+    console.log('Already owned game recommendation:', unplayed);
 
     //Unexplored genre recommendation
-    const unexploredOwned: {
-        name: string;
-        id: number;
-        matchingTags: number;
-    }[] = [];
+    const unexplored: RecommendationsArray = [];
 
     unplayedGamesData.forEach((game) => {
         const gameTags = Object.keys(game.tags);
@@ -114,7 +102,7 @@ export default function getRecomendations(
             nonGenreMatchingTags > 2 &&
             !hasDislikedGenre
         ) {
-            unexploredOwned.push({
+            unexplored.push({
                 name: game.name,
                 id: game.appid,
                 matchingTags,
@@ -122,14 +110,12 @@ export default function getRecomendations(
         }
     });
 
-    const unexploredOwnedRecommendations = unexploredOwned.sort(
-        (a, b) => b.matchingTags - a.matchingTags
-    );
+    unexplored.sort((a, b) => b.matchingTags - a.matchingTags);
 
     console.log(
         'Unexplored genre, already owned game recommendation:',
-        unexploredOwnedRecommendations
+        unexplored
     );
 
-    return { unplayedOwnedRecommendations, unexploredOwnedRecommendations };
+    return { unplayed, unexplored };
 }

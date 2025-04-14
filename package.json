@@ -11,10 +11,12 @@
     "dependencies": {
         "axios": "^1.8.3",
         "howlongtobeat": "github:Mythic1x/howlongtobeat#master",
+        "motion": "^12.7.2",
         "next": "15.2.2",
         "p-limit": "^6.2.0",
         "react": "^19.0.0",
-        "react-dom": "^19.0.0"
+        "react-dom": "^19.0.0",
+        "react-spinners": "^0.15.0"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
