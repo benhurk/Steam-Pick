@@ -5,6 +5,7 @@ import checkGamesTags from '@/functions/checkGamesTags';
 import getRecomendations from '@/functions/getRecommendations';
 import getUserGames from '@/functions/helpers/getUserGames';
 import GameRecommendationCard from '@/components/GameRecommendationCard';
+import Background from '@/components/Background';
 
 type Props = {
     searchParams: {
@@ -54,12 +55,13 @@ export default async function Recommendations({ searchParams }: Props) {
     );
 
     return (
-        <main className='py-9 bg-gray-800'>
-            <div className='max-w-3xl mx-auto'>
+        <main className='relative min-h-screen'>
+            <Background />
+            <div className='max-w-3xl mx-auto py-8'>
                 {(ownedGamesRecommendations.unplayed.length > 0 ||
                     ownedGamesRecommendations.unexplored.length > 0) && (
                     <section id='owned'>
-                        <h2 className='mb-4 text-center text-5xl font-bold text-slate-100'>
+                        <h2 className='mb-4 text-center text-5xl font-bold text-slate-50'>
                             Games you already own
                         </h2>
                         <p className='mb-12 text-slate-300 text-lg text-center'>
@@ -68,7 +70,7 @@ export default async function Recommendations({ searchParams }: Props) {
                         </p>
                         <div className='flex justify-between'>
                             <div>
-                                <p className='mb-3 text-slate-100 text-lg text-center'>
+                                <p className='block mb-4 text-slate-50 text-xl text-center font-semibold'>
                                     Similar to what you like:
                                 </p>
                                 {ownedGamesRecommendations.unplayed && (
@@ -79,10 +81,12 @@ export default async function Recommendations({ searchParams }: Props) {
                                     />
                                 )}
                             </div>
-                            <span className='text-slate-300 text-lg'>or</span>
+                            <span className='text-slate-50 font-semibold text-xl'>
+                                or
+                            </span>
                             <div className='w-min'>
-                                <p className='mb-3 text-slate-100 text-lg text-center'>
-                                    If you want to try something different:
+                                <p className='mb-4 text-slate-50 text-xl text-center font-semibold'>
+                                    Try something different:
                                 </p>
                                 {ownedGamesRecommendations.unexplored && (
                                     <GameRecommendationCard
