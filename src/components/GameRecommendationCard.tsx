@@ -54,8 +54,10 @@ export default function GameRecommendationCard({
 
     return (
         <div
-            className='relative h-[30rem] w-80 bg-slate-950 border border-slate-300 rounded-sm overflow-hidden shadow-lg shadow-slate-600
-                        hover:scale-105 hover:bg-slate-900 hover:shadow-slate-400 transition duration-200 ease-in-out'>
+            className='relative h-[30rem] w-80 border border-slate-300 rounded-sm overflow-hidden shadow-lg shadow-sky-800
+                        bg-gradient-to-bl from-slate-950 via-slate-800 to-slate-950 
+                        hover:scale-105 hover:from-slate-900 hover:via-slate-700 hover:to-slate-900 hover:shadow-sky-700
+                        transition duration-200 ease-in-out'>
             <AnimatePresence mode='wait'>
                 {loading ? (
                     <motion.div
@@ -97,7 +99,7 @@ export default function GameRecommendationCard({
                                     type='button'
                                     onClick={handleSkip}
                                     className='w-full py-1.5 bg-slate-200 text-slate-950 font-semibold rounded-md cursor-pointer
-                                                    hover:bg-slate-50 transition-colors duration-200 ease-in-out'>
+                                                    hover:bg-white transition-colors duration-200 ease-in-out'>
                                     Skip
                                 </button>
                             </div>

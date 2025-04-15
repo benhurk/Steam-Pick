@@ -61,10 +61,12 @@ export default async function Recommendations({ searchParams }: Props) {
                 {(ownedGamesRecommendations.unplayed.length > 0 ||
                     ownedGamesRecommendations.unexplored.length > 0) && (
                     <section id='owned'>
-                        <h2 className='mb-4 text-center text-5xl font-bold text-slate-50'>
+                        <h2
+                            className='mb-4 text-center text-5xl font-bold text-transparent 
+                                        bg-gradient-to-br from-cyan-200 via-sky-300 to-blue-400 bg-clip-text'>
                             Games you already own
                         </h2>
-                        <p className='mb-12 text-slate-300 text-lg text-center'>
+                        <p className='mb-12 text-slate-50 text-lg text-center'>
                             You have {unplayedGames.length} unplayed games in
                             your library. Here are some you may enjoy:
                         </p>
