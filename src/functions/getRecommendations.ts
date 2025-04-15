@@ -37,14 +37,14 @@ export default function getRecomendations(
             ).length > 0;
 
         const nonGenreMatchingTags =
-            matchingGameplay + matchingThemes + matchingMoods;
+            matchingGameplay.count + matchingThemes.count + matchingMoods.count;
 
         const matchingTags = matchingGenres.count + nonGenreMatchingTags;
 
         if (
             recommendConditions(
                 matchingGenres.count,
-                matchingGameplay,
+                matchingGameplay.count,
                 nonGenreMatchingTags,
                 hasDislikedGenre,
                 matchingGenres.tags
@@ -53,12 +53,20 @@ export default function getRecomendations(
             unplayed.push({
                 name: game.name,
                 id: game.appid,
-                matchingTags,
+                matchingTags: {
+                    count: matchingTags,
+                    tags: [
+                        ...matchingGenres.tags,
+                        ...matchingGameplay.tags,
+                        ...matchingThemes.tags,
+                        ...matchingMoods.tags,
+                    ],
+                },
             });
         }
     });
 
-    unplayed.sort((a, b) => b.matchingTags - a.matchingTags);
+    unplayed.sort((a, b) => b.matchingTags.count - a.matchingTags.count);
 
     console.log('Already owned game recommendation:', unplayed);
 
@@ -68,9 +76,14 @@ export default function getRecomendations(
     unplayedGamesData.forEach((game) => {
         const gameTags = Object.keys(game.tags);
 
-        const matchingUnexploredGenres = gameTags.filter((tag) =>
+        const matchingUnexploredGenresTags = gameTags.filter((tag) =>
             unexploredGenres.some((genre) => genre === tag)
-        ).length;
+        );
+
+        const matchingUnexploredGenres = {
+            count: matchingUnexploredGenresTags.length,
+            tags: matchingUnexploredGenresTags,
+        };
 
         const {
             matchingGenres,
@@ -91,26 +104,35 @@ export default function getRecomendations(
             ).length > 0;
 
         const nonGenreMatchingTags =
-            matchingGameplay + matchingThemes + matchingMoods;
+            matchingGameplay.count + matchingThemes.count + matchingMoods.count;
 
-        const matchingTags = matchingUnexploredGenres + nonGenreMatchingTags;
+        const matchingTags =
+            matchingUnexploredGenres.count + nonGenreMatchingTags;
 
         if (
-            matchingUnexploredGenres > 0 &&
+            matchingUnexploredGenres.count > 0 &&
             matchingGenres.count === 0 &&
-            matchingGameplay > 1 &&
+            matchingGameplay.count > 1 &&
             nonGenreMatchingTags > 2 &&
             !hasDislikedGenre
         ) {
             unexplored.push({
                 name: game.name,
                 id: game.appid,
-                matchingTags,
+                matchingTags: {
+                    count: matchingTags,
+                    tags: [
+                        ...matchingUnexploredGenres.tags,
+                        ...matchingGameplay.tags,
+                        ...matchingThemes.tags,
+                        ...matchingMoods.tags,
+                    ],
+                },
             });
         }
     });
 
-    unexplored.sort((a, b) => b.matchingTags - a.matchingTags);
+    unexplored.sort((a, b) => b.matchingTags.count - a.matchingTags.count);
 
     console.log(
         'Unexplored genre, already owned game recommendation:',

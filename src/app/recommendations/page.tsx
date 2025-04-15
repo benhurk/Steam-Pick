@@ -80,6 +80,7 @@ export default async function Recommendations({ searchParams }: Props) {
                                         recommendationsArray={
                                             ownedGamesRecommendations.unplayed
                                         }
+                                        unexploredGenres={unexploredGenres}
                                     />
                                 )}
                             </div>
@@ -95,6 +96,7 @@ export default async function Recommendations({ searchParams }: Props) {
                                         recommendationsArray={
                                             ownedGamesRecommendations.unexplored
                                         }
+                                        unexploredGenres={unexploredGenres}
                                     />
                                 )}
                             </div>

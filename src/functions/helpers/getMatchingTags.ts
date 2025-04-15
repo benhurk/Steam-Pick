@@ -14,17 +14,32 @@ export default function getMatchingTags(
         tags: matchingGenresTags,
     };
 
-    const matchingGameplay = gameTags.filter((tag) =>
+    const matchingGameplayTags = gameTags.filter((tag) =>
         favoriteGameplay.some(([gp]) => gp === tag)
-    ).length;
+    );
 
-    const matchingThemes = gameTags.filter((tag) =>
+    const matchingGameplay = {
+        count: matchingGameplayTags.length,
+        tags: matchingGameplayTags,
+    };
+
+    const matchingThemesTags = gameTags.filter((tag) =>
         favoriteThemes.some(([theme]) => theme === tag)
-    ).length;
+    );
 
-    const matchingMoods = gameTags.filter((tag) =>
+    const matchingThemes = {
+        count: matchingThemesTags.length,
+        tags: matchingThemesTags,
+    };
+
+    const matchingMoodsTags = gameTags.filter((tag) =>
         favoriteMoods.some(([mood]) => mood === tag)
-    ).length;
+    );
+
+    const matchingMoods = {
+        count: matchingMoodsTags.length,
+        tags: matchingMoodsTags,
+    };
 
     return { matchingGenres, matchingGameplay, matchingThemes, matchingMoods };
 }

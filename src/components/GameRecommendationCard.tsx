@@ -5,17 +5,16 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'motion/react';
 import { SquareLoader } from 'react-spinners';
+import { RecommendationsArray } from '@/types/Recommendations';
 
 type Props = {
-    recommendationsArray: {
-        name: string;
-        id: number;
-        matchingTags: number;
-    }[];
+    recommendationsArray: RecommendationsArray;
+    unexploredGenres: string[];
 };
 
 export default function GameRecommendationCard({
     recommendationsArray,
+    unexploredGenres,
 }: Props) {
     const [loading, setLoading] = useState<boolean>(false);
     const [recommendationIndex, setRecommendationIndex] = useState<number>(0);
@@ -23,8 +22,6 @@ export default function GameRecommendationCard({
 
     useEffect(() => {
         const fetchGameDetails = async () => {
-            setLoading(true);
-
             try {
                 const res = await fetch(
                     `http://localhost:3000/api/gamedetails?id=${recommendationsArray[recommendationIndex].id}`
@@ -45,6 +42,8 @@ export default function GameRecommendationCard({
     }, [recommendationIndex, recommendationsArray]);
 
     const handleSkip = () => {
+        setLoading(true);
+
         if (recommendationIndex === recommendationsArray.length - 1) {
             setRecommendationIndex(0);
         } else if (recommendationIndex < recommendationsArray.length - 1) {
@@ -52,9 +51,12 @@ export default function GameRecommendationCard({
         }
     };
 
+    const isUnexploredGenre = (tag: string) =>
+        unexploredGenres.some((genre) => genre === tag);
+
     return (
         <div
-            className='relative h-[30rem] w-80 border border-slate-300 rounded-sm overflow-hidden shadow-lg shadow-sky-800
+            className='relative h-[31rem] w-80 border border-slate-300 rounded-sm overflow-hidden shadow-lg shadow-sky-800
                         bg-gradient-to-bl from-slate-950 via-slate-800 to-slate-950 
                         hover:scale-105 hover:from-slate-900 hover:via-slate-700 hover:to-slate-900 hover:shadow-sky-700
                         transition duration-200 ease-in-out'>
@@ -85,20 +87,39 @@ export default function GameRecommendationCard({
                                     alt={gameInfo.data.name}
                                     width={320}
                                     height={320}
-                                    className='mb-2'
+                                    className='mb-1'
                                 />
-                                <h3 className='mb-4 px-3 text-xl font-semibold text-center text-slate-50'>
-                                    {gameInfo.data.name}
-                                </h3>
-                                <p className='text-sm px-3 text-slate-300 mb-4 leading-6'>
-                                    {gameInfo.data.short_description}
-                                </p>
+                                <div className='px-3'>
+                                    <h3 className='mb-2 text-xl font-semibold text-center text-slate-50'>
+                                        {gameInfo.data.name}
+                                    </h3>
+                                    <p className='text-sm text-slate-300 leading-6'>
+                                        {gameInfo.data.short_description}
+                                    </p>
+                                </div>
                             </a>
                             <div className='p-3 pt-0'>
+                                <div className='flex gap-2 flex-wrap justify-center mb-4'>
+                                    {recommendationsArray[
+                                        recommendationIndex
+                                    ].matchingTags.tags.map((tag, index) => (
+                                        <span
+                                            key={tag + index * Math.random()}
+                                            className={`block text-slate-50 text-xs py-0.5 px-1 rounded-sm
+                                                    ${
+                                                        isUnexploredGenre(tag)
+                                                            ? 'bg-orange-500'
+                                                            : 'bg-sky-900'
+                                                    }
+                                                    shadow-sm shadow-gray-800`}>
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
                                 <button
                                     type='button'
                                     onClick={handleSkip}
-                                    className='w-full py-1.5 bg-slate-200 text-slate-950 font-semibold rounded-md cursor-pointer
+                                    className='w-full py-1 bg-slate-200 text-slate-950 font-semibold rounded-md cursor-pointer
                                                     hover:bg-white transition-colors duration-200 ease-in-out'>
                                     Skip
                                 </button>
