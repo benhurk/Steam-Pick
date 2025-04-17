@@ -9,12 +9,10 @@ import { RecommendationsArray } from '@/types/Recommendations';
 
 type Props = {
     recommendationsArray: RecommendationsArray;
-    unexploredGenres: string[];
 };
 
 export default function GameRecommendationCard({
     recommendationsArray,
-    unexploredGenres,
 }: Props) {
     const [loading, setLoading] = useState<boolean>(false);
     const [recommendationIndex, setRecommendationIndex] = useState<number>(0);
@@ -51,12 +49,9 @@ export default function GameRecommendationCard({
         }
     };
 
-    const isUnexploredGenre = (tag: string) =>
-        unexploredGenres.some((genre) => genre === tag);
-
     return (
         <div
-            className='relative h-[31rem] w-80 border border-slate-300 rounded-sm overflow-hidden shadow-lg shadow-sky-800
+            className='relative h-[32rem] w-80 border border-slate-300 rounded-sm overflow-hidden shadow-lg shadow-sky-800
                         bg-gradient-to-bl from-slate-950 via-slate-800 to-slate-950 
                         hover:scale-105 hover:from-slate-900 hover:via-slate-700 hover:to-slate-900 hover:shadow-sky-700
                         transition duration-200 ease-in-out'>
@@ -105,13 +100,7 @@ export default function GameRecommendationCard({
                                     ].matchingTags.tags.map((tag, index) => (
                                         <span
                                             key={tag + index * Math.random()}
-                                            className={`block text-slate-50 text-xs py-0.5 px-1 rounded-sm
-                                                    ${
-                                                        isUnexploredGenre(tag)
-                                                            ? 'bg-orange-500'
-                                                            : 'bg-sky-900'
-                                                    }
-                                                    shadow-sm shadow-gray-800`}>
+                                            className='block text-slate-50 bg-sky-800 text-xs py-0.5 px-1 rounded-sm shadow-sm shadow-gray-800'>
                                             {tag}
                                         </span>
                                     ))}

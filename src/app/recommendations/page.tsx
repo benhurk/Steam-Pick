@@ -2,10 +2,11 @@ import { redirect } from 'next/navigation';
 
 import getGamesData from '@/functions/getGamesData';
 import checkGamesTags from '@/functions/checkGamesTags';
-import getRecomendations from '@/functions/getRecommendations';
+import getOwnedRecomendations from '@/functions/getOwnedRecommendations';
 import getUserGames from '@/functions/helpers/getUserGames';
 import GameRecommendationCard from '@/components/GameRecommendationCard';
 import Background from '@/components/Background';
+import getNewRecommendations from '@/functions/getNewRecommendations';
 
 type Props = {
     searchParams: {
@@ -40,69 +41,83 @@ export default async function Recommendations({ searchParams }: Props) {
         favoriteThemes,
         favoriteMoods,
         dislikedGenres,
-        unexploredGenres,
     } = checkGamesTags(completedGamesTags, droppedGamesTags);
 
     //Get recommendations
-    const ownedGamesRecommendations = getRecomendations(
+    const ownedGamesRecommendations = getOwnedRecomendations(
         favoriteGenres,
         favoriteGameplay,
         favoriteThemes,
         favoriteMoods,
         dislikedGenres,
-        unplayedGamesData,
-        unexploredGenres
+        unplayedGamesData
+    );
+
+    const newGamesRecommendations = await getNewRecommendations(
+        favoriteGenres,
+        favoriteGameplay,
+        favoriteThemes,
+        favoriteMoods,
+        dislikedGenres,
+        ownedGames
     );
 
     return (
         <main className='relative min-h-screen'>
             <Background />
             <div className='max-w-3xl mx-auto py-8'>
-                {(ownedGamesRecommendations.unplayed.length > 0 ||
-                    ownedGamesRecommendations.unexplored.length > 0) && (
-                    <section id='owned'>
-                        <h2
-                            className='mb-4 text-center text-5xl font-bold text-transparent 
-                                        bg-gradient-to-br from-cyan-200 via-sky-300 to-blue-400 bg-clip-text'>
-                            Games you already own
-                        </h2>
-                        <p className='mb-12 text-slate-50 text-lg text-center'>
-                            You have {unplayedGames.length} unplayed games in
-                            your library. Here are some you may enjoy:
-                        </p>
-                        <div className='flex justify-between'>
-                            <div>
-                                <p className='block mb-4 text-slate-50 text-xl text-center font-semibold'>
-                                    Similar to what you like:
-                                </p>
-                                {ownedGamesRecommendations.unplayed && (
-                                    <GameRecommendationCard
-                                        recommendationsArray={
-                                            ownedGamesRecommendations.unplayed
-                                        }
-                                        unexploredGenres={unexploredGenres}
-                                    />
-                                )}
-                            </div>
-                            <span className='text-slate-50 font-semibold text-xl'>
-                                or
-                            </span>
+                <section>
+                    <h2
+                        className='mb-12 text-center text-5xl font-bold text-transparent 
+                                        bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                        Recommendations
+                    </h2>
+
+                    <div className='flex justify-between'>
+                        {ownedGamesRecommendations.length > 0 && (
                             <div className='w-min'>
-                                <p className='mb-4 text-slate-50 text-xl text-center font-semibold'>
-                                    Try something different:
+                                <h3
+                                    className='block mb-2 text-transparent text-2xl text-center font-bold
+                                                bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                                    Already in your library
+                                </h3>
+                                <p className='mb-4 text-slate-50 font-semibold text-center'>
+                                    There is {unplayedGames.length} unplayed
+                                    games in your library.
                                 </p>
-                                {ownedGamesRecommendations.unexplored && (
+                                {ownedGamesRecommendations && (
                                     <GameRecommendationCard
                                         recommendationsArray={
-                                            ownedGamesRecommendations.unexplored
+                                            ownedGamesRecommendations
                                         }
-                                        unexploredGenres={unexploredGenres}
                                     />
                                 )}
                             </div>
-                        </div>
-                    </section>
-                )}
+                        )}
+                        <span className='text-slate-50 font-semibold text-xl'>
+                            or
+                        </span>
+                        {newGamesRecommendations.length > 0 && (
+                            <div className='w-min'>
+                                <h3
+                                    className='block mb-2 text-transparent text-2xl text-center font-bold
+                                                bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                                    Want something new?
+                                </h3>
+                                <p className='mb-4 text-slate-50 font-semibold text-center'>
+                                    Here are some games that fit your taste.
+                                </p>
+                                {newGamesRecommendations && (
+                                    <GameRecommendationCard
+                                        recommendationsArray={
+                                            newGamesRecommendations
+                                        }
+                                    />
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </section>
             </div>
         </main>
     );

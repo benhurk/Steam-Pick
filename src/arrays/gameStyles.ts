@@ -57,7 +57,6 @@ export const themes = [
     'Dark Fantasy',
     'Comedy',
     'Satire',
-    'Psychological Horror',
     'Anime',
     'Crime',
 ];
