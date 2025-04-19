@@ -37,7 +37,7 @@ export default function checkGamesTags(
     const unexploredGenres = [...allTagsCount.genresCount.entries()]
         .filter(
             ([tag, count]) =>
-                count <= 1 && !broadGenres.some((genre) => genre === tag)
+                count <= 1 && !broadGenres.some((genre) => genre.name === tag)
         )
         .map(([tag]) => tag);
 

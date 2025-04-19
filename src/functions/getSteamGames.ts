@@ -1,7 +1,7 @@
 import { SteamGame } from '@/types/SteamGame';
 import { OwnedGamesRes, RecentlyPlayedRes } from '@/types/SteamDataRes';
 
-const BASE_URL = 'http://api.steampowered.com/IPlayerService';
+const BASE_URL = 'https://api.steampowered.com/IPlayerService';
 
 export default async function getSteamGames(steamId: string) {
     //Get owned games

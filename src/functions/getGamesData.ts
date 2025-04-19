@@ -37,6 +37,8 @@ export default async function getGamesData(
     const completedGamesTags = filterGameTags(completedGamesData);
     const droppedGamesTags = filterGameTags(droppedGamesData);
 
+    console.log(completedGamesTags);
+
     logGamesData(completedGamesData, droppedGamesData, unplayedGamesData);
 
     return { completedGamesTags, droppedGamesTags, unplayedGamesData };

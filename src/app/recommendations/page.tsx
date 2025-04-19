@@ -53,14 +53,14 @@ export default async function Recommendations({ searchParams }: Props) {
         unplayedGamesData
     );
 
-    const newGamesRecommendations = await getNewRecommendations(
-        favoriteGenres,
-        favoriteGameplay,
-        favoriteThemes,
-        favoriteMoods,
-        dislikedGenres,
-        ownedGames
-    );
+    // const newGamesRecommendations = await getNewRecommendations(
+    //     favoriteGenres,
+    //     favoriteGameplay,
+    //     favoriteThemes,
+    //     favoriteMoods,
+    //     dislikedGenres,
+    //     ownedGames
+    // );
 
     return (
         <main className='relative min-h-screen'>
@@ -97,7 +97,7 @@ export default async function Recommendations({ searchParams }: Props) {
                         <span className='text-slate-50 font-semibold text-xl'>
                             or
                         </span>
-                        {newGamesRecommendations.length > 0 && (
+                        {/* {newGamesRecommendations.length > 0 && (
                             <div className='w-min'>
                                 <h3
                                     className='block mb-2 text-transparent text-2xl text-center font-bold
@@ -115,7 +115,7 @@ export default async function Recommendations({ searchParams }: Props) {
                                     />
                                 )}
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </section>
             </div>

@@ -6,7 +6,7 @@ export default function getDislikedGenres(
 ) {
     const allTags = new Set([...droppedTags, ...completedTags]);
     const genres = [...allTags].filter((tag) =>
-        specificGenres.some((genre) => genre === tag)
+        specificGenres.some((genre) => genre.name === tag)
     );
 
     const dislikedGenres = genres.filter((tag) => {

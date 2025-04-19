@@ -7,29 +7,29 @@ export default function filterGameTags(data: SteamSpyDataRes) {
         let filteredTags: string[] = [];
 
         const gameSpecificGenres = Object.keys(game.tags).filter((tag) =>
-            specificGenres.some((genre) => genre === tag)
+            specificGenres.some((genre) => genre.name === tag)
         );
 
         if (gameSpecificGenres.length > 0) {
             filteredTags = [...filteredTags, ...gameSpecificGenres];
         } else {
             const gameBroadGenres = Object.keys(game.tags).filter((tag) =>
-                broadGenres.some((genre) => genre === tag)
+                broadGenres.some((genre) => genre.name === tag)
             );
 
             filteredTags = [...filteredTags, ...gameBroadGenres];
         }
 
         const gameStyles = Object.keys(game.tags).filter((tag) =>
-            gameplayStyles.some((style) => style === tag)
+            gameplayStyles.some((style) => style.name === tag)
         );
 
         const gameThemes = Object.keys(game.tags).filter((tag) =>
-            themes.some((theme) => theme === tag)
+            themes.some((theme) => theme.name === tag)
         );
 
         const gameMoods = Object.keys(game.tags).filter((tag) =>
-            moods.some((mood) => mood === tag)
+            moods.some((mood) => mood.name === tag)
         );
 
         filteredTags = [

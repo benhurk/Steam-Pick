@@ -8,28 +8,28 @@ export default function getTagsCount(tagsArray: string[]) {
     const moodsCount = new Map<string, number>();
 
     broadGenres.forEach((genre) => {
-        const count = tagsArray.filter((tag) => tag === genre).length;
-        genresCount.set(genre, count);
+        const count = tagsArray.filter((tag) => tag === genre.name).length;
+        genresCount.set(genre.name, count);
     });
 
     specificGenres.forEach((genre) => {
-        const count = tagsArray.filter((tag) => tag === genre).length;
-        genresCount.set(genre, count);
+        const count = tagsArray.filter((tag) => tag === genre.name).length;
+        genresCount.set(genre.name, count);
     });
 
     gameplayStyles.forEach((style) => {
-        const count = tagsArray.filter((tag) => tag === style).length;
-        gameplayStylesCount.set(style, count);
+        const count = tagsArray.filter((tag) => tag === style.name).length;
+        gameplayStylesCount.set(style.name, count);
     });
 
     themes.forEach((theme) => {
-        const count = tagsArray.filter((tag) => tag === theme).length;
-        themesCount.set(theme, count);
+        const count = tagsArray.filter((tag) => tag === theme.name).length;
+        themesCount.set(theme.name, count);
     });
 
     moods.forEach((mood) => {
-        const count = tagsArray.filter((tag) => tag === mood).length;
-        moodsCount.set(mood, count);
+        const count = tagsArray.filter((tag) => tag === mood.name).length;
+        moodsCount.set(mood.name, count);
     });
 
     return {
