@@ -1,8 +1,10 @@
+import pLimit from 'p-limit';
 import filterGameTags from './utils/filterGameTags';
 import logGamesData from './utils/logGamesData';
+import { SteamGame } from '@/types/TSteam';
+import SteamSpyDataRes from '@/types/TSteamSpy';
 
-import { SteamGame } from '@/types/SteamGame';
-import getSteamSpyAppDetails from './helpers/getSteamSpyAppDetails';
+const limit = pLimit(1);
 
 export default async function getGamesData(
     ownedGames: SteamGame[],
@@ -10,9 +12,18 @@ export default async function getGamesData(
     droppedGames: Set<string>,
     unplayedGames: SteamGame[]
 ) {
-    const ownedGamesData = await getSteamSpyAppDetails(
-        ownedGames.map((games) => games.appid)
+    const requests = ownedGames.map((game) =>
+        limit(async () => {
+            return await fetch(
+                `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`,
+                { next: { revalidate: 86400 } }
+            ).then((res) => res.json());
+        })
     );
+
+    const ownedGamesData: SteamSpyDataRes = (
+        await Promise.all(requests)
+    ).flat();
 
     //Completed
     const completedGamesData = ownedGamesData.filter((game) =>
@@ -36,8 +47,6 @@ export default async function getGamesData(
     //Get tags
     const completedGamesTags = filterGameTags(completedGamesData);
     const droppedGamesTags = filterGameTags(droppedGamesData);
-
-    console.log(completedGamesTags);
 
     logGamesData(completedGamesData, droppedGamesData, unplayedGamesData);
 

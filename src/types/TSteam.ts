@@ -1,4 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+export type SteamGame = {
+    appid: number;
+    name: string;
+    playtime: number;
+};
+
 export type OwnedGamesRes = {
     response: {
         game_count: number;

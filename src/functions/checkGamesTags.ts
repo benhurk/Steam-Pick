@@ -46,7 +46,7 @@ export default function checkGamesTags(
     console.log('Favorite themes:', favoriteThemes);
     console.log('Favorite moods:', favoriteMoods);
     console.log('Disliked genres:', dislikedGenres);
-    console.log('Unexplored genres:', unexploredGenres);
+    // console.log('Unexplored genres:', unexploredGenres);
 
     return {
         favoriteGenres,

@@ -20,7 +20,7 @@ export const gameplayStyles = [
     { tagid: 1720, name: 'Dungeon Crawler' },
     { tagid: 7332, name: 'Base Building' },
     { tagid: 1702, name: 'Crafting' },
-    { tagid: 5379, name: '2D Platformer' },
+    { tagid: 1625, name: 'Platformer' },
     { tagid: 1734, name: 'Fast-Paced' },
     { tagid: 379975, name: 'Clicker' },
     { tagid: 1698, name: 'Point & Click' },
@@ -50,7 +50,6 @@ export const themes = [
     { tagid: 1671, name: 'Superhero' },
     { tagid: 3942, name: 'Sci-fi' },
     { tagid: 4947, name: 'Romance' },
-    { tagid: 4726, name: 'Cute' },
     { tagid: 4004, name: 'Retro' },
     { tagid: 5716, name: 'Mystery' },
     { tagid: 4604, name: 'Dark Fantasy' },
@@ -70,4 +69,5 @@ export const moods = [
     { tagid: 4342, name: 'Dark' },
     { tagid: 4145, name: 'Cinematic' },
     { tagid: 552282, name: 'Wholesome' },
+    { tagid: 4726, name: 'Cute' },
 ];

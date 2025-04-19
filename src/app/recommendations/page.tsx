@@ -2,11 +2,10 @@ import { redirect } from 'next/navigation';
 
 import getGamesData from '@/functions/getGamesData';
 import checkGamesTags from '@/functions/checkGamesTags';
-import getOwnedRecomendations from '@/functions/getOwnedRecommendations';
-import getUserGames from '@/functions/helpers/getUserGames';
 import GameRecommendationCard from '@/components/GameRecommendationCard';
 import Background from '@/components/Background';
-import getNewRecommendations from '@/functions/getNewRecommendations';
+import getRecommendations from '@/functions/getRecommendations';
+import { TPlaytimes, TUserGames } from '@/types/TApi';
 
 type Props = {
     searchParams: {
@@ -21,17 +20,34 @@ export default async function Recommendations({ searchParams }: Props) {
         redirect('/');
     }
 
-    //Get the user's games
-    const { ownedGames, completedGames, droppedGames, unplayedGames } =
-        await getUserGames(steamId);
+    //Get user games
+    const userGames: TUserGames = await fetch(
+        `${process.env.URL}/api/steam/usergames?steamid=${steamId}`
+    ).then((res) => res.json());
+
+    //Check playtimes
+    const playtimes: TPlaytimes = await fetch(
+        `
+        ${process.env.URL}/api/hltb`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                playedGames: userGames.played,
+                recentlyPlayed: userGames.recentlyPlayed,
+            }),
+        }
+    ).then((res) => res.json());
 
     //Get tags or other necessary data
     const { completedGamesTags, droppedGamesTags, unplayedGamesData } =
         await getGamesData(
-            ownedGames,
-            new Set(completedGames),
-            new Set(droppedGames),
-            unplayedGames
+            userGames.owned,
+            new Set(playtimes.completed),
+            new Set(playtimes.dropped),
+            userGames.unplayed
         );
 
     //Get user's taste and unexplored genres
@@ -44,13 +60,14 @@ export default async function Recommendations({ searchParams }: Props) {
     } = checkGamesTags(completedGamesTags, droppedGamesTags);
 
     //Get recommendations
-    const ownedGamesRecommendations = getOwnedRecomendations(
+    const recommendations = await getRecommendations(
         favoriteGenres,
         favoriteGameplay,
         favoriteThemes,
         favoriteMoods,
         dislikedGenres,
-        unplayedGamesData
+        unplayedGamesData,
+        userGames.owned
     );
 
     // const newGamesRecommendations = await getNewRecommendations(
@@ -73,8 +90,13 @@ export default async function Recommendations({ searchParams }: Props) {
                         Recommendations
                     </h2>
 
-                    <div className='flex justify-between'>
-                        {ownedGamesRecommendations.length > 0 && (
+                    <div
+                        className={`flex ${
+                            Object.values(recommendations).length > 1
+                                ? 'justify-between'
+                                : 'justify-center'
+                        }`}>
+                        {recommendations.owned.length > 0 && (
                             <div className='w-min'>
                                 <h3
                                     className='block mb-2 text-transparent text-2xl text-center font-bold
@@ -82,21 +104,23 @@ export default async function Recommendations({ searchParams }: Props) {
                                     Already in your library
                                 </h3>
                                 <p className='mb-4 text-slate-50 font-semibold text-center'>
-                                    There is {unplayedGames.length} unplayed
-                                    games in your library.
+                                    There is {userGames.unplayed.length}{' '}
+                                    unplayed games in your library.
                                 </p>
-                                {ownedGamesRecommendations && (
+                                {recommendations.owned && (
                                     <GameRecommendationCard
                                         recommendationsArray={
-                                            ownedGamesRecommendations
+                                            recommendations.owned
                                         }
                                     />
                                 )}
                             </div>
                         )}
-                        <span className='text-slate-50 font-semibold text-xl'>
-                            or
-                        </span>
+                        {Object.values(recommendations).length > 1 && (
+                            <span className='text-slate-50 font-semibold text-xl'>
+                                or
+                            </span>
+                        )}
                         {/* {newGamesRecommendations.length > 0 && (
                             <div className='w-min'>
                                 <h3

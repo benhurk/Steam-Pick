@@ -1,14 +1,14 @@
 'use client';
 
-import { AppDetailsRes } from '@/types/SteamDataRes';
+import { AppDetailsRes } from '@/types/TSteam';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'motion/react';
 import { SquareLoader } from 'react-spinners';
-import { RecommendationsArray } from '@/types/Recommendations';
+import { TRecommendations } from '@/types/TRecommendations';
 
 type Props = {
-    recommendationsArray: RecommendationsArray;
+    recommendationsArray: TRecommendations;
 };
 
 export default function GameRecommendationCard({
@@ -22,7 +22,7 @@ export default function GameRecommendationCard({
         const fetchGameDetails = async () => {
             try {
                 const res = await fetch(
-                    `http://localhost:3000/api/gamedetails?id=${recommendationsArray[recommendationIndex].id}`
+                    `http://localhost:3000/api/steam/appdetails?id=${recommendationsArray[recommendationIndex].id}`
                 );
 
                 const data: AppDetailsRes = await res.json();

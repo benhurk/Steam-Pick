@@ -6,7 +6,7 @@ export default function getTopTags(entries: [string, number][]) {
 
     const counts = new Set(sortedAndFiltered.map(([tag, count]) => count));
 
-    const topMinCount = Math.min(...[...counts].slice(0, 2));
+    const topMinCount = Math.min(...[...counts].slice(0, 3));
 
     return sortedAndFiltered.filter(([tag, count]) => count >= topMinCount);
 }

@@ -1,4 +1,4 @@
-export type RecommendationsArray = {
+export type TRecommendations = {
     name: string;
     id: number;
     matchingTags: {

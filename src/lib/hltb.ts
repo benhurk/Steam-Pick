@@ -1,6 +1,6 @@
 import { HowLongToBeatEntry, HowLongToBeatService } from 'howlongtobeat';
-import checkDifferentVersions from './checkDifferentVersions';
-import getTitleDate from '../utils/getTitleDate';
+import checkDifferentVersions from '../functions/helpers/checkDifferentVersions';
+import getTitleDate from '../functions/utils/getTitleDate';
 
 export default async function checkHltbData(
     gameName: string,

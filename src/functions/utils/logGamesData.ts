@@ -1,4 +1,4 @@
-import SteamSpyDataRes from '@/types/SteamSpyDataRes';
+import SteamSpyDataRes from '@/types/TSteamSpy';
 
 export default function logGamesData(
     completedGamesData: SteamSpyDataRes,

@@ -1,4 +1,4 @@
-import SteamSpyDataRes from '@/types/SteamSpyDataRes';
+import SteamSpyDataRes from '@/types/TSteamSpy';
 import getMatchingTags from './helpers/getMatchingTags';
 import recommendConditions from './utils/recommendConditions';
 
@@ -10,7 +10,6 @@ export default function getOwnedRecomendations(
     dislikedGenres: string[],
     unplayedGamesData: SteamSpyDataRes
 ) {
-    //Unplayed
     const recommendations = unplayedGamesData
         .map((game) => {
             const gameTags = Object.keys(game.tags);

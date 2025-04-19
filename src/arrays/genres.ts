@@ -2,7 +2,6 @@ export const broadGenres = [
     { tagid: 599, name: 'Simulation' },
     { tagid: 9, name: 'Strategy' },
     { tagid: 122, name: 'RPG' },
-    { tagid: 1625, name: 'Platformer' },
     { tagid: 1667, name: 'Horror' },
     { tagid: 1662, name: 'Survival' },
     { tagid: 1774, name: 'Shooter' },
@@ -12,8 +11,8 @@ export const broadGenres = [
 
 export const specificGenres = [
     { tagid: 1664, name: 'Puzzle' },
-    { tagid: 1716, name: 'Roguelike' },
-    { tagid: 3959, name: 'Roguelite' },
+    { tagid: 1716, name: 'Rogue-like' },
+    { tagid: 3959, name: 'Rogue-lite' },
     { tagid: 1741, name: 'Turn-Based Strategy' },
     { tagid: 9551, name: 'Dating Sim' },
     { tagid: 4434, name: 'JRPG' },
