@@ -4,12 +4,12 @@ export default function recommendConditions(
     matchingGenres: number,
     matchingGameplay: number,
     nonGenreMatchingTags: number,
-    hasDislikedGenre: boolean,
-    matchingGenreTags: string[]
+    matchingGenreTags: number[],
+    hasDislikedGenre?: boolean
 ) {
     const noSpecificGenresMatching =
         matchingGenreTags.filter((gt) =>
-            specificGenres.some((genre) => genre === gt)
+            specificGenres.some((genre) => genre.tagid === gt)
         ).length === 0;
 
     //For games with only broad genres matching

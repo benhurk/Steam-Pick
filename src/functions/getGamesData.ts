@@ -44,7 +44,7 @@ export default async function getGamesData(
         unplayedGamesNames.has(game.name.toLowerCase())
     );
 
-    //Get tags
+    //Filter to get only the relevant tags ids
     const completedGamesTags = filterGameTags(completedGamesData);
     const droppedGamesTags = filterGameTags(droppedGamesData);
 

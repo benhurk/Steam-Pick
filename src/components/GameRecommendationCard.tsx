@@ -81,7 +81,7 @@ export default function GameRecommendationCard({
                                     src={gameInfo.data.header_image}
                                     alt={gameInfo.data.name}
                                     width={320}
-                                    height={320}
+                                    height={0}
                                     className='mb-1'
                                 />
                                 <div className='px-3'>
@@ -108,6 +108,7 @@ export default function GameRecommendationCard({
                                 <button
                                     type='button'
                                     onClick={handleSkip}
+                                    disabled={recommendationsArray.length === 1}
                                     className='w-full py-1 bg-slate-200 text-slate-950 font-semibold rounded-md cursor-pointer
                                                     hover:bg-white transition-colors duration-200 ease-in-out'>
                                     Skip

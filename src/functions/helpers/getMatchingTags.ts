@@ -1,9 +1,9 @@
 export default function getMatchingTags(
-    gameTags: string[],
-    favoriteGenres: [string, number][],
-    favoriteGameplay: [string, number][],
-    favoriteThemes: [string, number][],
-    favoriteMoods: [string, number][]
+    gameTags: number[],
+    favoriteGenres: [number, number][],
+    favoriteGameplay: [number, number][],
+    favoriteThemes: [number, number][],
+    favoriteMoods: [number, number][]
 ) {
     const matchingGenresTags = gameTags.filter((tag) =>
         favoriteGenres.some(([genre]) => genre === tag)

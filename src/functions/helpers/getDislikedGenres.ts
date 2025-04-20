@@ -1,12 +1,12 @@
 import { specificGenres } from '@/arrays/genres';
 
 export default function getDislikedGenres(
-    droppedTags: string[],
-    completedTags: string[]
+    droppedTags: number[],
+    completedTags: number[]
 ) {
     const allTags = new Set([...droppedTags, ...completedTags]);
     const genres = [...allTags].filter((tag) =>
-        specificGenres.some((genre) => genre.name === tag)
+        specificGenres.some((genre) => genre.tagid === tag)
     );
 
     const dislikedGenres = genres.filter((tag) => {

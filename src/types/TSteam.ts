@@ -152,3 +152,43 @@ export type AppDetailsRes = {
         };
     };
 };
+
+export type QueryRes = {
+    response: {
+        metadata: {
+            total_matching_records: number;
+            start: number;
+            count: number;
+        };
+        ids: {
+            appid: number;
+        }[];
+        store_items: {
+            item_type: number;
+            id: number;
+            success: number;
+            visible: boolean;
+            name: string;
+            store_url_path: string;
+            appid: number;
+            type: number;
+            is_free: boolean;
+            tagids: number[];
+            categories: {
+                supported_player_categoryids: number[];
+            };
+            reviews: {
+                summary_filtered: {
+                    review_count: number;
+                    percent_positive: number;
+                    review_score: number;
+                    review_score_label: string;
+                };
+            };
+            tags: {
+                tagid: number;
+                weight: number;
+            }[];
+        }[];
+    };
+};

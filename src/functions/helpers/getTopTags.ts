@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export default function getTopTags(entries: [string, number][]) {
+export default function getTopTags(entries: [number, number][]) {
     const sortedAndFiltered = entries
         .sort((a, b) => b[1] - a[1])
         .filter(([tag, count]) => count >= 3);

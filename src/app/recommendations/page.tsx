@@ -50,7 +50,7 @@ export default async function Recommendations({ searchParams }: Props) {
             userGames.unplayed
         );
 
-    //Get user's taste and unexplored genres
+    //Get user's taste
     const {
         favoriteGenres,
         favoriteGameplay,
@@ -66,18 +66,9 @@ export default async function Recommendations({ searchParams }: Props) {
         favoriteThemes,
         favoriteMoods,
         dislikedGenres,
-        unplayedGamesData,
-        userGames.owned
+        userGames.owned,
+        unplayedGamesData
     );
-
-    // const newGamesRecommendations = await getNewRecommendations(
-    //     favoriteGenres,
-    //     favoriteGameplay,
-    //     favoriteThemes,
-    //     favoriteMoods,
-    //     dislikedGenres,
-    //     ownedGames
-    // );
 
     return (
         <main className='relative min-h-screen'>
@@ -92,7 +83,7 @@ export default async function Recommendations({ searchParams }: Props) {
 
                     <div
                         className={`flex ${
-                            Object.values(recommendations).length > 1
+                            Object.keys(recommendations).length > 1
                                 ? 'justify-between'
                                 : 'justify-center'
                         }`}>
@@ -121,7 +112,7 @@ export default async function Recommendations({ searchParams }: Props) {
                                 or
                             </span>
                         )}
-                        {/* {newGamesRecommendations.length > 0 && (
+                        {recommendations.discover.length > 0 && (
                             <div className='w-min'>
                                 <h3
                                     className='block mb-2 text-transparent text-2xl text-center font-bold
@@ -131,15 +122,15 @@ export default async function Recommendations({ searchParams }: Props) {
                                 <p className='mb-4 text-slate-50 font-semibold text-center'>
                                     Here are some games that fit your taste.
                                 </p>
-                                {newGamesRecommendations && (
+                                {recommendations.discover && (
                                     <GameRecommendationCard
                                         recommendationsArray={
-                                            newGamesRecommendations
+                                            recommendations.discover
                                         }
                                     />
                                 )}
                             </div>
-                        )} */}
+                        )}
                     </div>
                 </section>
             </div>

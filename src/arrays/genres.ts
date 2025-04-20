@@ -7,10 +7,10 @@ export const broadGenres = [
     { tagid: 1774, name: 'Shooter' },
     { tagid: 1663, name: 'FPS' },
     { tagid: 4106, name: 'Action-Adventure' },
+    { tagid: 1664, name: 'Puzzle' },
 ];
 
 export const specificGenres = [
-    { tagid: 1664, name: 'Puzzle' },
     { tagid: 1716, name: 'Rogue-like' },
     { tagid: 3959, name: 'Rogue-lite' },
     { tagid: 1741, name: 'Turn-Based Strategy' },

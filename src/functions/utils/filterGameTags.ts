@@ -4,33 +4,33 @@ import SteamSpyDataRes from '@/types/TSteamSpy';
 
 export default function filterGameTags(data: SteamSpyDataRes) {
     const filteredGamesData = data.map((game) => {
-        let filteredTags: string[] = [];
+        let filteredTags: number[] = [];
 
-        const gameSpecificGenres = Object.keys(game.tags).filter((tag) =>
-            specificGenres.some((genre) => genre.name === tag)
-        );
+        const gameSpecificGenres = specificGenres
+            .filter((g) => Object.keys(game.tags).some((t) => t === g.name))
+            .map((g) => g.tagid);
 
         if (gameSpecificGenres.length > 0) {
             filteredTags = [...filteredTags, ...gameSpecificGenres];
         } else {
-            const gameBroadGenres = Object.keys(game.tags).filter((tag) =>
-                broadGenres.some((genre) => genre.name === tag)
-            );
+            const gameBroadGenres = broadGenres
+                .filter((g) => Object.keys(game.tags).some((t) => t === g.name))
+                .map((g) => g.tagid);
 
             filteredTags = [...filteredTags, ...gameBroadGenres];
         }
 
-        const gameStyles = Object.keys(game.tags).filter((tag) =>
-            gameplayStyles.some((style) => style.name === tag)
-        );
+        const gameStyles = gameplayStyles
+            .filter((g) => Object.keys(game.tags).some((t) => t === g.name))
+            .map((g) => g.tagid);
 
-        const gameThemes = Object.keys(game.tags).filter((tag) =>
-            themes.some((theme) => theme.name === tag)
-        );
+        const gameThemes = themes
+            .filter((g) => Object.keys(game.tags).some((t) => t === g.name))
+            .map((g) => g.tagid);
 
-        const gameMoods = Object.keys(game.tags).filter((tag) =>
-            moods.some((mood) => mood.name === tag)
-        );
+        const gameMoods = moods
+            .filter((g) => Object.keys(game.tags).some((t) => t === g.name))
+            .map((g) => g.tagid);
 
         filteredTags = [
             ...filteredTags,

@@ -53,19 +53,16 @@ export const themes = [
     { tagid: 4004, name: 'Retro' },
     { tagid: 5716, name: 'Mystery' },
     { tagid: 4604, name: 'Dark Fantasy' },
-    { tagid: 1719, name: 'Comedy' },
     { tagid: 1651, name: 'Satire' },
     { tagid: 4085, name: 'Anime' },
     { tagid: 6378, name: 'Crime' },
 ];
 
 export const moods = [
-    { tagid: 4166, name: 'Atmospheric' },
     { tagid: 1654, name: 'Relaxing' },
     { tagid: 4136, name: 'Funny' },
     { tagid: 5608, name: 'Emotional' },
     { tagid: 5186, name: 'Psychological' },
-    { tagid: 4667, name: 'Violent' },
     { tagid: 4342, name: 'Dark' },
     { tagid: 4145, name: 'Cinematic' },
     { tagid: 552282, name: 'Wholesome' },
