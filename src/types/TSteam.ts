@@ -4,6 +4,12 @@ export type SteamGame = {
     appid: number;
     name: string;
     playtime: number;
+    recentlyPlayed: boolean;
+    total_achievements?: number;
+    unlocked_achievements?: {
+        name: string;
+        player_percent_unlocked: string;
+    }[];
 };
 
 export type OwnedGamesRes = {
@@ -25,19 +31,21 @@ export type OwnedGamesRes = {
     };
 };
 
-export type RecentlyPlayedRes = {
+export type GetTopAchievementsForGamesRes = {
     response: {
-        total_count: number;
         games: {
             appid: number;
-            img_icon_url: string;
-            name: string;
-            playtime_2weeks: number;
-            playtime_deck_forever: number;
-            playtime_forever: number;
-            playtime_linux_forever: number;
-            playtime_mac_forever: number;
-            playtime_windows_forever: number;
+            total_achievements: number;
+            achievements?: {
+                statid: number;
+                bit: number;
+                name: string;
+                desc: string;
+                icon: string;
+                icon_gray: string;
+                hidden: boolean;
+                player_percent_unlocked: string;
+            }[];
         }[];
     };
 };

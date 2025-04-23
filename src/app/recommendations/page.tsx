@@ -5,7 +5,8 @@ import checkGamesTags from '@/functions/checkGamesTags';
 import GameRecommendationCard from '@/components/GameRecommendationCard';
 import Background from '@/components/Background';
 import getRecommendations from '@/functions/getRecommendations';
-import { TPlaytimes, TUserGames } from '@/types/TApi';
+import { TUserGames } from '@/types/TApi';
+import analyseGamesWeight from '@/functions/analyseGamesWeight';
 
 type Props = {
     searchParams: {
@@ -25,30 +26,12 @@ export default async function Recommendations({ searchParams }: Props) {
         `${process.env.URL}/api/steam/usergames?steamid=${steamId}`
     ).then((res) => res.json());
 
-    //Check playtimes
-    const playtimes: TPlaytimes = await fetch(
-        `
-        ${process.env.URL}/api/hltb`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                playedGames: userGames.played,
-                recentlyPlayed: userGames.recentlyPlayed,
-            }),
-        }
-    ).then((res) => res.json());
+    //Calculate the games weight
+    const gameWeights = analyseGamesWeight(userGames.played);
 
-    //Get tags or other necessary data
-    const { completedGamesTags, droppedGamesTags, unplayedGamesData } =
-        await getGamesData(
-            userGames.owned,
-            new Set(playtimes.completed),
-            new Set(playtimes.dropped),
-            userGames.unplayed
-        );
+    //Get played games tags and unplayed games data
+    const { relevantGamesTags, irrelevantGamesTags, unplayedGamesData } =
+        await getGamesData(userGames.owned, userGames.unplayed, gameWeights);
 
     //Get user's taste
     const {
@@ -57,7 +40,7 @@ export default async function Recommendations({ searchParams }: Props) {
         favoriteThemes,
         favoriteMoods,
         dislikedGenres,
-    } = checkGamesTags(completedGamesTags, droppedGamesTags);
+    } = checkGamesTags(relevantGamesTags, irrelevantGamesTags);
 
     //Get recommendations
     const recommendations = await getRecommendations(
@@ -73,6 +56,7 @@ export default async function Recommendations({ searchParams }: Props) {
     return (
         <main className='relative min-h-screen'>
             <Background />
+
             <div className='max-w-3xl mx-auto py-8'>
                 <section>
                     <h2

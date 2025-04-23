@@ -1,39 +1,49 @@
 import getDislikedGenres from './helpers/getDislikedGenres';
 import getTagsCount from './helpers/getTagsCount';
 import getTopTags from './helpers/getTopTags';
+import getTagNames from './utils/getTagNames';
 
 export default function checkGamesTags(
-    completedGamesTags: number[],
-    droppedGamesTags: number[]
+    relevantGamesTags: number[],
+    irrelevantGamesTags: number[]
 ) {
-    const completedTagsCount = getTagsCount(completedGamesTags);
+    const relevantTagsCount = getTagsCount(relevantGamesTags);
 
     const favoriteGenres = getTopTags([
-        ...completedTagsCount.genresCount.entries(),
+        ...relevantTagsCount.genresCount.entries(),
     ]);
 
     const favoriteGameplay = getTopTags([
-        ...completedTagsCount.gameplayStylesCount.entries(),
+        ...relevantTagsCount.gameplayStylesCount.entries(),
     ]);
 
     const favoriteThemes = getTopTags([
-        ...completedTagsCount.themesCount.entries(),
+        ...relevantTagsCount.themesCount.entries(),
     ]);
 
     const favoriteMoods = getTopTags([
-        ...completedTagsCount.moodsCount.entries(),
+        ...relevantTagsCount.moodsCount.entries(),
     ]);
 
     const dislikedGenres = getDislikedGenres(
-        droppedGamesTags,
-        completedGamesTags
+        irrelevantGamesTags,
+        relevantGamesTags
     );
 
-    console.log('Favorite genres:', favoriteGenres);
-    console.log('Favorite gameplay styles:', favoriteGameplay);
-    console.log('Favorite themes:', favoriteThemes);
-    console.log('Favorite moods:', favoriteMoods);
-    console.log('Disliked genres:', dislikedGenres);
+    console.log(
+        'Favorite genres:',
+        getTagNames(favoriteGenres.map(([g]) => g))
+    );
+    console.log(
+        'Favorite gameplay styles:',
+        getTagNames(favoriteGameplay.map(([g]) => g))
+    );
+    console.log(
+        'Favorite themes:',
+        getTagNames(favoriteThemes.map(([g]) => g))
+    );
+    console.log('Favorite moods:', getTagNames(favoriteMoods.map(([g]) => g)));
+    console.log('Disliked genres:', getTagNames(dislikedGenres));
 
     return {
         favoriteGenres,

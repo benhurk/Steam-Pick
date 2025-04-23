@@ -1,6 +1,7 @@
 export const revalidate = 86400;
 
-import { OwnedGamesRes, RecentlyPlayedRes } from '@/types/TSteam';
+import isRecentlyPlayed from '@/functions/utils/isRecentlyPlayed';
+import { GetTopAchievementsForGamesRes, OwnedGamesRes } from '@/types/TSteam';
 import { SteamGame } from '@/types/TSteam';
 import { NextResponse } from 'next/server';
 
@@ -24,37 +25,53 @@ export async function GET(req: Request) {
         )
             .then((res) => res.json())
             .then((data: OwnedGamesRes) =>
-                data.response.games.map((game) => {
-                    return {
-                        appid: game.appid,
-                        name: game.name.toLowerCase(),
-                        playtime: game.playtime_forever,
-                    };
-                })
-            );
-
-        //Get recently played games names
-        const recentlyPlayed = await fetch(
-            `${BASE_URL}/GetRecentlyPlayedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&format=json`
-        )
-            .then((res) => res.json())
-            .then((data: RecentlyPlayedRes) =>
-                data.response.games.map((game) => game.name.toLowerCase())
+                data.response.games.map((game) => ({
+                    appid: game.appid,
+                    name: game.name.toLowerCase(),
+                    playtime: game.playtime_forever,
+                    recentlyPlayed: isRecentlyPlayed(game.rtime_last_played),
+                }))
             );
 
         //Filter played games
-        const played = owned.filter((game) => game.playtime >= 120);
+        let played = owned.filter((game) => game.playtime >= 120);
 
         //Filter unplayed games
         const unplayed = owned.filter(
-            (g) =>
-                g.playtime < 120 &&
-                !recentlyPlayed.some((r) => r === g.name.toLowerCase())
+            (g) => g.playtime < 120 && !g.recentlyPlayed
         );
+
+        //Get played games achievements
+        const appids = encodeURI(
+            played
+                .map((g) => g.appid)
+                .map((id, index) => `appids[${index}]=${id}`)
+                .join('&')
+        );
+
+        const achievements: GetTopAchievementsForGamesRes = await fetch(
+            `${BASE_URL}/GetTopAchievementsForGames/v1/?key=${process.env.STEAM_KEY}&steamid=${steamId}&max_achievements=5000&${appids}`
+        ).then((res) => res.json());
+
+        //Update played games to include the achievements
+        played = achievements.response.games.map((g) => {
+            const game = played.filter((p) => p.appid === g.appid)[0];
+
+            return {
+                appid: game.appid,
+                name: game.name,
+                playtime: game.playtime,
+                recentlyPlayed: game.recentlyPlayed,
+                total_achievements: g.total_achievements,
+                unlocked_achievements: g.achievements?.map((a) => ({
+                    name: a.name,
+                    player_percent_unlocked: a.player_percent_unlocked,
+                })),
+            };
+        });
 
         return NextResponse.json({
             owned,
-            recentlyPlayed,
             played,
             unplayed,
         });

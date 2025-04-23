@@ -7,10 +7,10 @@ export const broadGenres = [
     { tagid: 1774, name: 'Shooter' },
     { tagid: 1663, name: 'FPS' },
     { tagid: 4106, name: 'Action-Adventure' },
-    { tagid: 1664, name: 'Puzzle' },
 ];
 
 export const specificGenres = [
+    { tagid: 1664, name: 'Puzzle' },
     { tagid: 1716, name: 'Rogue-like' },
     { tagid: 3959, name: 'Rogue-lite' },
     { tagid: 1741, name: 'Turn-Based Strategy' },
@@ -46,7 +46,7 @@ export const specificGenres = [
     { tagid: 1100689, name: 'Open World Survival Craft' },
     { tagid: 12472, name: 'Management' },
     { tagid: 3978, name: 'Survival Horror' },
-    { tagid: 5395, name: '3D Platformer' },
+    // { tagid: 5395, name: '3D Platformer' },
     { tagid: 7178, name: 'Party Game' },
     { tagid: 10695, name: 'Party-Based RPG' },
     { tagid: 620519, name: 'Hero Shooter' },
