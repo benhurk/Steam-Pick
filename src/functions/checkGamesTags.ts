@@ -1,48 +1,46 @@
+import { GameWeight } from '@/types/TGames';
 import getDislikedGenres from './helpers/getDislikedGenres';
 import getTagsCount from './helpers/getTagsCount';
 import getTopTags from './helpers/getTopTags';
 import getTagNames from './utils/getTagNames';
 
-export default function checkGamesTags(
-    relevantGamesTags: number[],
-    irrelevantGamesTags: number[]
-) {
-    const relevantTagsCount = getTagsCount(relevantGamesTags);
+export default function checkGamesTags(gamesWeight: GameWeight[]) {
+    const tagsCount = getTagsCount(gamesWeight);
 
-    const favoriteGenres = getTopTags([
-        ...relevantTagsCount.genresCount.entries(),
-    ]);
-
-    const favoriteGameplay = getTopTags([
-        ...relevantTagsCount.gameplayStylesCount.entries(),
-    ]);
-
-    const favoriteThemes = getTopTags([
-        ...relevantTagsCount.themesCount.entries(),
-    ]);
-
-    const favoriteMoods = getTopTags([
-        ...relevantTagsCount.moodsCount.entries(),
-    ]);
-
-    const dislikedGenres = getDislikedGenres(
-        irrelevantGamesTags,
-        relevantGamesTags
-    );
+    const favoriteGenres = getTopTags([...tagsCount.genres.entries()]);
+    const favoriteGameplay = getTopTags([...tagsCount.gameplay.entries()]);
+    const favoriteThemes = getTopTags([...tagsCount.themes.entries()]);
+    const favoriteMoods = getTopTags([...tagsCount.moods.entries()]);
+    const dislikedGenres = getDislikedGenres(gamesWeight);
 
     console.log(
         'Favorite genres:',
-        getTagNames(favoriteGenres.map(([g]) => g))
+        favoriteGenres.map(([tag, count]) => ({
+            tag: getTagNames([tag]),
+            count,
+        }))
     );
     console.log(
         'Favorite gameplay styles:',
-        getTagNames(favoriteGameplay.map(([g]) => g))
+        favoriteGameplay.map(([tag, count]) => ({
+            tag: getTagNames([tag]),
+            count,
+        }))
     );
     console.log(
         'Favorite themes:',
-        getTagNames(favoriteThemes.map(([g]) => g))
+        favoriteThemes.map(([tag, count]) => ({
+            tag: getTagNames([tag]),
+            count,
+        }))
     );
-    console.log('Favorite moods:', getTagNames(favoriteMoods.map(([g]) => g)));
+    console.log(
+        'Favorite moods:',
+        favoriteMoods.map(([tag, count]) => ({
+            tag: getTagNames([tag]),
+            count,
+        }))
+    );
     console.log('Disliked genres:', getTagNames(dislikedGenres));
 
     return {

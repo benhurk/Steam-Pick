@@ -1,23 +1,22 @@
-import { TGameWeights } from '@/types/TGameWeights';
-import { SteamGame } from '@/types/TSteam';
+import { GameData, GameWeight } from '@/types/TGames';
 import {
     calculatePlaytimeScore,
     calculateAchievementsScore,
 } from './helpers/calculateScores';
 
-export default function analyseGamesWeight(gamesArray: SteamGame[]) {
-    const gameWeights: TGameWeights = [];
+export default function analyseGamesWeight(gamesArray: GameData[]) {
+    const gameWeights: GameWeight[] = [];
 
-    gamesArray.forEach((g) => {
-        const playtime = g.playtime / 60; //In hours
+    gamesArray.forEach((game) => {
+        const playtime = game.playtime / 60; //In hours
 
         const totalAchievementsUnlocked =
-            ((g.unlocked_achievements?.length || 0) /
-                (g.total_achievements || 0)) *
+            ((game.unlocked_achievements?.length || 0) /
+                (game.total_achievements || 0)) *
             100;
 
         const bestAchievementPercentage = Number(
-            g.unlocked_achievements?.sort(
+            game.unlocked_achievements?.sort(
                 (a, b) =>
                     Number(a.player_percent_unlocked) -
                     Number(b.player_percent_unlocked)
@@ -31,8 +30,7 @@ export default function analyseGamesWeight(gamesArray: SteamGame[]) {
         );
 
         gameWeights.push({
-            appid: g.appid,
-            name: g.name,
+            ...game,
             weight: playtimeScore + achievementsScore,
         });
     });

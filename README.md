@@ -31,7 +31,7 @@
   GET https://api.steampowered.com/IStoreQueryService/Query/v1/?key=&input_json=
 ```
 
-Returns the Steam store data for up to 1000 apps per request.
+Returns store data for up to 1000 apps per request. Has data not present in `store.steampowered.com/api/appdetails/`.
 
 | Param        | Type     | Description                       |
 | :----------- | :------- | :-------------------------------- |
@@ -90,7 +90,7 @@ Returns the Steam store data for up to 1000 apps per request.
 
     **tagids_must_match**:
 
-    To specify the tag ids you must pass in objects with the property `tagids` which is either a string or number array. However, each `tagids` can only include 1 tag, to specify multiple tags you need to pass in multiple objects.
+    To specify the tag ids you must pass in objects with the property `tagids`. Each `tagids` can only include 1 tag, to specify multiple tags you need to pass in multiple objects with `tagids`.
 
     ```json
     "tagids_must_match": [{"tagids": ["1628"]}, {"tagids": ["1664"]}]
@@ -103,4 +103,4 @@ Returns the Steam store data for up to 1000 apps per request.
     | `country_code` | `string` | e.g. 'US', 'FR', 'DE', 'BR'. Which country to pull data from. **Required**|
 
     > [!NOTE]  
-    > When testing `country_code` the data looked the same no matter what code i passed, so i'm not sure what it does, but **if you don't include it, no data will be returned**. My guess is that it just won't return data from apps banned or not released in X country.
+    > When testing `country_code` the data looked the same every time, so i'm not sure what it does, but **if you don't include it, no data will be returned**. My guess is that it just won't return data from apps banned or not released in X country.

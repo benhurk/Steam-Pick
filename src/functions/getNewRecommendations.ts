@@ -1,7 +1,7 @@
 import pLimit from 'p-limit';
 import getMatchingTags from './helpers/getMatchingTags';
 import recommendConditions from './utils/recommendConditions';
-import { SteamGame } from '@/types/TSteam';
+import { SteamGame } from '@/types/TGames';
 import { TQueryData, TQueryFilters } from '@/types/TApi';
 import getTagNames from './utils/getTagNames';
 

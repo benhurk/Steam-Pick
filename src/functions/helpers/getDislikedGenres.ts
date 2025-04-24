@@ -1,19 +1,36 @@
 import { specificGenres } from '@/arrays/genres';
+import { GameWeight } from '@/types/TGames';
 
-export default function getDislikedGenres(
-    droppedTags: number[],
-    completedTags: number[]
-) {
-    const allTags = new Set([...droppedTags, ...completedTags]);
-    const genres = [...allTags].filter((tag) =>
+export default function getDislikedGenres(gamesWeight: GameWeight[]) {
+    const allTags = gamesWeight.map((g) => g.tags).flat();
+    const genres = allTags.filter((tag) =>
         specificGenres.some((genre) => genre.tagid === tag)
     );
 
-    const dislikedGenres = genres.filter((tag) => {
-        const droppedCount = droppedTags.filter((dt) => dt === tag).length;
-        const completedCount = completedTags.filter((ct) => ct === tag).length;
+    console.log(
+        'No Weight Metroidvanias:',
+        gamesWeight.filter(
+            (g) => g.weight === 0 && g.tags.some((tag) => tag === 1628)
+        )
+    );
 
-        if (droppedCount >= 3 && droppedCount > completedCount) {
+    const noWeightTags = gamesWeight
+        .filter((g) => g.weight === 0)
+        .map((g) => g.tags)
+        .flat();
+
+    const withWeightTags = gamesWeight
+        .filter((g) => g.weight > 0)
+        .map((g) => g.tags)
+        .flat();
+
+    const dislikedGenres = genres.filter((tag) => {
+        const noWeightCount = noWeightTags.filter((dt) => dt === tag).length;
+        const withWeightCount = withWeightTags.filter(
+            (ct) => ct === tag
+        ).length;
+
+        if (noWeightCount >= 3 && noWeightCount > withWeightCount) {
             return tag;
         }
     });

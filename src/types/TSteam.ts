@@ -1,17 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type SteamGame = {
-    appid: number;
-    name: string;
-    playtime: number;
-    recentlyPlayed: boolean;
-    total_achievements?: number;
-    unlocked_achievements?: {
-        name: string;
-        player_percent_unlocked: string;
-    }[];
-};
-
 export type OwnedGamesRes = {
     response: {
         game_count: number;

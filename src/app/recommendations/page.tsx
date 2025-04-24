@@ -1,12 +1,14 @@
 import { redirect } from 'next/navigation';
 
 import getGamesData from '@/functions/getGamesData';
+import analyseGamesWeight from '@/functions/analyseGamesWeight';
 import checkGamesTags from '@/functions/checkGamesTags';
+import getRecommendations from '@/functions/getRecommendations';
+
+import { TUserGames } from '@/types/TApi';
+
 import GameRecommendationCard from '@/components/GameRecommendationCard';
 import Background from '@/components/Background';
-import getRecommendations from '@/functions/getRecommendations';
-import { TUserGames } from '@/types/TApi';
-import analyseGamesWeight from '@/functions/analyseGamesWeight';
 
 type Props = {
     searchParams: {
@@ -26,31 +28,24 @@ export default async function Recommendations({ searchParams }: Props) {
         `${process.env.URL}/api/steam/usergames?steamid=${steamId}`
     ).then((res) => res.json());
 
-    //Calculate the games weight
-    const gameWeights = analyseGamesWeight(userGames.played);
+    //Get game tags
+    const gamesData = await getGamesData(userGames.played, userGames.unplayed);
 
-    //Get played games tags and unplayed games data
-    const { relevantGamesTags, irrelevantGamesTags, unplayedGamesData } =
-        await getGamesData(userGames.owned, userGames.unplayed, gameWeights);
+    //Calculate the played games weight
+    const gamesWeight = analyseGamesWeight(gamesData.played);
 
     //Get user's taste
-    const {
-        favoriteGenres,
-        favoriteGameplay,
-        favoriteThemes,
-        favoriteMoods,
-        dislikedGenres,
-    } = checkGamesTags(relevantGamesTags, irrelevantGamesTags);
+    const taste = checkGamesTags(gamesWeight);
 
     //Get recommendations
     const recommendations = await getRecommendations(
-        favoriteGenres,
-        favoriteGameplay,
-        favoriteThemes,
-        favoriteMoods,
-        dislikedGenres,
+        taste.favoriteGenres,
+        taste.favoriteGameplay,
+        taste.favoriteThemes,
+        taste.favoriteMoods,
+        taste.dislikedGenres,
         userGames.owned,
-        unplayedGamesData
+        gamesData.unplayed
     );
 
     return (

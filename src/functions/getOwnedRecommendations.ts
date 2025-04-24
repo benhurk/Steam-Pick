@@ -1,8 +1,7 @@
-import SteamSpyDataRes from '@/types/TSteamSpy';
 import getMatchingTags from './helpers/getMatchingTags';
 import getTagNames from './utils/getTagNames';
 import recommendConditions from './utils/recommendConditions';
-import getTagIds from './utils/getTagIds';
+import { GameData } from '@/types/TGames';
 
 export default function getOwnedRecomendations(
     favoriteGenres: [number, number][],
@@ -10,19 +9,19 @@ export default function getOwnedRecomendations(
     favoriteThemes: [number, number][],
     favoriteMoods: [number, number][],
     dislikedGenres: number[],
-    unplayedGamesData: SteamSpyDataRes
+    unplayedGamesData: GameData[]
 ) {
+    console.log(unplayedGamesData);
+
     const recommendations = unplayedGamesData
         .map((game) => {
-            const gameTags = getTagIds(Object.keys(game.tags));
-
             const {
                 matchingGenres,
                 matchingGameplay,
                 matchingThemes,
                 matchingMoods,
             } = getMatchingTags(
-                gameTags,
+                game.tags,
                 favoriteGenres,
                 favoriteGameplay,
                 favoriteThemes,
@@ -30,7 +29,7 @@ export default function getOwnedRecomendations(
             );
 
             const hasDislikedGenre =
-                gameTags.filter((tag) =>
+                game.tags.filter((tag) =>
                     dislikedGenres.some((genre) => genre === tag)
                 ).length > 0;
 

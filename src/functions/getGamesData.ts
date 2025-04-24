@@ -1,18 +1,17 @@
 import pLimit from 'p-limit';
 import filterGameTags from './utils/filterGameTags';
-import logGamesData from './utils/logGamesData';
-import { SteamGame } from '@/types/TSteam';
+// import logGamesData from './utils/logGamesData';
+import { GameData, SteamGame } from '@/types/TGames';
 import SteamSpyDataRes from '@/types/TSteamSpy';
-import { TGameWeights } from '@/types/TGameWeights';
 
 const limit = pLimit(1);
 
 export default async function getGamesData(
-    ownedGames: SteamGame[],
-    unplayedGames: SteamGame[],
-    gameWeights: TGameWeights
+    playedGames: SteamGame[],
+    unplayedGames: SteamGame[]
 ) {
-    const requests = ownedGames.map((game) =>
+    //Played games data
+    const playedGamesRequests = playedGames.map((game) =>
         limit(async () => {
             return await fetch(
                 `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`,
@@ -21,41 +20,43 @@ export default async function getGamesData(
         })
     );
 
-    const ownedGamesData: SteamSpyDataRes = (
-        await Promise.all(requests)
+    const playedGamesData: SteamSpyDataRes = (
+        await Promise.all(playedGamesRequests)
     ).flat();
 
-    //Completed
-    const relevantGamesData = ownedGamesData.filter(
-        (game) =>
-            gameWeights.filter((g) => g.appid === game.appid && g.weight > 0)[0]
+    const played: GameData[] = playedGamesData.map((game) => {
+        const steamData = playedGames.filter((g) => g.appid === game.appid)[0];
+
+        return {
+            ...steamData,
+            tags: filterGameTags(game.tags),
+        };
+    });
+
+    //Unplayed games data
+    const unplayedGamesRequests = unplayedGames.map((game) =>
+        limit(async () => {
+            return await fetch(
+                `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`,
+                { next: { revalidate: 86400 } }
+            ).then((res) => res.json());
+        })
     );
 
-    //Dropped
-    const irrelevantGamesData = ownedGamesData.filter(
-        (game) =>
-            gameWeights.filter(
-                (g) => g.appid === game.appid && g.weight === 0
-            )[0]
-    );
+    const unplayedGamesData: SteamSpyDataRes = (
+        await Promise.all(unplayedGamesRequests)
+    ).flat();
 
-    //Unplayed
-    const unplayedGamesData = ownedGamesData.filter((game) =>
-        unplayedGames
-            .map((u) => u.name)
-            .some((u) => u === game.name.toLowerCase())
-    );
+    const unplayed: GameData[] = unplayedGamesData.map((game) => {
+        const steamData = unplayedGames.filter(
+            (g) => g.appid === game.appid
+        )[0];
 
-    //Filter to get only the relevant tags ids
-    const relevantGamesTags = filterGameTags(relevantGamesData);
-    const irrelevantGamesTags = filterGameTags(irrelevantGamesData);
+        return {
+            ...steamData,
+            tags: filterGameTags(game.tags),
+        };
+    });
 
-    logGamesData(
-        relevantGamesData,
-        irrelevantGamesData,
-        unplayedGamesData,
-        'Rogue-lite'
-    );
-
-    return { relevantGamesTags, irrelevantGamesTags, unplayedGamesData };
+    return { played, unplayed };
 }

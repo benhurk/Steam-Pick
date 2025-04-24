@@ -1,7 +1,6 @@
 import getOwnedRecomendations from './getOwnedRecommendations';
-import { SteamGame } from '@/types/TSteam';
 import getNewRecommendations from './getNewRecommendations';
-import SteamSpyDataRes from '@/types/TSteamSpy';
+import { SteamGame, GameData } from '@/types/TGames';
 
 export default async function getRecommendations(
     favoriteGenres: [number, number][],
@@ -10,7 +9,7 @@ export default async function getRecommendations(
     favoriteMoods: [number, number][],
     dislikedGenres: number[],
     ownedGames: SteamGame[],
-    unplayedGamesData: SteamSpyDataRes
+    unplayedGamesData: GameData[]
 ) {
     const owned = getOwnedRecomendations(
         favoriteGenres,
