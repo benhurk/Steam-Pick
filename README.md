@@ -1,5 +1,9 @@
 ## How does it work?
 
+### Tags grouping
+
+Some tags are misused, for example, _Survival Horror_
+
 ### Game weight logic
 
 | Playtime | Points |
@@ -31,7 +35,7 @@
   GET https://api.steampowered.com/IStoreQueryService/Query/v1/?key=&input_json=
 ```
 
-Returns store data for up to 1000 apps per request. Has data not present in `store.steampowered.com/api/appdetails/`.
+Returns the Steam store data for up to 1000 apps per request.
 
 | Param        | Type     | Description                       |
 | :----------- | :------- | :-------------------------------- |
@@ -60,8 +64,8 @@ Returns store data for up to 1000 apps per request. Has data not present in `sto
 
     -   **1** - Alphabetical order.
     -   **2** - Ascending appid.
-    -   **3** - Descending appid.
-    -   **21** - Descending percentage of positive reviews.
+    -   **20** - Most recent.
+    -   **21** - Percentage of positive reviews (desc).
 
     **filter**:
     | Property | Type | Description |
@@ -99,8 +103,8 @@ Returns store data for up to 1000 apps per request. Has data not present in `sto
 -   **"context"**:
     | Property | Type | Description |
     | :---------- | :--------- | :------------------------------------------ |
-    | `elanguage` | `number` | An id for the language of the store data. Defaults to 0 (english). |
+    | `elanguage` | `number` | An ID for the language that the data will be returned in (if avaiable). Defaults to 0 (english). |
     | `country_code` | `string` | e.g. 'US', 'FR', 'DE', 'BR'. Which country to pull data from. **Required**|
 
-    > [!NOTE]  
-    > When testing `country_code` the data looked the same every time, so i'm not sure what it does, but **if you don't include it, no data will be returned**. My guess is that it just won't return data from apps banned or not released in X country.
+> [!NOTE]  
+> When testing `country_code` the data looked the same every time, so i'm not sure what it does, but **if you don't include it, no data will be returned**. My guess is that it just won't return data from apps banned or not released in X country.

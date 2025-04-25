@@ -1,8 +1,8 @@
 import pLimit from 'p-limit';
 import filterGameTags from './utils/filterGameTags';
-// import logGamesData from './utils/logGamesData';
 import { GameData, SteamGame } from '@/types/TGames';
 import SteamSpyDataRes from '@/types/TSteamSpy';
+import getTagIds from './utils/getTagIds';
 
 const limit = pLimit(1);
 
@@ -26,10 +26,14 @@ export default async function getGamesData(
 
     const played: GameData[] = playedGamesData.map((game) => {
         const steamData = playedGames.filter((g) => g.appid === game.appid)[0];
+        const tagsObj = Object.entries(game.tags).map(([tag, weight]) => ({
+            tagid: getTagIds([tag])[0],
+            weight: weight,
+        }));
 
         return {
             ...steamData,
-            tags: filterGameTags(game.tags),
+            tags: filterGameTags(tagsObj),
         };
     });
 
@@ -52,9 +56,14 @@ export default async function getGamesData(
             (g) => g.appid === game.appid
         )[0];
 
+        const tagsObj = Object.entries(game.tags).map(([tag, weight]) => ({
+            tagid: getTagIds([tag])[0],
+            weight: weight,
+        }));
+
         return {
             ...steamData,
-            tags: filterGameTags(game.tags),
+            tags: filterGameTags(tagsObj),
         };
     });
 

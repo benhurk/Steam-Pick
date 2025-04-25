@@ -1,11 +1,12 @@
 'use client';
 
-import { AppDetailsRes } from '@/types/TSteam';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { AnimatePresence, motion } from 'motion/react';
+import Image from 'next/image';
 import { SquareLoader } from 'react-spinners';
-import { TRecommendations } from '@/types/TRecommendations';
+
+import { AppDetailsRes } from '@/types/TSteam';
+import { TRecommendations } from '@/types/TGames';
 
 type Props = {
     recommendationsArray: TRecommendations;
