@@ -1,11 +1,8 @@
-import pLimit from 'p-limit';
 import getMatchingTags from './helpers/getMatchingTags';
 import recommendConditions from './utils/recommendConditions';
 import { SteamGame } from '@/types/TGames';
 import { TQueryData, TQueryFilters } from '@/types/TApi';
 import getTagNames from './utils/getTagNames';
-
-const limit = pLimit(1);
 
 export default async function getNewRecommendations(
     favoriteGenres: [number, number][],
@@ -15,8 +12,11 @@ export default async function getNewRecommendations(
     dislikedGenres: number[],
     ownedGames: SteamGame[]
 ) {
-    const requests = favoriteGenres.map(([genre]) =>
-        limit(async () => {
+    const recommendations = [];
+
+    // Process genres sequentially to avoid rate limiting
+    for (const [genre] of favoriteGenres) {
+        try {
             const filtersBody: TQueryFilters = {
                 includeTag: genre,
                 excludeTags: dislikedGenres,
@@ -34,66 +34,96 @@ export default async function getNewRecommendations(
                 }
             ).then((res) => res.json());
 
-            return data;
-        })
-    );
+            const processedGames = data
+                .filter(
+                    (game) =>
+                        !ownedGames.some(
+                            (og) => og.name === game.name.toLowerCase()
+                        )
+                )
+                .map((game) => {
+                    const {
+                        matchingGenres,
+                        matchingGameplay,
+                        matchingThemes,
+                        matchingMoods,
+                    } = getMatchingTags(
+                        game.tagids,
+                        favoriteGenres,
+                        favoriteGameplay,
+                        favoriteThemes,
+                        favoriteMoods
+                    );
 
-    const favoriteGenresGames = (await Promise.all(requests)).flat();
+                    const nonGenreMatchingTags =
+                        matchingGameplay.count +
+                        matchingThemes.count +
+                        matchingMoods.count;
 
-    //Remove owned games
-    const filteredGames = favoriteGenresGames.filter(
-        (game) => !ownedGames.some((og) => og.name === game.name.toLowerCase())
-    );
+                    return {
+                        game,
+                        score: matchingGenres.count * 2 + nonGenreMatchingTags, // Weight genres higher
+                        matchingGenres,
+                        matchingGameplay,
+                        matchingThemes,
+                        matchingMoods,
+                    };
+                })
+                .filter(
+                    ({
+                        matchingGenres,
+                        matchingGameplay,
+                        matchingThemes,
+                        matchingMoods,
+                    }) =>
+                        recommendConditions(
+                            matchingGenres.count,
+                            matchingGameplay.count,
+                            matchingThemes.count + matchingMoods.count,
+                            matchingGenres.tags
+                        )
+                )
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 3);
 
-    const recommendations = [...filteredGames]
-        .map((game) => {
-            const {
-                matchingGenres,
-                matchingGameplay,
-                matchingThemes,
-                matchingMoods,
-            } = getMatchingTags(
-                game.tagids,
-                favoriteGenres,
-                favoriteGameplay,
-                favoriteThemes,
-                favoriteMoods
+            recommendations.push(
+                ...processedGames.map(
+                    ({
+                        game,
+                        score,
+                        matchingGenres,
+                        matchingGameplay,
+                        matchingThemes,
+                        matchingMoods,
+                    }) => ({
+                        name: game.name,
+                        id: game.appid,
+                        matchingTags: {
+                            count: score,
+                            tags: getTagNames([
+                                ...matchingGenres.tags,
+                                ...matchingGameplay.tags,
+                                ...matchingThemes.tags,
+                                ...matchingMoods.tags,
+                            ]),
+                        },
+                    })
+                )
             );
 
-            const nonGenreMatchingTags =
-                matchingGameplay.count +
-                matchingThemes.count +
-                matchingMoods.count;
+            // Add delay between genre requests to avoid rate limiting
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+        } catch (error) {
+            console.error(`Error processing genre ${genre}:`, error);
+            continue;
+        }
+    }
 
-            const matchingTags = matchingGenres.count + nonGenreMatchingTags;
+    // Remove duplicates (in case same game appears for multiple genres)
+    const uniqueRecommendations = [
+        ...new Map(recommendations.map((g) => [g.id, g])).values(),
+    ];
 
-            if (
-                recommendConditions(
-                    matchingGenres.count,
-                    matchingGameplay.count,
-                    nonGenreMatchingTags,
-                    matchingGenres.tags
-                )
-            ) {
-                return {
-                    name: game.name,
-                    id: game.appid,
-                    matchingTags: {
-                        count: matchingTags,
-                        tags: getTagNames([
-                            ...matchingGenres.tags,
-                            ...matchingGameplay.tags,
-                            ...matchingThemes.tags,
-                            ...matchingMoods.tags,
-                        ]),
-                    },
-                };
-            }
-        })
-        .filter((r) => r != undefined)
-        .sort((a, b) => b.matchingTags.count - a.matchingTags.count);
-
-    console.log('New games recommendations:', recommendations);
-
-    return recommendations;
+    console.log('New games recommendations:', uniqueRecommendations);
+    return uniqueRecommendations;
 }

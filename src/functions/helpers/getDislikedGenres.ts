@@ -7,13 +7,6 @@ export default function getDislikedGenres(gamesWeight: GameWeight[]) {
         specificGenres.some((genre) => genre.tagid === tag)
     );
 
-    console.log(
-        'No Weight Metroidvanias:',
-        gamesWeight.filter(
-            (g) => g.weight === 0 && g.tags.some((tag) => tag === 1628)
-        )
-    );
-
     const noWeightTags = gamesWeight
         .filter((g) => g.weight === 0)
         .map((g) => g.tags)

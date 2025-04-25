@@ -11,8 +11,6 @@ export default function getOwnedRecomendations(
     dislikedGenres: number[],
     unplayedGamesData: GameData[]
 ) {
-    console.log(unplayedGamesData);
-
     const recommendations = unplayedGamesData
         .map((game) => {
             const {

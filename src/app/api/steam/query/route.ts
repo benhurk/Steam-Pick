@@ -16,13 +16,11 @@ export async function POST(request: Request) {
         let pagination = 0;
         let hasMorePages = true;
 
-        //"tagids_exclude":${excludeTags},
-
         while (hasMorePages) {
             const QUERY = encodeURI(
                 `&input_json={"query":{"start":"${pagination}","count":"1000","sort":"21","filters":{"released_only":true,"type_filters":{"include_games":true},"tagids_must_match":[{"tagids":["${includeTag}"]}],"tagids_exclude":${JSON.stringify(
                     excludeTags
-                )},"global_top_n_sellers":"1000000"}},"context":{"language":"english","country_code":"US"},"data_request":{"include_tag_count":"20","include_reviews":true}}`
+                )},"global_top_n_sellers":"1000000"}},"context":{"country_code":"US"},"data_request":{"include_tag_count":"20","include_reviews":true}}`
             );
 
             const res = await fetch(`${BASE_URL}${QUERY}`);
@@ -73,7 +71,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json(games);
     } catch (error) {
-        console.error('Error getting Steam Query:', error);
+        console.error('Error fetching Steam Query:', error);
         return NextResponse.json(
             { error: 'Failed to fetch Steam data' },
             { status: 500 }
