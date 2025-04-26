@@ -3,7 +3,7 @@ export const difficulties = [
     { tagid: 4026, name: 'Difficult' },
 ];
 
-export const progression = [
-    { tagid: 7250, name: 'Linear' },
-    { tagid: 6869, name: 'Nonlinear' },
+export const playersPreferenceTags = [
+    { tagid: 4182, name: 'Singleplayer' },
+    { tagid: 3859, name: 'Multiplayer' },
 ];

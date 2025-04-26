@@ -1,7 +1,11 @@
 import { specificGenres } from '@/arrays/genres';
 import { GameWeight } from '@/types/TGames';
+import { TPreferences } from '@/types/TPreferences';
 
-export default function getDislikedGenres(gamesWeight: GameWeight[]) {
+export default function getDislikedGenres(
+    gamesWeight: GameWeight[],
+    preferences?: TPreferences
+) {
     const allTags = gamesWeight.map((g) => g.tags).flat();
     const genres = allTags.filter((tag) =>
         specificGenres.some((genre) => genre.tagid === tag)
@@ -17,14 +21,20 @@ export default function getDislikedGenres(gamesWeight: GameWeight[]) {
         .map((g) => g.tags)
         .flat();
 
-    const dislikedGenres = genres.filter((tag) => {
+    const dislikedGenres: number[] = [];
+
+    if (preferences && !preferences.recommendMultiplayer) {
+        dislikedGenres.push(3859);
+    }
+
+    genres.forEach((tag) => {
         const noWeightCount = noWeightTags.filter((dt) => dt === tag).length;
         const withWeightCount = withWeightTags.filter(
             (ct) => ct === tag
         ).length;
 
         if (noWeightCount >= 3 && noWeightCount > withWeightCount) {
-            return tag;
+            dislikedGenres.push(tag);
         }
     });
 

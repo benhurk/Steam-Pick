@@ -1,6 +1,6 @@
 export const revalidate = 86400;
 
-import filterGroupedTags from '@/functions/utils/filterGroupedTag';
+import filterGroupedTags from '@/functions/utils/filterGroupedTags';
 import { TQueryFilters, TQueryData } from '@/types/TApi';
 import { QueryRes } from '@/types/TSteam';
 import { NextResponse } from 'next/server';

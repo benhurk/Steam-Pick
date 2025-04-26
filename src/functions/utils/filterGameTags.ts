@@ -1,6 +1,6 @@
 import { gameplayStyles, moods, themes } from '@/arrays/gameStyles';
 import { broadGenres, specificGenres } from '@/arrays/genres';
-import filterGroupedTags from './filterGroupedTag';
+import filterGroupedTags from './filterGroupedTags';
 
 export default function filterGameTags(
     tags: { tagid: number; weight: number }[]

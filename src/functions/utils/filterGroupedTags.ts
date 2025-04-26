@@ -7,6 +7,10 @@ export default function filterGroupedTags(
         groupedTags.some((set) => set.has(tag.tagid))
     );
 
+    if (groupedTagsFound.length < 2) {
+        return tags;
+    }
+
     const result = [];
 
     for (const set of groupedTags) {

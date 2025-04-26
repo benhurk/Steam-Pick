@@ -47,6 +47,7 @@ export const specificGenres = [
     { tagid: 12472, name: 'Management' },
     { tagid: 3978, name: 'Survival Horror' },
     { tagid: 1721, name: 'Psychological Horror' },
+    { tagid: 5379, name: '2D Platformer' },
     { tagid: 5395, name: '3D Platformer' },
     { tagid: 7178, name: 'Party Game' },
     { tagid: 10695, name: 'Party-Based RPG' },
