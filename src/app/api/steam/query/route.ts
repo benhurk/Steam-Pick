@@ -1,6 +1,6 @@
 export const revalidate = 86400;
 
-import filterGroupedTags from '@/functions/utils/filterGroupedTags';
+import filterGameTags from '@/functions/utils/filterGameTags';
 import { TQueryFilters, TQueryData } from '@/types/TApi';
 import { QueryRes } from '@/types/TSteam';
 import { NextResponse } from 'next/server';
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
                     .map((g) => ({
                         appid: g.appid,
                         name: g.name,
-                        tagids: filterGroupedTags(g.tags).map((f) => f.tagid),
+                        tagids: filterGameTags(g.tags),
                     }));
 
                 games.push(...filteredGamesData);

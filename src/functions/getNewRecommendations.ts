@@ -62,7 +62,7 @@ export default async function getNewRecommendations(
 
                     return {
                         game,
-                        score: matchingGenres.count * 2 + nonGenreMatchingTags, // Weight genres higher
+                        score: matchingGenres.count + nonGenreMatchingTags,
                         matchingGenres,
                         matchingGameplay,
                         matchingThemes,

@@ -5,7 +5,7 @@ import getTopTags from './helpers/getTopTags';
 import getTagNames from './utils/getTagNames';
 
 export default function checkGamesTags(gamesWeight: GameWeight[]) {
-    const tagsCount = getTagsCount(gamesWeight);
+    const tagsCount = getTagsCount(gamesWeight.filter((g) => g.weight > 0));
 
     const favoriteGenres = getTopTags([...tagsCount.genres.entries()]);
     const favoriteGameplay = getTopTags([...tagsCount.gameplay.entries()]);
