@@ -1,6 +1,5 @@
 import getMatchingTags from './helpers/getMatchingTags';
 import getTagNames from './utils/getTagNames';
-import recommendConditions from './utils/recommendConditions';
 import { GameData } from '@/types/TGames';
 
 export default function getOwnedRecomendations(
@@ -39,13 +38,10 @@ export default function getOwnedRecomendations(
             const matchingTags = matchingGenres.count + nonGenreMatchingTags;
 
             if (
-                recommendConditions(
-                    matchingGenres.count,
-                    matchingGameplay.count,
-                    nonGenreMatchingTags,
-                    matchingGenres.tags,
-                    hasDislikedGenre
-                )
+                matchingGenres.count > 0 &&
+                matchingGameplay.count > 0 &&
+                nonGenreMatchingTags > 2 &&
+                !hasDislikedGenre
             ) {
                 return {
                     name: game.name,

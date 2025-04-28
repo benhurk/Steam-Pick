@@ -4,7 +4,6 @@ export const broadGenres = [
     { tagid: 122, name: 'RPG' },
     { tagid: 1667, name: 'Horror' },
     { tagid: 1662, name: 'Survival' },
-    { tagid: 1774, name: 'Shooter' },
     { tagid: 1663, name: 'FPS' },
     { tagid: 4106, name: 'Action-Adventure' },
 ];
@@ -54,4 +53,6 @@ export const specificGenres = [
     { tagid: 620519, name: 'Hero Shooter' },
     { tagid: 11014, name: 'Interactive Fiction' },
     { tagid: 4637, name: 'Top-Down Shooter' },
+    { tagid: 4474, name: 'CRPG' },
+    { tagid: 5094, name: 'Narration' },
 ];

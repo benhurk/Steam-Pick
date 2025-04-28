@@ -1,5 +1,4 @@
 export function calculatePlaytimeScore(playtime: number) {
-    // if (playtime >= 100) return 4;
     if (playtime >= 50) return 3;
     if (playtime >= 20) return 2;
     if (playtime > 10) return 1;

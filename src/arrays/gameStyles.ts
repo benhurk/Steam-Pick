@@ -15,7 +15,6 @@ export const gameplayStyles = [
     { tagid: 32322, name: 'Deckbuilding' },
     { tagid: 8945, name: 'Resource Management' },
     { tagid: 1773, name: 'Arcade' },
-    { tagid: 5094, name: 'Narration' },
     { tagid: 5613, name: 'Detective' },
     { tagid: 1720, name: 'Dungeon Crawler' },
     { tagid: 7332, name: 'Base Building' },

@@ -1,18 +1,25 @@
 ## How does it work?
 
-### Tags grouping
+### Fixing tags
 
-Some tags are misused, for example, _Survival Horror_
+#### Broad genres
+
+Are Disco Elysium and Elden Ring similar games? No. But they're both _RPGs_. To get a more precise idea of what someone's favorite genres are, we [split genres into 'broad' and 'specific'](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/arrays/genres.ts), then, [when getting the games tags we only consider broad genres if the game has no specific genre tagged](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/utils/filterGameTags.ts). So Disco Elysium is a _CRPG_ and Elden Ring is a _Souls-like_, while The Elder Scrolls IV is a _RPG_.
+
+#### Inflated tags
+
+A good example of a inflated tag is _Souls-like_. Even tough a game plays very differently from actual _Souls_ games, if it has melee combat or a more unforgiving difficulty it might be tagged that, take Cuphead for example. Luckly, Steam has a tag weight system, so we can [group the inflated tags with their common pairs](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/arrays/groupedTags.ts) and [pick only the one with the highest weight](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/utils/filterGroupedTags.ts), this will result in, Cuphead for example, not being considered _Souls-like_, only a _Shmup_.
 
 ### Game weight logic
+
+A simple system that attribute games a score, the score is used to identify which type of games the user [likes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getTagsCount.ts) or [dislikes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getDislikedGenres.ts).
 
 | Playtime | Points |
 | :------- | :----- |
 | ≤ 10h    | 0      |
 | 10~20h   | 1      |
 | 20~50h   | 2      |
-| 50~100h  | 3      |
-| > 100h   | 4      |
+| ≥ 50h +  | 3      |
 
 | Best achievement global % | Total achievements | Points |
 | :------------------------ | :----------------- | :----- |
@@ -21,8 +28,6 @@ Some tags are misused, for example, _Survival Horror_
 | ≥ 25%                     | ≥ 50%              | 1      |
 | < 25%                     | ≥ 50%              | 2      |
 | < 25%                     | 100%               | 3      |
-
-> Achievements with 100% global completion don't count.
 
 ## Steam API
 

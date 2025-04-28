@@ -1,6 +1,10 @@
 export const groupedTags = [
     //Survival Horror, Psychological Horror
     new Set([3978, 1721]),
-    //Hack and Slash, Souls-like
-    new Set([1646, 29482]),
+    //Metroidvania, Hack and Slash, Souls-like
+    new Set([1628, 1646, 29482]),
+    //Shmup, Souls-like
+    new Set([4255, 29482]),
+    //Precision Platformer, Souls-like
+    new Set([3877, 29482]),
 ];
