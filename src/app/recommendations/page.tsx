@@ -8,7 +8,6 @@ import getRecommendations from '@/functions/getRecommendations';
 import { TUserGames } from '@/types/TApi';
 
 import GameRecommendationCard from '@/components/GameRecommendationCard';
-import Background from '@/components/Background';
 
 type Props = {
     searchParams: {
@@ -49,14 +48,12 @@ export default async function Recommendations({ searchParams }: Props) {
     );
 
     return (
-        <main className='relative min-h-screen'>
-            <Background />
-
+        <main>
             <div className='max-w-3xl mx-auto py-8'>
                 <section>
                     <h2
                         className='mb-12 text-center text-5xl font-bold text-transparent 
-                                        bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                                bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
                         Recommendations
                     </h2>
 

@@ -2,6 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { FaCircleInfo } from 'react-icons/fa6';
+import { LuPickaxe } from 'react-icons/lu';
+import { RiListSettingsFill } from 'react-icons/ri';
+import { TfiHelpAlt } from 'react-icons/tfi';
 
 export default function Home() {
     const router = useRouter();
@@ -14,32 +18,61 @@ export default function Home() {
     };
 
     return (
-        <main className='flex flex-col h-screen justify-center items-center'>
-            <h1 className='mb-4 text-3xl'>Unbacklog</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    placeholder='Your Steam ID'
-                    className='mb-4 outline-0 w-full text-center py-2 border border-cyan-900 focus:border-blue-400 rounded-md
-                    transition-colors duration-200 ease-in-out'
-                    value={steamId}
-                    onChange={(e) => setSteamId(e.target.value)}
-                />
-                <div>
-                    <button
-                        type='submit'
-                        className='me-2 cursor-pointer w-fit bg-sky-950 hover:bg-sky-800 text-white py-2 px-4 rounded-lg 
-                        transition-colors duration-200 ease-in-out'>
-                        Submit
-                    </button>
-                    <button
-                        type='button'
-                        className='cursor-pointer w-fit bg-neutral-200 hover:bg-neutral-100 text-neutral-900 py-2 px-4 rounded-lg 
-                        transition-colors duration-200 ease-in-out'>
-                        Preferences
-                    </button>
+        <main className='relative flex flex-col grow justify-center items-center'>
+            <div>
+                <div className='mb-4'>
+                    <span className='flex items-center gap-1 text-lg font-extrabold text-blue-300'>
+                        <FaCircleInfo /> NOTE:
+                    </span>
+                    <p className='text-white font-semibold'>
+                        Make sure your profile and games are{' '}
+                        <b className='text-blue-300'>publicly visible</b>.
+                    </p>
                 </div>
-            </form>
+                <form onSubmit={handleSubmit} className='font-semibold'>
+                    <div className='flex mb-6 shadow-xl shadow-neutral-800'>
+                        <div
+                            className='relative w-full rounded-tl-md rounded-bl overflow-hidden before:absolute before:inset-0 z-10
+                        before:bg-slate-950 before:opacity-40'>
+                            <input
+                                type='text'
+                                placeholder='Your Steam ID'
+                                className='relative outline-0 w-full px-4 py-2.5 text-center text-slate-50 bg-transparent 
+                        rounded-tl-md rounded-bl-md border-t border-b border-l border-sky-600
+                        placeholder:text-slate-300 focus:placeholder:text-transparent
+                        hover:placeholder:text-slate-100 hover:border-sky-500 transition-colors duration-200'
+                                value={steamId}
+                                onChange={(e) => setSteamId(e.target.value)}
+                            />
+                        </div>
+                        <button
+                            type='submit'
+                            className='flex items-center gap-1 cursor-pointer w-fit text-white px-4 rounded-tr-md rounded-br-md
+                        bg-gradient-to-bl from-sky-700 via-sky-600 to-sky-800 
+                        hover:from-sky-600 hover:via-sky-500 hover:to-sky-700
+                        transition-colors duration-300 ease-in-out'>
+                            <LuPickaxe /> Pick
+                        </button>
+                    </div>
+
+                    <div className='flex justify-center gap-4'>
+                        <button
+                            type='button'
+                            className='flex items-center gap-1 cursor-pointer w-fit text-slate-900 bg-slate-200 py-1.5 px-4 rounded-md 
+                        hover:bg-white hover:text-slate-700
+                        transition-colors duration-300 ease-in-out'>
+                            <RiListSettingsFill /> Preferences
+                        </button>
+                        <button
+                            type='button'
+                            className='flex items-center gap-1 cursor-pointer w-fit text-blue-300 bg-transparent py-1.5 px-4 rounded-md 
+                        border border-blue-300 hover:bg-blue-300 hover:text-slate-900
+                        transition-colors duration-300 ease-in-out'>
+                            <TfiHelpAlt /> Help
+                        </button>
+                    </div>
+                </form>
+            </div>
         </main>
     );
 }
