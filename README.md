@@ -65,14 +65,14 @@ Returns the Steam store data for up to 1000 apps per request.
     | `sort` | `number` | An id for sorting. Tells the response how to sort the data.|
     | `filter` | `object` | An object with filter configuration.|
 
-    **Known sorting ids**:
+    `sort`:
 
     -   **1** - Alphabetical order.
     -   **2** - Ascending appid.
     -   **20** - Most recent.
     -   **21** - Percentage of positive reviews (desc).
 
-    **filter**:
+    `filter`:
     | Property | Type | Description |
     | :---------- | :--------- | :------------------------------------------ |
     | `released_only` | `boolean` | Return only released apps.|
@@ -82,7 +82,7 @@ Returns the Steam store data for up to 1000 apps per request.
     | `tagids_exclude` | `number[]` | Don't return apps that contains the specified tag ids. |
     | `global_top_n_sellers` | `number` | Return only apps in the top "n" most selled. |
 
-    **type_filters**:
+    `type_filter`:
 
     -   "include_apps" `boolean`
     -   "include_packages" `boolean`
@@ -97,7 +97,7 @@ Returns the Steam store data for up to 1000 apps per request.
     -   "include_series" `boolean`
     -   "include_music" `boolean`
 
-    **tagids_must_match**:
+    `tagids_must_match`:
 
     To specify the tag ids you must pass in objects with the property `tagids`. Each `tagids` can only include 1 tag, to specify multiple tags you need to pass in multiple objects with `tagids`.
 
