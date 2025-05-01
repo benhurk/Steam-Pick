@@ -1,11 +1,11 @@
 'use client';
 
+import HelpMenu from '@/components/HelpMenu';
+import PreferencesMenu from '@/components/PreferencesMenu';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaCircleInfo } from 'react-icons/fa6';
 import { LuPickaxe } from 'react-icons/lu';
-import { RiListSettingsFill } from 'react-icons/ri';
-import { TfiHelpAlt } from 'react-icons/tfi';
 
 export default function Home() {
     const router = useRouter();
@@ -21,10 +21,10 @@ export default function Home() {
         <main className='relative flex flex-col grow justify-center items-center'>
             <div>
                 <div className='mb-4'>
-                    <span className='flex items-center gap-1 text-lg font-extrabold text-blue-300'>
+                    <span className='flex items-center gap-1 text-xl font-extrabold text-blue-300'>
                         <FaCircleInfo /> NOTE:
                     </span>
-                    <p className='text-white font-semibold'>
+                    <p className='text-white font-semibold text-lg'>
                         Make sure your profile and games are{' '}
                         <b className='text-blue-300'>publicly visible</b>.
                     </p>
@@ -56,20 +56,8 @@ export default function Home() {
                     </div>
 
                     <div className='flex justify-center gap-4'>
-                        <button
-                            type='button'
-                            className='flex items-center gap-1 cursor-pointer w-fit text-slate-900 bg-slate-200 py-1.5 px-4 rounded-md 
-                        hover:bg-white hover:text-slate-700
-                        transition-colors duration-300 ease-in-out'>
-                            <RiListSettingsFill /> Preferences
-                        </button>
-                        <button
-                            type='button'
-                            className='flex items-center gap-1 cursor-pointer w-fit text-blue-300 bg-transparent py-1.5 px-4 rounded-md 
-                        border border-blue-300 hover:bg-blue-300 hover:text-slate-900
-                        transition-colors duration-300 ease-in-out'>
-                            <TfiHelpAlt /> Help
-                        </button>
+                        <PreferencesMenu />
+                        <HelpMenu />
                     </div>
                 </form>
             </div>

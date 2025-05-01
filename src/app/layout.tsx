@@ -1,7 +1,10 @@
+import './globals.css';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import './globals.css';
+import Link from 'next/link';
+
 import Background from '@/components/Background';
+import { BsGithub } from 'react-icons/bs';
 
 export const metadata: Metadata = {
     title: 'Steam Unbacklog',
@@ -20,16 +23,23 @@ export default function RootLayout({
                 <header
                     className='relative py-6 before:absolute before:inset-0 z-10
                         before:bg-slate-950 before:opacity-60'>
-                    <div className='container'>
-                        <h1 className='relative flex gap-4 items-center text-4xl font-bold text-white pointer-events-none'>
-                            <Image
-                                width={36}
-                                height={36}
-                                src='./steamlogo.svg'
-                                alt='Steam'
-                            />
-                            Picker
-                        </h1>
+                    <div className='relative container flex justify-between items-center'>
+                        <Link href={'/'}>
+                            <h1 className='flex gap-4 items-center text-4xl font-bold text-white'>
+                                <Image
+                                    width={36}
+                                    height={36}
+                                    src='./steamlogo.svg'
+                                    alt='Steam'
+                                />
+                                Pick
+                            </h1>
+                        </Link>
+                        <Link
+                            href={'https://github.com/benhurk/Steam-Unbacklog'}
+                            className='text-white text-3xl'>
+                            <BsGithub />
+                        </Link>
                     </div>
                 </header>
                 {children}
