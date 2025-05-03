@@ -5,7 +5,7 @@ export default function Background() {
                 className='absolute w-[150%] h-[200%] -inset-1/2 bg-[url(/bg.png)] bg-repeat blur-xs
                             -rotate-z-12 rotate-x-45 '
             />
-            <div className='absolute inset-0 bg-gradient-to-bl from-black via-gray-800  to-black opacity-85' />
+            <div className='absolute inset-0 bg-gradient-to-bl from-black via-gray-800  to-black opacity-90' />
         </div>
     );
 }

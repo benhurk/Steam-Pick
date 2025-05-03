@@ -8,6 +8,7 @@ import getRecommendations from '@/functions/getRecommendations';
 import { TUserGames } from '@/types/TApi';
 
 import GameRecommendationCard from '@/components/GameRecommendationCard';
+import getTagNames from '@/functions/utils/getTagNames';
 
 type Props = {
     searchParams: {
@@ -49,12 +50,42 @@ export default async function Recommendations({ searchParams }: Props) {
 
     return (
         <main>
-            <div className='max-w-3xl mx-auto py-8'>
+            <div className='max-w-3xl mx-auto py-6'>
+                <section className='mb-18'>
+                    <h2
+                        className='mb-8 text-center text-4xl font-bold text-transparent 
+                                bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                        Overview
+                    </h2>
+                    <ul
+                        className='text-white text-lg list-disc w-fit mx-auto shadow-lg
+                    *:not-last:mb-1'>
+                        <li>
+                            Your favorite genres are:{' '}
+                            {getTagNames(
+                                taste.favoriteGenres.map(([tag]) => tag)
+                            ).join(', ')}
+                            .
+                        </li>
+                        <li>
+                            {taste.dislikedGenres.length > 0
+                                ? `Genres you don't seem to like: ${getTagNames(
+                                      taste.dislikedGenres.map((tag) => tag)
+                                  ).join(', ')}.`
+                                : "There isn't any particular genre that you tried and didn't enjoy."}
+                        </li>
+                        <li>
+                            There are {userGames.unplayed.length} unplayed games
+                            in your library. {recommendations.owned.length} that
+                            fit your taste.
+                        </li>
+                    </ul>
+                </section>
                 <section>
                     <h2
-                        className='mb-12 text-center text-5xl font-bold text-transparent 
+                        className='mb-8 text-center text-4xl font-bold text-transparent 
                                 bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
-                        Recommendations
+                        Picked Games
                     </h2>
 
                     <div
@@ -65,15 +96,9 @@ export default async function Recommendations({ searchParams }: Props) {
                         }`}>
                         {recommendations.owned.length > 0 && (
                             <div className='w-min'>
-                                <h3
-                                    className='block mb-2 text-transparent text-2xl text-center font-bold
-                                                bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                                <h3 className='block mb-4 text-xl text-center font-semibold text-white'>
                                     Already in your library
                                 </h3>
-                                <p className='mb-4 text-slate-50 font-semibold text-center'>
-                                    There is {userGames.unplayed.length}{' '}
-                                    unplayed games in your library.
-                                </p>
                                 {recommendations.owned && (
                                     <GameRecommendationCard
                                         recommendationsArray={
@@ -90,14 +115,9 @@ export default async function Recommendations({ searchParams }: Props) {
                         )}
                         {recommendations.discover.length > 0 && (
                             <div className='w-min'>
-                                <h3
-                                    className='block mb-2 text-transparent text-2xl text-center font-bold
-                                                bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                                <h3 className='block mb-4 text-xl text-center font-semibold text-white '>
                                     Want something new?
                                 </h3>
-                                <p className='mb-4 text-slate-50 font-semibold text-center'>
-                                    Here are some games that fit your taste.
-                                </p>
                                 {recommendations.discover && (
                                     <GameRecommendationCard
                                         recommendationsArray={

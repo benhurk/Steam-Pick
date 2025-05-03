@@ -21,25 +21,36 @@ export default function RootLayout({
             <body className='relative flex flex-col min-h-screen antialiased font-sans'>
                 <Background />
                 <header
-                    className='relative py-6 before:absolute before:inset-0 z-10
+                    className='relative py-6 text-white before:absolute before:inset-0 z-10
                         before:bg-slate-950 before:opacity-60'>
                     <div className='relative container flex justify-between items-center'>
                         <Link href={'/'}>
-                            <h1 className='flex gap-4 items-center text-4xl font-bold text-white'>
+                            <h1 className='flex gap-4 items-center text-5xl font-bold'>
                                 <Image
-                                    width={36}
-                                    height={36}
+                                    width={48}
+                                    height={48}
                                     src='./steamlogo.svg'
                                     alt='Steam'
                                 />
                                 Pick
                             </h1>
                         </Link>
-                        <Link
-                            href={'https://github.com/benhurk/Steam-Unbacklog'}
-                            className='text-white text-3xl'>
-                            <BsGithub />
-                        </Link>
+                        <nav className='font-semibold text-lg'>
+                            <ul className='flex items-center gap-16'>
+                                <li>
+                                    <Link href={'/'}>About</Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href={
+                                            'https://github.com/benhurk/Steam-Unbacklog'
+                                        }
+                                        className='text-white text-4xl'>
+                                        <BsGithub />
+                                    </Link>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </header>
                 {children}
