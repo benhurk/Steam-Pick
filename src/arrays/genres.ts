@@ -11,7 +11,7 @@ export const broadGenres = [
 export const specificGenres = [
     { tagid: 1664, name: 'Puzzle' },
     { tagid: 1716, name: 'Rogue-like' },
-    { tagid: 3959, name: 'Rogue-lite' },
+    // { tagid: 3959, name: 'Rogue-lite' },
     { tagid: 1741, name: 'Turn-Based Strategy' },
     { tagid: 9551, name: 'Dating Sim' },
     { tagid: 4434, name: 'JRPG' },

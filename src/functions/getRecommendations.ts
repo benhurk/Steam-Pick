@@ -7,7 +7,7 @@ export default async function getRecommendations(
     favoriteGameplay: [number, number][],
     favoriteThemes: [number, number][],
     favoriteMoods: [number, number][],
-    dislikedGenres: number[],
+    excludedTags: number[],
     ownedGames: SteamGame[],
     unplayedGamesData: GameData[]
 ) {
@@ -16,7 +16,7 @@ export default async function getRecommendations(
         favoriteGameplay,
         favoriteThemes,
         favoriteMoods,
-        dislikedGenres,
+        excludedTags,
         unplayedGamesData
     );
 
@@ -25,7 +25,7 @@ export default async function getRecommendations(
         favoriteGameplay,
         favoriteThemes,
         favoriteMoods,
-        dislikedGenres,
+        excludedTags,
         ownedGames
     );
 

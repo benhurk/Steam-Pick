@@ -1,4 +1,4 @@
-import { SteamGame } from './TSteam';
+import { SteamGame } from './TGames';
 
 export type TUserGames = {
     owned: SteamGame[];

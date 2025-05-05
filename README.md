@@ -12,7 +12,7 @@ A good example of a inflated tag is _Souls-like_. Even tough a game plays very d
 
 ### Game weight logic
 
-A simple system that attribute games a score, the score is used to identify which type of games the user [likes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getTagsCount.ts) or [dislikes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getDislikedGenres.ts).
+A simple system that attribute games a score, the score is used to identify which type of games the user [likes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getTagsCount.ts) or [dislikes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getTagsToExclude.ts).
 
 | Playtime | Points |
 | :------- | :----- |

@@ -19,7 +19,6 @@ export const gameplayStyles = [
     { tagid: 1720, name: 'Dungeon Crawler' },
     { tagid: 7332, name: 'Base Building' },
     { tagid: 1702, name: 'Crafting' },
-    { tagid: 1625, name: 'Platformer' },
     { tagid: 1734, name: 'Fast-Paced' },
     { tagid: 379975, name: 'Clicker' },
     { tagid: 1698, name: 'Point & Click' },

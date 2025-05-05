@@ -8,7 +8,7 @@ export default async function getNewRecommendations(
     favoriteGameplay: [number, number][],
     favoriteThemes: [number, number][],
     favoriteMoods: [number, number][],
-    dislikedGenres: number[],
+    excludedTags: number[],
     ownedGames: SteamGame[]
 ) {
     const recommendations = [];
@@ -18,7 +18,7 @@ export default async function getNewRecommendations(
         try {
             const filtersBody: TQueryFilters = {
                 includeTag: genre,
-                excludeTags: dislikedGenres,
+                excludeTags: excludedTags,
                 minRating: { count: 2000, percentPositive: 85 },
             };
 
@@ -121,7 +121,7 @@ export default async function getNewRecommendations(
     // Remove duplicates (in case same game appears for multiple genres)
     const uniqueRecommendations = [
         ...new Map(recommendations.map((g) => [g.id, g])).values(),
-    ];
+    ].sort((a, b) => b.matchingTags.count - a.matchingTags.count);
 
     console.log('New games recommendations:', uniqueRecommendations);
     return uniqueRecommendations;

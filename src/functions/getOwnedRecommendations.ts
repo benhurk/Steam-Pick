@@ -7,7 +7,7 @@ export default function getOwnedRecomendations(
     favoriteGameplay: [number, number][],
     favoriteThemes: [number, number][],
     favoriteMoods: [number, number][],
-    dislikedGenres: number[],
+    excludedTags: number[],
     unplayedGamesData: GameData[]
 ) {
     const recommendations = unplayedGamesData
@@ -25,9 +25,9 @@ export default function getOwnedRecomendations(
                 favoriteMoods
             );
 
-            const hasDislikedGenre =
+            const hasExcludedTag =
                 game.tags.filter((tag) =>
-                    dislikedGenres.some((genre) => genre === tag)
+                    excludedTags.some((genre) => genre === tag)
                 ).length > 0;
 
             const nonGenreMatchingTags =
@@ -41,7 +41,7 @@ export default function getOwnedRecomendations(
                 matchingGenres.count > 0 &&
                 matchingGameplay.count > 0 &&
                 nonGenreMatchingTags > 2 &&
-                !hasDislikedGenre
+                !hasExcludedTag
             ) {
                 return {
                     name: game.name,

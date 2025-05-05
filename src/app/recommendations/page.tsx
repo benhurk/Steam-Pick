@@ -13,11 +13,16 @@ import getTagNames from '@/functions/utils/getTagNames';
 type Props = {
     searchParams: {
         steamId: string;
+        prefs?: string;
     };
 };
 
 export default async function Recommendations({ searchParams }: Props) {
-    const { steamId } = await searchParams;
+    const { steamId, prefs } = await searchParams;
+
+    const preferences = prefs
+        ? JSON.parse(decodeURIComponent(prefs))
+        : undefined;
 
     if (!steamId) {
         redirect('/');
@@ -35,7 +40,7 @@ export default async function Recommendations({ searchParams }: Props) {
     const gamesWeight = analyseGamesWeight(gamesData.played);
 
     //Get user's taste
-    const taste = checkGamesTags(gamesWeight);
+    const taste = checkGamesTags(gamesWeight, preferences);
 
     //Get recommendations
     const recommendations = await getRecommendations(
@@ -43,7 +48,7 @@ export default async function Recommendations({ searchParams }: Props) {
         taste.favoriteGameplay,
         taste.favoriteThemes,
         taste.favoriteMoods,
-        taste.dislikedGenres,
+        taste.excludedTags,
         userGames.owned,
         gamesData.unplayed
     );
@@ -60,19 +65,13 @@ export default async function Recommendations({ searchParams }: Props) {
                     <ul
                         className='text-white text-lg list-disc w-fit mx-auto shadow-lg
                     *:not-last:mb-1'>
+                        <li>Preferences: {prefs}</li>
                         <li>
                             Your favorite genres are:{' '}
                             {getTagNames(
                                 taste.favoriteGenres.map(([tag]) => tag)
                             ).join(', ')}
                             .
-                        </li>
-                        <li>
-                            {taste.dislikedGenres.length > 0
-                                ? `Genres you don't seem to like: ${getTagNames(
-                                      taste.dislikedGenres.map((tag) => tag)
-                                  ).join(', ')}.`
-                                : "There isn't any particular genre that you tried and didn't enjoy."}
                         </li>
                         <li>
                             There are {userGames.unplayed.length} unplayed games

@@ -1,17 +1,21 @@
 import { GameWeight } from '@/types/TGames';
-import getDislikedGenres from './helpers/getDislikedGenres';
+import getTagsToExclude from './helpers/getTagsToExclude';
 import getTagsCount from './helpers/getTagsCount';
 import getTopTags from './helpers/getTopTags';
 import getTagNames from './utils/getTagNames';
+import { TPreferences } from '@/types/TPreferences';
 
-export default function checkGamesTags(gamesWeight: GameWeight[]) {
+export default function checkGamesTags(
+    gamesWeight: GameWeight[],
+    preferences: TPreferences | undefined
+) {
     const tagsCount = getTagsCount(gamesWeight.filter((g) => g.weight > 0));
 
     const favoriteGenres = getTopTags([...tagsCount.genres.entries()]);
     const favoriteGameplay = getTopTags([...tagsCount.gameplay.entries()]);
     const favoriteThemes = getTopTags([...tagsCount.themes.entries()]);
     const favoriteMoods = getTopTags([...tagsCount.moods.entries()]);
-    const dislikedGenres = getDislikedGenres(gamesWeight);
+    const excludedTags = getTagsToExclude(gamesWeight, preferences);
 
     console.log(
         'Favorite genres:',
@@ -41,13 +45,13 @@ export default function checkGamesTags(gamesWeight: GameWeight[]) {
             count,
         }))
     );
-    console.log('Disliked genres:', getTagNames(dislikedGenres));
+    console.log('Excluded tags:', getTagNames(excludedTags));
 
     return {
         favoriteGenres,
         favoriteGameplay,
         favoriteThemes,
         favoriteMoods,
-        dislikedGenres,
+        excludedTags,
     };
 }

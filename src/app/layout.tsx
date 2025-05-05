@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import Background from '@/components/Background';
 import { BsGithub } from 'react-icons/bs';
+import { PreferencesProvider } from '@/contexts/Preferences';
 
 export const metadata: Metadata = {
     title: 'Steam Unbacklog',
@@ -43,8 +44,9 @@ export default function RootLayout({
                                 <li>
                                     <Link
                                         href={
-                                            'https://github.com/benhurk/Steam-Unbacklog'
+                                            'https://github.com/benhurk/Steam-Pick'
                                         }
+                                        target='_blank'
                                         className='text-white text-4xl'>
                                         <BsGithub />
                                     </Link>
@@ -53,7 +55,7 @@ export default function RootLayout({
                         </nav>
                     </div>
                 </header>
-                {children}
+                <PreferencesProvider>{children}</PreferencesProvider>
             </body>
         </html>
     );

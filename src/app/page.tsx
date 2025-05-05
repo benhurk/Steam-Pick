@@ -1,9 +1,13 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import { usePreferences } from '@/contexts/Preferences';
+import encodePreferences from '@/functions/utils/encodePreferences';
+
 import HelpMenu from '@/components/HelpMenu';
 import PreferencesMenu from '@/components/PreferencesMenu';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { FaCircleInfo } from 'react-icons/fa6';
 import { LuPickaxe } from 'react-icons/lu';
 
@@ -11,10 +15,17 @@ export default function Home() {
     const router = useRouter();
 
     const [steamId, setSteamId] = useState<string>('');
+    const preferences = usePreferences().preferences;
+
+    const prefs = encodePreferences(preferences);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        router.push(`/recommendations?steamId=${encodeURIComponent(steamId)}`);
+        router.push(
+            `/recommendations?steamId=${steamId}${
+                prefs.length > 0 ? `&prefs=${prefs}` : ''
+            }`
+        );
     };
 
     return (
@@ -28,6 +39,7 @@ export default function Home() {
                         Make sure your profile and games are{' '}
                         <a
                             href='https://help.steampowered.com/en/faqs/view/588C-C67D-0251-C276'
+                            target='_blank'
                             className='text-blue-300 font-semibold'>
                             publicly visible
                         </a>
@@ -45,7 +57,7 @@ export default function Home() {
                                 className='relative outline-0 w-full px-3 py-2.5 text-center text-slate-50 bg-transparent 
                                 rounded-tl-md rounded-bl-md border-t border-b border-l border-sky-600
                                 placeholder:text-slate-300 focus:placeholder:text-transparent
-                                hover:placeholder:text-slate-100 hover:border-sky-500 transition-colors duration-200'
+                                hover:placeholder:text-slate-100 hover:border-sky-500 transition-colors duration-300'
                                 value={steamId}
                                 onChange={(e) => setSteamId(e.target.value)}
                             />

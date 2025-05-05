@@ -1,4 +1,10 @@
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from './ui/dialog';
 
 import { TfiHelpAlt } from 'react-icons/tfi';
 import { RiListSettingsFill } from 'react-icons/ri';
@@ -13,9 +19,9 @@ export default function HelpMenu() {
                 <TfiHelpAlt /> Help
             </DialogTrigger>
             <DialogContent>
-                <DialogTitle className='border-b border-gray-300 pb-3'>
-                    Help
-                </DialogTitle>
+                <DialogHeader className='border-b border-gray-300 pb-3'>
+                    <DialogTitle>Help</DialogTitle>
+                </DialogHeader>
                 <section>
                     <h3 className='font-semibold'>How do i get my Steam ID?</h3>
                     Open Steam and go to your Account details.
