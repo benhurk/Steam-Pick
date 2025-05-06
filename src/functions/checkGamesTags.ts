@@ -7,7 +7,7 @@ import { TPreferences } from '@/types/TPreferences';
 
 export default function checkGamesTags(
     gamesWeight: GameWeight[],
-    preferences: TPreferences | undefined
+    preferences: TPreferences
 ) {
     const tagsCount = getTagsCount(gamesWeight.filter((g) => g.weight > 0));
 

@@ -13,4 +13,6 @@ export const difficulties = [
 export const multiplayerTags = [
     { tagid: 3859, name: 'Multiplayer' },
     { tagid: 1685, name: 'Co-op' },
+    { tagid: 3841, name: 'Local Co-Op' },
+    { tagid: 10816, name: 'Split Screen' },
 ];

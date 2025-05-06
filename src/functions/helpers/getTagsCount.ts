@@ -1,6 +1,7 @@
 import { gameplayStyles, moods, themes } from '@/arrays/gameStyles';
 import { broadGenres, specificGenres } from '@/arrays/genres';
 import { GameWeight } from '@/types/TGames';
+import getTagNames from '../utils/getTagNames';
 
 export default function getTagsCount(games: GameWeight[]) {
     const genresCount = new Map<number, number>();
@@ -42,6 +43,15 @@ export default function getTagsCount(games: GameWeight[]) {
             moodsCount.set(mood.tagid, currentCount + count * weight);
         });
     });
+
+    console.log(
+        [...gameplayStylesCount.entries()]
+            .map(([tag, count]) => ({
+                name: getTagNames([tag]),
+                count,
+            }))
+            .sort((a, b) => b.count - a.count)
+    );
 
     return {
         genres: genresCount,

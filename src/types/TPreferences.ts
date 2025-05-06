@@ -1,7 +1,6 @@
 export interface TPreferences {
-    earlyAccess: boolean;
-    vr: boolean;
-    mustInclude: number[];
+    exclude: number[];
+    include: number[];
 }
 
 export interface TPreferencesContext {

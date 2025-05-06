@@ -1,3 +1,22 @@
+import {
+    difficulties,
+    miscellaneousTags,
+    multiplayerTags,
+} from '@/arrays/gamePreferences';
+import { gameplayStyles, moods, themes } from '@/arrays/gameStyles';
+import { broadGenres, specificGenres } from '@/arrays/genres';
+
+export const allTags = [
+    ...specificGenres,
+    ...broadGenres,
+    ...gameplayStyles,
+    ...themes,
+    ...moods,
+    ...miscellaneousTags,
+    ...difficulties,
+    ...multiplayerTags,
+];
+
 export const groupedTags = [
     //Survival Horror, Psychological Horror
     new Set([3978, 1721]),

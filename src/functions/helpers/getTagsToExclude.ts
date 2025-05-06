@@ -4,7 +4,7 @@ import { TPreferences } from '@/types/TPreferences';
 
 export default function getTagsToExclude(
     gamesWeight: GameWeight[],
-    preferences: TPreferences | undefined
+    preferences: TPreferences
 ) {
     const allTags = gamesWeight.map((g) => g.tags).flat();
     const genres = allTags.filter((tag) =>
@@ -21,10 +21,7 @@ export default function getTagsToExclude(
         .map((g) => g.tags)
         .flat();
 
-    const toExclude: number[] = [];
-
-    if (!preferences?.earlyAccess) toExclude.push(493);
-    if (!preferences?.vr) toExclude.push(21978);
+    const toExclude: number[] = [...preferences.exclude];
 
     genres.forEach((tag) => {
         const noWeightCount = noWeightTags.filter((dt) => dt === tag).length;
@@ -33,7 +30,7 @@ export default function getTagsToExclude(
         ).length;
 
         if (noWeightCount >= 3 && noWeightCount > withWeightCount) {
-            toExclude.push(tag);
+            if (!toExclude.includes(tag)) toExclude.push(tag);
         }
     });
 

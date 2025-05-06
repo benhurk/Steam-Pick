@@ -1,13 +1,10 @@
 'use client';
 
+import preferencesInitialState from '@/arrays/preferencesInitialState';
 import { TPreferences, TPreferencesContext } from '@/types/TPreferences';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-const initialState: TPreferences = {
-    earlyAccess: false,
-    vr: false,
-    mustInclude: [],
-};
+const initialState: TPreferences = preferencesInitialState;
 
 const PreferencesContext = createContext<TPreferencesContext>({
     preferences: initialState,

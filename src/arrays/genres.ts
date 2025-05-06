@@ -11,7 +11,6 @@ export const broadGenres = [
 export const specificGenres = [
     { tagid: 1664, name: 'Puzzle' },
     { tagid: 1716, name: 'Rogue-like' },
-    // { tagid: 3959, name: 'Rogue-lite' },
     { tagid: 1741, name: 'Turn-Based Strategy' },
     { tagid: 9551, name: 'Dating Sim' },
     { tagid: 4434, name: 'JRPG' },
@@ -39,7 +38,6 @@ export const specificGenres = [
     { tagid: 615955, name: 'Idler' },
     { tagid: 1628, name: 'Metroidvania' },
     { tagid: 1646, name: 'Hack and Slash' },
-    { tagid: 3877, name: 'Precision Platformer' },
     { tagid: 29482, name: 'Souls-like' },
     { tagid: 1743, name: 'Fighting' },
     { tagid: 1100689, name: 'Open World Survival Craft' },
@@ -52,7 +50,5 @@ export const specificGenres = [
     { tagid: 10695, name: 'Party-Based RPG' },
     { tagid: 620519, name: 'Hero Shooter' },
     { tagid: 11014, name: 'Interactive Fiction' },
-    { tagid: 4637, name: 'Top-Down Shooter' },
     { tagid: 4474, name: 'CRPG' },
-    { tagid: 5094, name: 'Narration' },
 ];

@@ -9,6 +9,8 @@ import { TUserGames } from '@/types/TApi';
 
 import GameRecommendationCard from '@/components/GameRecommendationCard';
 import getTagNames from '@/functions/utils/getTagNames';
+import { TPreferences } from '@/types/TPreferences';
+import preferencesInitialState from '@/arrays/preferencesInitialState';
 
 type Props = {
     searchParams: {
@@ -20,13 +22,13 @@ type Props = {
 export default async function Recommendations({ searchParams }: Props) {
     const { steamId, prefs } = await searchParams;
 
-    const preferences = prefs
-        ? JSON.parse(decodeURIComponent(prefs))
-        : undefined;
-
     if (!steamId) {
         redirect('/');
     }
+
+    const preferences: TPreferences = prefs
+        ? JSON.parse(decodeURIComponent(prefs))
+        : preferencesInitialState;
 
     //Get user games
     const userGames: TUserGames = await fetch(

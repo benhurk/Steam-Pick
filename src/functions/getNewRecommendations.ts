@@ -111,7 +111,7 @@ export default async function getNewRecommendations(
             );
 
             // Add delay between genre requests to avoid rate limiting
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1500));
         } catch (error) {
             console.error(`Error processing genre ${genre}:`, error);
             continue;

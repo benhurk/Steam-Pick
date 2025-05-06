@@ -9,23 +9,37 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { difficulties, multiplayerTags } from '@/arrays/gamePreferences';
 import { usePreferences } from '@/contexts/Preferences';
+import { excludeByDefault } from '@/arrays/preferencesInitialState';
 
 export default function PreferencesMenu() {
     const { preferences, setPreferences } = usePreferences();
 
     const toggleTag = (tagid: number) => {
-        if (preferences.mustInclude.some((tag) => tag === tagid)) {
-            return preferences.mustInclude.filter((t) => t != tagid);
+        if (preferences.include.includes(tagid)) {
+            if (excludeByDefault.includes(tagid)) {
+                setPreferences({
+                    include: preferences.include.filter((t) => t != tagid),
+                    exclude: [...preferences.exclude, tagid],
+                });
+            } else {
+                setPreferences({
+                    ...preferences,
+                    include: preferences.include.filter((t) => t != tagid),
+                });
+            }
         } else {
-            return [...preferences.mustInclude, tagid];
+            if (excludeByDefault.includes(tagid)) {
+                setPreferences({
+                    include: [...preferences.include, tagid],
+                    exclude: preferences.exclude.filter((t) => t != tagid),
+                });
+            } else {
+                setPreferences({
+                    ...preferences,
+                    include: [...preferences.include, tagid],
+                });
+            }
         }
-    };
-
-    const handleToggleTag = (tagid: number) => {
-        setPreferences({
-            ...preferences,
-            mustInclude: toggleTag(tagid),
-        });
     };
 
     return (
@@ -46,36 +60,30 @@ export default function PreferencesMenu() {
                         <div className='flex items-center gap-2'>
                             <Switch
                                 id='earlyAccess'
-                                checked={preferences.earlyAccess}
-                                onClick={() =>
-                                    setPreferences({
-                                        ...preferences,
-                                        earlyAccess: !preferences.earlyAccess,
-                                    })
-                                }
+                                checked={preferences.include.some(
+                                    (t) => t === 493
+                                )}
+                                onClick={() => toggleTag(493)}
                             />
                             <label htmlFor='earlyAccess'>Early Access</label>
                         </div>
                         <div className='flex items-center gap-2'>
                             <Switch
                                 id='VR'
-                                checked={preferences.vr}
-                                onClick={() =>
-                                    setPreferences({
-                                        ...preferences,
-                                        vr: !preferences.vr,
-                                    })
-                                }
+                                checked={preferences.include.some(
+                                    (t) => t === 21978
+                                )}
+                                onClick={() => toggleTag(21978)}
                             />
                             <label htmlFor='VR'>VR</label>
                         </div>
                         <div className='flex items-center gap-2'>
                             <Switch
                                 id='familyFriendly'
-                                checked={preferences.mustInclude.some(
+                                checked={preferences.include.some(
                                     (m) => m === 5350
                                 )}
-                                onClick={() => handleToggleTag(5350)}
+                                onClick={() => toggleTag(5350)}
                             />
                             <label htmlFor='familyFriendly'>
                                 Family Friendly
@@ -84,10 +92,10 @@ export default function PreferencesMenu() {
                         <div className='flex items-center gap-2'>
                             <Switch
                                 id='f2p'
-                                checked={preferences.mustInclude.some(
+                                checked={preferences.include.some(
                                     (m) => m === 113
                                 )}
-                                onClick={() => handleToggleTag(113)}
+                                onClick={() => toggleTag(113)}
                             />
                             <label htmlFor='f2p'>Free to Play</label>
                         </div>
@@ -102,10 +110,10 @@ export default function PreferencesMenu() {
                                 className='flex items-center gap-2 text-sm'>
                                 <Switch
                                     id={d.name}
-                                    checked={preferences.mustInclude.some(
+                                    checked={preferences.include.some(
                                         (m) => m === d.tagid
                                     )}
-                                    onClick={() => handleToggleTag(d.tagid)}
+                                    onClick={() => toggleTag(d.tagid)}
                                 />
                                 <label htmlFor={d.name}>{d.name}</label>
                             </div>
@@ -121,10 +129,10 @@ export default function PreferencesMenu() {
                                 className='flex items-center gap-2 text-sm'>
                                 <Switch
                                     id={mp.name}
-                                    checked={preferences.mustInclude.some(
+                                    checked={preferences.include.some(
                                         (m) => m === mp.tagid
                                     )}
-                                    onClick={() => handleToggleTag(mp.tagid)}
+                                    onClick={() => toggleTag(mp.tagid)}
                                 />
                                 <label htmlFor={mp.name}>{mp.name}</label>
                             </div>
