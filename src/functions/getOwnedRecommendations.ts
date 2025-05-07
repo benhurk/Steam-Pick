@@ -35,7 +35,8 @@ export default function getOwnedRecomendations(
                 matchingThemes.count +
                 matchingMoods.count;
 
-            const matchingTags = matchingGenres.count + nonGenreMatchingTags;
+            const matchingTags =
+                matchingGenres.count * 2 + nonGenreMatchingTags; //Weight genres higher
 
             if (
                 matchingGenres.count > 0 &&

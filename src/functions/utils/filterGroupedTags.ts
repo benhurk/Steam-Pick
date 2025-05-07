@@ -3,7 +3,7 @@ import { groupedTags } from '@/arrays/groupedTags';
 export default function filterGroupedTags(
     tags: { tagid: number; weight: number }[]
 ) {
-    const groupedTagsFound = Object.values(tags).filter((tag) =>
+    const groupedTagsFound = tags.filter((tag) =>
         groupedTags.some((set) => set.has(tag.tagid))
     );
 
@@ -11,19 +11,22 @@ export default function filterGroupedTags(
         return tags;
     }
 
-    const result = [];
+    const result = [...tags];
 
     for (const set of groupedTags) {
         const matches = groupedTagsFound
-            .filter((found) => [...set].filter((tag) => tag === found.tagid))
+            .filter((found) => set.has(found.tagid))
             .sort((a, b) => b.weight - a.weight);
 
-        const toRemove = new Set(matches.slice(1));
-        const newTagsArray = Object.values(tags).filter(
-            (tag) => !toRemove.has(tag)
-        );
-
-        result.push(...newTagsArray);
+        if (matches.length > 1) {
+            // Keep only the highest weight tag from each group
+            const tagsToRemove = matches.slice(1).map((t) => t.tagid);
+            for (let i = result.length - 1; i >= 0; i--) {
+                if (tagsToRemove.includes(result[i].tagid)) {
+                    result.splice(i, 1);
+                }
+            }
+        }
     }
 
     return result;

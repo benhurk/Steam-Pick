@@ -1,7 +1,6 @@
 import { gameplayStyles, moods, themes } from '@/arrays/gameStyles';
 import { broadGenres, specificGenres } from '@/arrays/genres';
 import { GameWeight } from '@/types/TGames';
-import getTagNames from '../utils/getTagNames';
 
 export default function getTagsCount(games: GameWeight[]) {
     const genresCount = new Map<number, number>();
@@ -15,43 +14,49 @@ export default function getTagsCount(games: GameWeight[]) {
 
         broadGenres.forEach((genre) => {
             const currentCount = genresCount.get(genre.tagid) || 0;
-            const count = tags.filter((tag) => tag === genre.tagid).length;
-            genresCount.set(genre.tagid, currentCount + count * weight);
+            const hasTag = tags.includes(genre.tagid);
+
+            if (hasTag) {
+                genresCount.set(genre.tagid, currentCount + 1 * weight);
+            }
         });
 
         specificGenres.forEach((genre) => {
             const currentCount = genresCount.get(genre.tagid) || 0;
-            const count = tags.filter((tag) => tag === genre.tagid).length;
-            genresCount.set(genre.tagid, currentCount + count * weight);
+            const hasTag = tags.includes(genre.tagid);
+
+            if (hasTag) {
+                genresCount.set(genre.tagid, currentCount + 1 * weight);
+            }
         });
 
         gameplayStyles.forEach((style) => {
             const currentCount = gameplayStylesCount.get(style.tagid) || 0;
-            const count = tags.filter((tag) => tag === style.tagid).length;
-            gameplayStylesCount.set(style.tagid, currentCount + count * weight);
+            const hasTag = tags.includes(style.tagid);
+
+            if (hasTag) {
+                gameplayStylesCount.set(style.tagid, currentCount + 1 * weight);
+            }
         });
 
         themes.forEach((theme) => {
             const currentCount = themesCount.get(theme.tagid) || 0;
-            const count = tags.filter((tag) => tag === theme.tagid).length;
-            themesCount.set(theme.tagid, currentCount + count * weight);
+            const hasTag = tags.includes(theme.tagid);
+
+            if (hasTag) {
+                themesCount.set(theme.tagid, currentCount + 1 * weight);
+            }
         });
 
         moods.forEach((mood) => {
             const currentCount = moodsCount.get(mood.tagid) || 0;
-            const count = tags.filter((tag) => tag === mood.tagid).length;
-            moodsCount.set(mood.tagid, currentCount + count * weight);
+            const hasTag = tags.includes(mood.tagid);
+
+            if (hasTag) {
+                moodsCount.set(mood.tagid, currentCount + 1 * weight);
+            }
         });
     });
-
-    console.log(
-        [...gameplayStylesCount.entries()]
-            .map(([tag, count]) => ({
-                name: getTagNames([tag]),
-                count,
-            }))
-            .sort((a, b) => b.count - a.count)
-    );
 
     return {
         genres: genresCount,
