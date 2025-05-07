@@ -1,3 +1,4 @@
+import { TPreferences } from '@/types/TPreferences';
 import getMatchingTags from './helpers/getMatchingTags';
 import getTagNames from './utils/getTagNames';
 import { GameData } from '@/types/TGames';
@@ -8,7 +9,8 @@ export default function getOwnedRecomendations(
     favoriteThemes: [number, number][],
     favoriteMoods: [number, number][],
     excludedTags: number[],
-    unplayedGamesData: GameData[]
+    unplayedGamesData: GameData[],
+    preferences: TPreferences
 ) {
     const recommendations = unplayedGamesData
         .map((game) => {
@@ -30,6 +32,10 @@ export default function getOwnedRecomendations(
                     excludedTags.some((genre) => genre === tag)
                 ).length > 0;
 
+            const hasPrefTags = preferences.include.every((tag) =>
+                game.tags.includes(tag)
+            );
+
             const nonGenreMatchingTags =
                 matchingGameplay.count +
                 matchingThemes.count +
@@ -42,7 +48,8 @@ export default function getOwnedRecomendations(
                 matchingGenres.count > 0 &&
                 matchingGameplay.count > 0 &&
                 nonGenreMatchingTags > 2 &&
-                !hasExcludedTag
+                !hasExcludedTag &&
+                hasPrefTags
             ) {
                 return {
                     name: game.name,

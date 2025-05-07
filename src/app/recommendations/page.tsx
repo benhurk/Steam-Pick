@@ -52,7 +52,8 @@ export default async function Recommendations({ searchParams }: Props) {
         taste.favoriteMoods,
         taste.excludedTags,
         userGames.owned,
-        gamesData.unplayed
+        gamesData.unplayed,
+        preferences
     );
 
     return (

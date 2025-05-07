@@ -1,6 +1,7 @@
 import getOwnedRecomendations from './getOwnedRecommendations';
 import getNewRecommendations from './getNewRecommendations';
 import { SteamGame, GameData } from '@/types/TGames';
+import { TPreferences } from '@/types/TPreferences';
 
 export default async function getRecommendations(
     favoriteGenres: [number, number][],
@@ -9,7 +10,8 @@ export default async function getRecommendations(
     favoriteMoods: [number, number][],
     excludedTags: number[],
     ownedGames: SteamGame[],
-    unplayedGamesData: GameData[]
+    unplayedGamesData: GameData[],
+    preferences: TPreferences
 ) {
     const owned = getOwnedRecomendations(
         favoriteGenres,
@@ -17,7 +19,8 @@ export default async function getRecommendations(
         favoriteThemes,
         favoriteMoods,
         excludedTags,
-        unplayedGamesData
+        unplayedGamesData,
+        preferences
     );
 
     const discover = await getNewRecommendations(
@@ -26,7 +29,8 @@ export default async function getRecommendations(
         favoriteThemes,
         favoriteMoods,
         excludedTags,
-        ownedGames
+        ownedGames,
+        preferences
     );
 
     return { owned, discover };

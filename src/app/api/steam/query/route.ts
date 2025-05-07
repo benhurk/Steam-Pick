@@ -45,8 +45,14 @@ async function fetchUrl(url: string) {
 
 export async function POST(request: Request) {
     try {
-        const { includeTag, excludeTags, minRating }: TQueryFilters =
+        const { includeTags, excludeTags, minRating }: TQueryFilters =
             await request.json();
+
+        const toInclude = includeTags
+            .map((t) => JSON.stringify({ tagids: [`${t}`] }))
+            .join(', ');
+
+        console.log(toInclude);
 
         const toExclude = excludeTags.join('","');
 
@@ -57,7 +63,7 @@ export async function POST(request: Request) {
 
         while (hasMorePages) {
             const QUERY = encodeURI(
-                `&input_json={"query":{"start":"${pagination}","count":"1000","sort":"21","filters":{"released_only":true,"type_filters":{"include_games":true},"tagids_must_match":[{"tagids":["${includeTag}"]}],"tagids_exclude":["${toExclude}"],"global_top_n_sellers":"1000000"}},"context":{"country_code":"US"},"data_request":{"include_tag_count":"20","include_reviews":true}}`
+                `&input_json={"query":{"start":"${pagination}","count":"1000","sort":"21","filters":{"released_only":true,"type_filters":{"include_games":true},"tagids_must_match":[${toInclude}],"tagids_exclude":["${toExclude}"],"global_top_n_sellers":"1000000"}},"context":{"country_code":"US"},"data_request":{"include_tag_count":"20","include_reviews":true}}`
             );
 
             try {
@@ -70,7 +76,7 @@ export async function POST(request: Request) {
                     Object.keys(data.response).length === 0
                 ) {
                     console.log(
-                        `Empty response for tag ${includeTag} pagination ${pagination}`
+                        `Empty response for tag ${toInclude} pagination ${pagination}`
                     );
                     hasMorePages = false;
                     continue;
@@ -97,6 +103,8 @@ export async function POST(request: Request) {
                             tagids: filterGameTags(g.tags),
                         }));
 
+                    console.log(filteredGamesData);
+
                     games.push(...filteredGamesData);
 
                     if (data.response.metadata.count < 1000) {
@@ -115,7 +123,7 @@ export async function POST(request: Request) {
                 }
             } catch (error) {
                 console.error(
-                    `Failed after ${MAX_RETRIES} retries for tags ${includeTag} pagination ${pagination}:`,
+                    `Failed after ${MAX_RETRIES} retries for tags ${toInclude} pagination ${pagination}:`,
                     error
                 );
                 hasMorePages = false; // Stop pagination on persistent failure

@@ -13,7 +13,7 @@ export type TQueryData = {
 }[];
 
 export type TQueryFilters = {
-    includeTag: number;
+    includeTags: number[];
     excludeTags: number[];
     minRating: {
         count: number;

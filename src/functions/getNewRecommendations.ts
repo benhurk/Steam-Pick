@@ -2,6 +2,7 @@ import getMatchingTags from './helpers/getMatchingTags';
 import { SteamGame } from '@/types/TGames';
 import { TQueryData, TQueryFilters } from '@/types/TApi';
 import getTagNames from './utils/getTagNames';
+import { TPreferences } from '@/types/TPreferences';
 
 export default async function getNewRecommendations(
     favoriteGenres: [number, number][],
@@ -9,7 +10,8 @@ export default async function getNewRecommendations(
     favoriteThemes: [number, number][],
     favoriteMoods: [number, number][],
     excludedTags: number[],
-    ownedGames: SteamGame[]
+    ownedGames: SteamGame[],
+    preferences: TPreferences
 ) {
     const recommendations = [];
 
@@ -17,7 +19,7 @@ export default async function getNewRecommendations(
     for (const [genre] of favoriteGenres) {
         try {
             const filtersBody: TQueryFilters = {
-                includeTag: genre,
+                includeTags: [...preferences.include, genre],
                 excludeTags: excludedTags,
                 minRating: { count: 2000, percentPositive: 85 },
             };
@@ -79,7 +81,9 @@ export default async function getNewRecommendations(
                         matchingGameplay.count > 0 &&
                         matchingGameplay.count +
                             matchingThemes.count +
-                            matchingMoods.count >
+                            matchingMoods.count +
+                            preferences.include.length /
+                                preferences.include.length >
                             2
                 )
                 .sort((a, b) => b.score - a.score)
