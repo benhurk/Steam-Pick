@@ -11,6 +11,7 @@ import GameRecommendationCard from '@/components/GameRecommendationCard';
 import getTagNames from '@/functions/utils/getTagNames';
 import { TPreferences } from '@/types/TPreferences';
 import preferencesInitialState from '@/arrays/preferencesInitialState';
+import NothingFoundCard from '@/components/NothingFoundCard';
 
 type Props = {
     searchParams: {
@@ -77,59 +78,84 @@ export default async function Recommendations({ searchParams }: Props) {
                             .
                         </li>
                         <li>
-                            There are {userGames.unplayed.length} unplayed games
-                            in your library. {recommendations.owned.length} that
-                            fit your taste.
+                            {`There are ${
+                                userGames.unplayed.length
+                            } unplayed games
+                            in your library. ${
+                                recommendations.owned.length
+                            } that
+                            fit your taste${
+                                [...preferences.exclude, ...preferences.include]
+                                    .length > 0
+                                    ? ' and preferences'
+                                    : ''
+                            }.`}
                         </li>
                     </ul>
                 </section>
                 <section>
-                    <h2
-                        className='mb-8 text-center text-4xl font-bold text-transparent 
+                    {[...recommendations.owned, ...recommendations.discover]
+                        .length > 0 ? (
+                        <>
+                            <h2
+                                className='mb-8 text-center text-4xl font-bold text-transparent 
                                 bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
-                        Picked Games
-                    </h2>
+                                Picked Games
+                            </h2>
 
-                    <div
-                        className={`flex ${
-                            Object.keys(recommendations).length > 1
-                                ? 'justify-between'
-                                : 'justify-center'
-                        }`}>
-                        {recommendations.owned.length > 0 && (
-                            <div className='w-min'>
-                                <h3 className='block mb-4 text-xl text-center font-semibold text-white'>
-                                    Already in your library
-                                </h3>
-                                {recommendations.owned && (
-                                    <GameRecommendationCard
-                                        recommendationsArray={
-                                            recommendations.owned
-                                        }
-                                    />
+                            <div
+                                className={`flex ${
+                                    recommendations.owned.length > 0 &&
+                                    recommendations.discover.length > 0
+                                        ? 'justify-between'
+                                        : 'justify-center'
+                                }`}>
+                                {recommendations.owned.length > 0 && (
+                                    <div className='w-min'>
+                                        {recommendations.discover.length >
+                                            0 && (
+                                            <h3 className='block mb-4 text-xl text-center font-semibold text-white'>
+                                                Already in your library
+                                            </h3>
+                                        )}
+                                        {recommendations.owned && (
+                                            <GameRecommendationCard
+                                                recommendationsArray={
+                                                    recommendations.owned
+                                                }
+                                            />
+                                        )}
+                                    </div>
+                                )}
+                                {recommendations.owned.length > 0 &&
+                                    recommendations.discover.length > 0 && (
+                                        <span className='text-slate-50 font-semibold text-xl'>
+                                            or
+                                        </span>
+                                    )}
+                                {recommendations.discover.length > 0 && (
+                                    <div className='w-min'>
+                                        {recommendations.owned.length > 0 && (
+                                            <h3 className='block mb-4 text-xl text-center font-semibold text-white '>
+                                                Want something new?
+                                            </h3>
+                                        )}
+                                        {recommendations.discover && (
+                                            <GameRecommendationCard
+                                                recommendationsArray={
+                                                    recommendations.discover
+                                                }
+                                            />
+                                        )}
+                                    </div>
                                 )}
                             </div>
-                        )}
-                        {Object.values(recommendations).length > 1 && (
-                            <span className='text-slate-50 font-semibold text-xl'>
-                                or
-                            </span>
-                        )}
-                        {recommendations.discover.length > 0 && (
-                            <div className='w-min'>
-                                <h3 className='block mb-4 text-xl text-center font-semibold text-white '>
-                                    Want something new?
-                                </h3>
-                                {recommendations.discover && (
-                                    <GameRecommendationCard
-                                        recommendationsArray={
-                                            recommendations.discover
-                                        }
-                                    />
-                                )}
-                            </div>
-                        )}
-                    </div>
+                        </>
+                    ) : (
+                        <div className='w-fit mx-auto'>
+                            <NothingFoundCard />
+                        </div>
+                    )}
                 </section>
             </div>
         </main>

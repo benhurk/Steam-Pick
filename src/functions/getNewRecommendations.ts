@@ -3,6 +3,7 @@ import { SteamGame } from '@/types/TGames';
 import { TQueryData, TQueryFilters } from '@/types/TApi';
 import getTagNames from './utils/getTagNames';
 import { TPreferences } from '@/types/TPreferences';
+import recommendConditions from './utils/recommendConditions';
 
 export default async function getNewRecommendations(
     favoriteGenres: [number, number][],
@@ -77,14 +78,13 @@ export default async function getNewRecommendations(
                         matchingThemes,
                         matchingMoods,
                     }) =>
-                        matchingGenres.count > 0 &&
-                        matchingGameplay.count > 0 &&
-                        matchingGameplay.count +
-                            matchingThemes.count +
-                            matchingMoods.count +
-                            preferences.include.length /
-                                preferences.include.length >
-                            2
+                        recommendConditions(
+                            matchingGenres.count,
+                            matchingGameplay.count,
+                            matchingThemes.count,
+                            matchingMoods.count,
+                            preferences
+                        )
                 )
                 .sort((a, b) => b.score - a.score)
                 .slice(0, 3);
@@ -108,6 +108,7 @@ export default async function getNewRecommendations(
                                 ...matchingGameplay.tags,
                                 ...matchingThemes.tags,
                                 ...matchingMoods.tags,
+                                ...preferences.include,
                             ]),
                         },
                     })

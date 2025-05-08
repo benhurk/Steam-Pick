@@ -2,6 +2,7 @@ import { TPreferences } from '@/types/TPreferences';
 import getMatchingTags from './helpers/getMatchingTags';
 import getTagNames from './utils/getTagNames';
 import { GameData } from '@/types/TGames';
+import recommendConditions from './utils/recommendConditions';
 
 export default function getOwnedRecomendations(
     favoriteGenres: [number, number][],
@@ -45,11 +46,15 @@ export default function getOwnedRecomendations(
                 matchingGenres.count * 2 + nonGenreMatchingTags; //Weight genres higher
 
             if (
-                matchingGenres.count > 0 &&
-                matchingGameplay.count > 0 &&
-                nonGenreMatchingTags > 2 &&
-                !hasExcludedTag &&
-                hasPrefTags
+                recommendConditions(
+                    matchingGenres.count,
+                    matchingGameplay.count,
+                    matchingThemes.count,
+                    matchingMoods.count,
+                    preferences,
+                    hasPrefTags,
+                    hasExcludedTag
+                )
             ) {
                 return {
                     name: game.name,
@@ -61,6 +66,7 @@ export default function getOwnedRecomendations(
                             ...matchingGameplay.tags,
                             ...matchingThemes.tags,
                             ...matchingMoods.tags,
+                            ...preferences.include,
                         ]),
                     },
                 };

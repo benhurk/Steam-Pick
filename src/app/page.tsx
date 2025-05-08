@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { usePreferences } from '@/contexts/Preferences';
-import encodePreferences from '@/functions/utils/encodePreferences';
 
 import HelpMenu from '@/components/HelpMenu';
 import PreferencesMenu from '@/components/PreferencesMenu';
@@ -17,7 +16,7 @@ export default function Home() {
     const [steamId, setSteamId] = useState<string>('');
     const preferences = usePreferences().preferences;
 
-    const prefs = encodePreferences(preferences);
+    const prefs = encodeURIComponent(JSON.stringify(preferences));
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
