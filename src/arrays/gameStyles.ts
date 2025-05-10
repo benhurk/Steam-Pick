@@ -16,7 +16,6 @@ export const gameplayStyles = [
     { tagid: 8945, name: 'Resource Management' },
     { tagid: 1773, name: 'Arcade' },
     { tagid: 8369, name: 'Investigation' },
-    { tagid: 5613, name: 'Detective' },
     { tagid: 1720, name: 'Dungeon Crawler' },
     { tagid: 7332, name: 'Base Building' },
     { tagid: 1702, name: 'Crafting' },
@@ -25,6 +24,7 @@ export const gameplayStyles = [
     { tagid: 4036, name: 'Parkour' },
     { tagid: 3813, name: 'Real Time Tactics' },
     { tagid: 16689, name: 'Time Management' },
+    { tagid: 12472, name: 'Management' },
     { tagid: 14139, name: 'Turn-Based Tactics' },
     { tagid: 1644, name: 'Driving' },
     { tagid: 5094, name: 'Narration' },
@@ -32,15 +32,14 @@ export const gameplayStyles = [
     { tagid: 4486, name: 'Choose Your Own Adventure' },
     { tagid: 9204, name: 'Immersive Sim' },
     { tagid: 5652, name: 'Collectathon' },
-    { tagid: 1774, name: 'Shooter' },
     { tagid: 3854, name: 'Lore-Rich' },
     { tagid: 3878, name: 'Competitive' },
     { tagid: 3877, name: 'Precision Platformer' },
+    { tagid: 1734, name: 'Fast-Paced' },
 ];
 
 export const themes = [
     { tagid: 1684, name: 'Fantasy' },
-    { tagid: 4057, name: 'Magic' },
     { tagid: 1710, name: 'Surreal' },
     { tagid: 1678, name: 'War' },
     { tagid: 3987, name: 'Historical' },
@@ -57,17 +56,17 @@ export const themes = [
     { tagid: 3942, name: 'Sci-fi' },
     { tagid: 4947, name: 'Romance' },
     { tagid: 4004, name: 'Retro' },
-    { tagid: 5716, name: 'Mystery' },
     { tagid: 4604, name: 'Dark Fantasy' },
     { tagid: 1651, name: 'Satire' },
     { tagid: 4085, name: 'Anime' },
     { tagid: 6378, name: 'Crime' },
     { tagid: 3916, name: 'Old School' },
     { tagid: 44868, name: 'LGBTQ+' },
+    { tagid: 4695, name: 'Economy' },
+    { tagid: 4853, name: 'Political' },
 ];
 
 export const moods = [
-    { tagid: 1734, name: 'Fast-Paced' },
     { tagid: 1654, name: 'Relaxing' },
     { tagid: 4136, name: 'Funny' },
     { tagid: 5608, name: 'Emotional' },
@@ -78,4 +77,6 @@ export const moods = [
     { tagid: 4726, name: 'Cute' },
     { tagid: 5984, name: 'Drama' },
     { tagid: 1714, name: 'Psychedelic' },
+    { tagid: 5716, name: 'Mystery' },
+    { tagid: 4667, name: 'Violent' },
 ];

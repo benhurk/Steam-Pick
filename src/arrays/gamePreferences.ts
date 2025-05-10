@@ -1,13 +1,19 @@
 export const miscellaneousTags = [
-    { tagid: 493, name: 'Early Access' },
+    { tagid: 492, name: 'Indie' },
     { tagid: 21978, name: 'VR' },
     { tagid: 5350, name: 'Family Friendly' },
     { tagid: 113, name: 'Free to Play' },
+    { tagid: 4234, name: 'Short' },
 ];
 
 export const difficulties = [
     { tagid: 597, name: 'Casual' },
     { tagid: 4026, name: 'Difficult' },
+];
+
+export const pacings = [
+    { tagid: 1654, name: 'Relaxing' },
+    { tagid: 1734, name: 'Fast-Paced' },
 ];
 
 export const multiplayerTags = [

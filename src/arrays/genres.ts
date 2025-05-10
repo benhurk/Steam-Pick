@@ -6,12 +6,12 @@ export const broadGenres = [
     { tagid: 1662, name: 'Survival' },
     { tagid: 1663, name: 'FPS' },
     { tagid: 4106, name: 'Action-Adventure' },
+    { tagid: 1774, name: 'Shooter' },
 ];
 
 export const specificGenres = [
     { tagid: 1664, name: 'Puzzle' },
     { tagid: 1716, name: 'Rogue-like' },
-    { tagid: 1741, name: 'Turn-Based Strategy' },
     { tagid: 9551, name: 'Dating Sim' },
     { tagid: 4434, name: 'JRPG' },
     { tagid: 1666, name: 'Card Game' },
@@ -30,7 +30,6 @@ export const specificGenres = [
     { tagid: 87918, name: 'Farming Sim' },
     { tagid: 4364, name: 'Grand Strategy' },
     { tagid: 1754, name: 'MMORPG' },
-    { tagid: 1670, name: '4X' },
     { tagid: 699, name: 'Racing' },
     { tagid: 176981, name: 'Battle Royale' },
     { tagid: 701, name: 'Sports' },
@@ -41,7 +40,6 @@ export const specificGenres = [
     { tagid: 29482, name: 'Souls-like' },
     { tagid: 1743, name: 'Fighting' },
     { tagid: 1100689, name: 'Open World Survival Craft' },
-    { tagid: 12472, name: 'Management' },
     { tagid: 3978, name: 'Survival Horror' },
     { tagid: 1721, name: 'Psychological Horror' },
     { tagid: 5379, name: '2D Platformer' },

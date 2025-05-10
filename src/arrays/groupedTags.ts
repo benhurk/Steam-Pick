@@ -26,4 +26,14 @@ export const groupedTags = [
     new Set([4255, 29482]),
     //Precision Platformer, Souls-like
     new Set([3877, 29482]),
+    // Retro, Old School, Arcade
+    new Set([4004, 3916, 1773]),
+    //Sports, Racing
+    new Set([699, 701]),
+    //Base building, City Builder
+    new Set([4328, 7332]),
+    //FPS, Shooter
+    new Set([1663, 1774]),
+    //Open World, Exploration
+    new Set([1695, 3834]),
 ];

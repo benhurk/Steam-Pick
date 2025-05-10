@@ -23,7 +23,7 @@ export default function recommendConditions(
     } else if (
         genresCount > 0 &&
         gameplayCount > 0 &&
-        nonGenreMatchingTags > 2 &&
+        nonGenreMatchingTags > 1 &&
         !hasExcludedTag &&
         hasPrefTags
     ) {

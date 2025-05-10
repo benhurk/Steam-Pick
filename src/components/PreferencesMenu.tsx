@@ -2,12 +2,18 @@ import { RiListSettingsFill } from 'react-icons/ri';
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from './ui/dialog';
 import { Switch } from '@/components/ui/switch';
-import { difficulties, multiplayerTags } from '@/arrays/gamePreferences';
+import {
+    difficulties,
+    miscellaneousTags,
+    multiplayerTags,
+    pacings,
+} from '@/arrays/gamePreferences';
 import { usePreferences } from '@/contexts/Preferences';
 import { excludeByDefault } from '@/arrays/preferencesInitialState';
 
@@ -54,51 +60,27 @@ export default function PreferencesMenu() {
                 <DialogHeader className='border-b border-gray-300 pb-3'>
                     <DialogTitle>Preferences</DialogTitle>
                 </DialogHeader>
+                <DialogDescription className='text-md'>
+                    Turn on the switches below to <b>only</b> include games of
+                    that category.
+                </DialogDescription>
                 <section className='mb-6'>
                     <h3 className='font-semibold mb-2'>Miscellaneous</h3>
-                    <div className='grid grid-cols-2 gap-3 text-sm'>
-                        <div className='flex items-center gap-2'>
-                            <Switch
-                                id='earlyAccess'
-                                checked={preferences.include.some(
-                                    (t) => t === 493
-                                )}
-                                onClick={() => toggleTag(493)}
-                            />
-                            <label htmlFor='earlyAccess'>Early Access</label>
-                        </div>
-                        <div className='flex items-center gap-2'>
-                            <Switch
-                                id='VR'
-                                checked={preferences.include.some(
-                                    (t) => t === 21978
-                                )}
-                                onClick={() => toggleTag(21978)}
-                            />
-                            <label htmlFor='VR'>VR</label>
-                        </div>
-                        <div className='flex items-center gap-2'>
-                            <Switch
-                                id='familyFriendly'
-                                checked={preferences.include.some(
-                                    (m) => m === 5350
-                                )}
-                                onClick={() => toggleTag(5350)}
-                            />
-                            <label htmlFor='familyFriendly'>
-                                Family Friendly
-                            </label>
-                        </div>
-                        <div className='flex items-center gap-2'>
-                            <Switch
-                                id='f2p'
-                                checked={preferences.include.some(
-                                    (m) => m === 113
-                                )}
-                                onClick={() => toggleTag(113)}
-                            />
-                            <label htmlFor='f2p'>Free to Play</label>
-                        </div>
+                    <div className='grid grid-cols-2 gap-3'>
+                        {miscellaneousTags.map((t) => (
+                            <div
+                                key={t.tagid}
+                                className='flex items-center gap-2 text-sm'>
+                                <Switch
+                                    id={t.name}
+                                    checked={preferences.include.some(
+                                        (m) => m === t.tagid
+                                    )}
+                                    onClick={() => toggleTag(t.tagid)}
+                                />
+                                <label htmlFor={t.name}>{t.name}</label>
+                            </div>
+                        ))}
                     </div>
                 </section>
                 <section className='mb-6'>
@@ -116,6 +98,25 @@ export default function PreferencesMenu() {
                                     onClick={() => toggleTag(d.tagid)}
                                 />
                                 <label htmlFor={d.name}>{d.name}</label>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+                <section className='mb-6'>
+                    <h3 className='font-semibold mb-2'>Pacing</h3>
+                    <div className='grid grid-cols-2 gap-3'>
+                        {pacings.map((p) => (
+                            <div
+                                key={p.tagid}
+                                className='flex items-center gap-2 text-sm'>
+                                <Switch
+                                    id={p.name}
+                                    checked={preferences.include.some(
+                                        (m) => m === p.tagid
+                                    )}
+                                    onClick={() => toggleTag(p.tagid)}
+                                />
+                                <label htmlFor={p.name}>{p.name}</label>
                             </div>
                         ))}
                     </div>

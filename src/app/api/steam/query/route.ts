@@ -52,8 +52,6 @@ export async function POST(request: Request) {
             .map((t) => JSON.stringify({ tagids: [`${t}`] }))
             .join(', ');
 
-        console.log(toInclude);
-
         const toExclude = excludeTags.join('","');
 
         let pagination = 0;
@@ -102,8 +100,6 @@ export async function POST(request: Request) {
                             name: g.name,
                             tagids: filterGameTags(g.tags),
                         }));
-
-                    console.log(filteredGamesData);
 
                     games.push(...filteredGamesData);
 
