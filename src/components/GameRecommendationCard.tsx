@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import Image from 'next/image';
-import { SquareLoader } from 'react-spinners';
 
 import { AppDetailsRes } from '@/types/TSteam';
 import { TRecommendations } from '@/types/TGames';
+
+import LoaderSpinner from './LoaderSpinner';
 
 type Props = {
     recommendationsArray: TRecommendations;
@@ -33,7 +34,7 @@ export default function GameRecommendationCard({
             } finally {
                 setTimeout(() => {
                     setLoading(false);
-                }, 1000);
+                }, 500);
             }
         };
 
@@ -64,7 +65,7 @@ export default function GameRecommendationCard({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className='absolute inset-0 flex items-center justify-center'>
-                        <SquareLoader color='#f8fafc' />
+                        <LoaderSpinner />
                     </motion.div>
                 ) : (
                     gameInfo && (

@@ -6,7 +6,7 @@ import { QueryRes } from '@/types/TSteam';
 import { NextResponse } from 'next/server';
 
 const BASE_URL = `https://api.steampowered.com/IStoreQueryService/Query/v1/?key=${process.env.STEAM_KEY}`;
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 5;
 const RETRY_DELAY = 1500;
 
 async function fetchUrl(url: string) {

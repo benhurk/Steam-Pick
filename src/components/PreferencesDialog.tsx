@@ -61,7 +61,7 @@ export default function PreferencesMenu() {
                     <DialogTitle>Preferences</DialogTitle>
                 </DialogHeader>
                 <DialogDescription className='text-md'>
-                    Turn on the switches below to <b>only</b> include games of
+                    Toggle the switches below to <b>only</b> include games of
                     that category.
                 </DialogDescription>
                 <section className='mb-6'>

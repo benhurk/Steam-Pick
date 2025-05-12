@@ -22,20 +22,25 @@ export default function RootLayout({
             <body className='relative flex flex-col min-h-screen antialiased font-sans'>
                 <Background />
                 <header
-                    className='relative py-6 text-white before:absolute before:inset-0 z-10
+                    className='relative py-4 text-white before:absolute before:inset-0 z-10
                         before:bg-slate-950 before:opacity-60'>
                     <div className='relative container flex justify-between items-center'>
-                        <Link href={'/'}>
-                            <h1 className='flex gap-4 items-center text-5xl font-bold'>
-                                <Image
-                                    width={48}
-                                    height={48}
-                                    src='./steamlogo.svg'
-                                    alt='Steam'
-                                />
-                                Pick
-                            </h1>
-                        </Link>
+                        <div>
+                            <Link href={'/'} className='block mb-1'>
+                                <h1 className='flex gap-4 items-center text-5xl font-bold'>
+                                    <Image
+                                        width={48}
+                                        height={48}
+                                        src='./steamlogo.svg'
+                                        alt='Steam'
+                                    />
+                                    Pick
+                                </h1>
+                            </Link>
+                            <p className='text-lg '>
+                                Find games <b>for you</b>.
+                            </p>
+                        </div>
                         <nav className='font-semibold text-lg'>
                             <ul className='flex items-center gap-16'>
                                 <li>

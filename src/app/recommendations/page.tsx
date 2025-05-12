@@ -137,7 +137,7 @@ export default async function Recommendations({ searchParams }: Props) {
                                     <div className='w-min'>
                                         {recommendations.owned.length > 0 && (
                                             <h3 className='block mb-4 text-xl text-center font-semibold text-white '>
-                                                Want something new?
+                                                Discover something new
                                             </h3>
                                         )}
                                         {recommendations.discover && (
