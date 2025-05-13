@@ -37,7 +37,7 @@ export default function RootLayout({
                                     Pick
                                 </h1>
                             </Link>
-                            <p className='text-lg '>
+                            <p className='text-lg text-slate-300'>
                                 Find games <b>for you</b>.
                             </p>
                         </div>
