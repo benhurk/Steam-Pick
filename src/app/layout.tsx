@@ -21,9 +21,7 @@ export default function RootLayout({
         <html lang='en'>
             <body className='relative flex flex-col min-h-screen antialiased font-sans'>
                 <Background />
-                <header
-                    className='relative py-4 text-white before:absolute before:inset-0 z-10
-                        before:bg-slate-950 before:opacity-60'>
+                <header className='bg-dark-transparent py-4 text-white'>
                     <div className='relative container flex justify-between items-center'>
                         <div>
                             <Link href={'/'} className='block mb-1'>

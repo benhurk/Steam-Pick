@@ -6,6 +6,8 @@ import { SteamGame } from '@/types/TGames';
 import { NextResponse } from 'next/server';
 import { ownedGamesMock } from '@/arrays/mock';
 
+const BASE_URL = 'https://api.steampowered.com/IPlayerService';
+
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const steamId = searchParams.get('steamid');
@@ -16,8 +18,6 @@ export async function GET(req: Request) {
             { status: 400 }
         );
     }
-
-    const BASE_URL = 'https://api.steampowered.com/IPlayerService';
 
     try {
         //Get owned games

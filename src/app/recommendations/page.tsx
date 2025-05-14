@@ -5,12 +5,13 @@ import analyseGamesWeight from '@/functions/analyseGamesWeight';
 import checkGamesTags from '@/functions/checkGamesTags';
 import getRecommendations from '@/functions/getRecommendations';
 
-import { TUserGames } from '@/types/TApi';
+import { TUserGames, TUserInfo } from '@/types/TApi';
 
 import GameRecommendationCard from '@/components/GameRecommendationCard';
 import { TPreferences } from '@/types/TPreferences';
 import preferencesInitialState from '@/arrays/preferencesInitialState';
 import NothingFoundCard from '@/components/NothingFoundCard';
+import UserInfoSection from '@/components/UserInfoSection';
 
 type Props = {
     searchParams: {
@@ -29,6 +30,15 @@ export default async function Recommendations({ searchParams }: Props) {
     const preferences: TPreferences = prefs
         ? JSON.parse(decodeURIComponent(prefs))
         : preferencesInitialState;
+
+    //Get user info
+    const userInfo: TUserInfo = await fetch(
+        `${process.env.URL}/api/steam/userinfo?steamid=${steamId}`
+    ).then((res) => res.json());
+
+    if (!userInfo) {
+        redirect('/');
+    }
 
     //Get user games
     const userGames: TUserGames = await fetch(
@@ -57,17 +67,16 @@ export default async function Recommendations({ searchParams }: Props) {
     );
 
     return (
-        <main className='container flex flex-col grow justify-center'>
+        <main className='container py-12 flex flex-col gap-16'>
+            <UserInfoSection
+                userInfo={userInfo}
+                userTaste={taste}
+                userGames={userGames}
+            />
             <section>
                 {[...recommendations.owned, ...recommendations.discover]
                     .length > 0 ? (
                     <>
-                        <h2
-                            className='mb-12 text-center text-4xl font-bold text-transparent 
-                                bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
-                            Picked Games
-                        </h2>
-
                         <div
                             className={`flex ${
                                 recommendations.owned.length > 0 &&

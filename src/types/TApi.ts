@@ -1,5 +1,10 @@
 import { SteamGame } from './TGames';
 
+export type TUserInfo = {
+    personaname: string;
+    avatar: string;
+};
+
 export type TUserGames = {
     owned: SteamGame[];
     played: SteamGame[];

@@ -12,6 +12,22 @@ body {
     margin-inline: auto;
 }
 
+.bg-dark-transparent {
+    position: relative;
+}
+
+.bg-dark-transparent::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    z-index: -10;
+    background-color: var(--color-slate-950);
+    opacity: 0.6;
+}
+
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
