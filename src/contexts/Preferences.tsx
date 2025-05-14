@@ -1,6 +1,6 @@
 'use client';
 
-import preferencesInitialState from '@/arrays/preferencesInitialState';
+import preferencesInitialState from '@/consts/preferencesInitialState';
 import { TPreferences, TPreferencesContext } from '@/types/TPreferences';
 import { createContext, ReactNode, useContext, useState } from 'react';
 

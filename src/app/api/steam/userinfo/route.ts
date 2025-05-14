@@ -1,5 +1,6 @@
-import { UserSummariesRes } from '@/types/TSteam';
 import { NextResponse } from 'next/server';
+
+import { UserSummariesRes } from '@/types/TSteam';
 
 const BASE_URL =
     'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2';
@@ -10,7 +11,7 @@ export async function GET(req: Request) {
 
     if (!steamId) {
         return NextResponse.json(
-            { error: 'No Steam id provided.' },
+            { error: 'No SteamID provided.' },
             { status: 400 }
         );
     }

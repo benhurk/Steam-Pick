@@ -9,7 +9,7 @@ import {
 
 import { TfiHelpAlt } from 'react-icons/tfi';
 
-export default function HelpMenu() {
+export default function HelpDialog() {
     return (
         <Dialog>
             <DialogTrigger

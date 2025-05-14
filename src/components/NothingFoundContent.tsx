@@ -4,7 +4,7 @@ import { TbFaceIdError } from 'react-icons/tb';
 import { FaHome } from 'react-icons/fa';
 import Link from 'next/link';
 
-export default function NothingFoundCard() {
+export default function NothingFoundContent() {
     return (
         <div>
             <div className='w-full h-52 text-white'>

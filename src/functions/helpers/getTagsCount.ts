@@ -1,5 +1,4 @@
-import { gameplayStyles, moods, themes } from '@/arrays/gameStyles';
-import { broadGenres, specificGenres } from '@/arrays/genres';
+import gameTags from '@/consts/gameTags';
 import { GameWeight } from '@/types/TGames';
 
 export default function getTagsCount(games: GameWeight[]) {
@@ -12,7 +11,7 @@ export default function getTagsCount(games: GameWeight[]) {
         const tags = g.tags;
         const weight = g.weight;
 
-        broadGenres.forEach((genre) => {
+        gameTags.broadGenres.forEach((genre) => {
             const currentCount = genresCount.get(genre.tagid) || 0;
             const hasTag = tags.includes(genre.tagid);
 
@@ -21,7 +20,7 @@ export default function getTagsCount(games: GameWeight[]) {
             }
         });
 
-        specificGenres.forEach((genre) => {
+        gameTags.specificGenres.forEach((genre) => {
             const currentCount = genresCount.get(genre.tagid) || 0;
             const hasTag = tags.includes(genre.tagid);
 
@@ -30,7 +29,7 @@ export default function getTagsCount(games: GameWeight[]) {
             }
         });
 
-        gameplayStyles.forEach((style) => {
+        gameTags.gameplay.forEach((style) => {
             const currentCount = gameplayStylesCount.get(style.tagid) || 0;
             const hasTag = tags.includes(style.tagid);
 
@@ -39,7 +38,7 @@ export default function getTagsCount(games: GameWeight[]) {
             }
         });
 
-        themes.forEach((theme) => {
+        gameTags.themes.forEach((theme) => {
             const currentCount = themesCount.get(theme.tagid) || 0;
             const hasTag = tags.includes(theme.tagid);
 
@@ -48,7 +47,7 @@ export default function getTagsCount(games: GameWeight[]) {
             }
         });
 
-        moods.forEach((mood) => {
+        gameTags.moods.forEach((mood) => {
             const currentCount = moodsCount.get(mood.tagid) || 0;
             const hasTag = tags.includes(mood.tagid);
 

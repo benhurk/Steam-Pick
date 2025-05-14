@@ -1,4 +1,4 @@
-import { groupedTags } from '@/arrays/groupedTags';
+import { groupedTags } from '@/consts/groupedTags';
 
 export default function filterGroupedTags(
     tags: { tagid: number; weight: number }[]

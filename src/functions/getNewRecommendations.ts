@@ -4,24 +4,20 @@ import { TQueryData, TQueryFilters } from '@/types/TApi';
 import getTagNames from './utils/getTagNames';
 import { TPreferences } from '@/types/TPreferences';
 import recommendConditions from './utils/recommendConditions';
+import { TTaste } from '@/types/TTaste';
 
 export default async function getNewRecommendations(
-    favoriteGenres: [number, number][],
-    favoriteGameplay: [number, number][],
-    favoriteThemes: [number, number][],
-    favoriteMoods: [number, number][],
-    excludedTags: number[],
+    taste: TTaste,
     ownedGames: SteamGame[],
     preferences: TPreferences
 ) {
     const recommendations = [];
 
-    // Process genres sequentially to avoid rate limiting
-    for (const [genre] of favoriteGenres) {
+    for (const [genre] of taste.favoriteGenres) {
         try {
             const filtersBody: TQueryFilters = {
                 includeTags: [...preferences.include, genre],
-                excludeTags: excludedTags,
+                excludeTags: taste.excludedTags,
                 minRating: { count: 2000, percentPositive: 85 },
             };
 
@@ -37,12 +33,14 @@ export default async function getNewRecommendations(
             ).then((res) => res.json());
 
             const processedGames = data
+                //Remove owned games
                 .filter(
                     (game) =>
                         !ownedGames.some(
                             (og) => og.name === game.name.toLowerCase()
                         )
                 )
+                //Parse tags
                 .map((game) => {
                     const {
                         matchingGenres,
@@ -51,10 +49,10 @@ export default async function getNewRecommendations(
                         matchingMoods,
                     } = getMatchingTags(
                         game.tagids,
-                        favoriteGenres,
-                        favoriteGameplay,
-                        favoriteThemes,
-                        favoriteMoods
+                        taste.favoriteGenres,
+                        taste.favoriteGameplay,
+                        taste.favoriteThemes,
+                        taste.favoriteMoods
                     );
 
                     const nonGenreMatchingTags =
@@ -71,6 +69,7 @@ export default async function getNewRecommendations(
                         matchingMoods,
                     };
                 })
+                //Get best matches
                 .filter(
                     ({
                         matchingGenres,
@@ -115,7 +114,7 @@ export default async function getNewRecommendations(
                 )
             );
 
-            // Add delay between genre requests to avoid rate limiting
+            // Add delay between requests to avoid rate limiting
             await new Promise((resolve) => setTimeout(resolve, 1500));
         } catch (error) {
             console.error(`Error processing genre ${genre}:`, error);

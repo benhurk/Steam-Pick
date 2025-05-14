@@ -5,7 +5,7 @@ import getTopTags from './helpers/getTopTags';
 import getTagNames from './utils/getTagNames';
 import { TPreferences } from '@/types/TPreferences';
 
-export default function checkGamesTags(
+export default function parseTags(
     gamesWeight: GameWeight[],
     preferences: TPreferences
 ) {

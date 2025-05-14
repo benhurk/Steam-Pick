@@ -1,6 +1,5 @@
-import { broadGenres, specificGenres } from '@/arrays/genres';
+import gameTags, { allTags } from '@/consts/gameTags';
 import filterGroupedTags from './filterGroupedTags';
-import { allTags } from '@/arrays/groupedTags';
 
 export default function filterGameTags(
     tags: { tagid: number; weight: number }[]
@@ -12,11 +11,11 @@ export default function filterGameTags(
     const bestTags = filterGroupedTags(relevantTags).map((tag) => tag.tagid);
 
     //Separate genre tags
-    const gameBroadGenres = broadGenres
+    const gameBroadGenres = gameTags.broadGenres
         .filter((g) => bestTags.some((t) => t === g.tagid))
         .map((g) => g.tagid);
 
-    const gameSpecificGenres = specificGenres
+    const gameSpecificGenres = gameTags.specificGenres
         .filter((g) => bestTags.some((t) => t === g.tagid))
         .map((g) => g.tagid);
 

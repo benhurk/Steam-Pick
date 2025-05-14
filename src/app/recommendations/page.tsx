@@ -1,17 +1,17 @@
 import { redirect } from 'next/navigation';
 
+import { TUserGames, TUserInfo } from '@/types/TApi';
+import { TPreferences } from '@/types/TPreferences';
+import preferencesInitialState from '@/consts/preferencesInitialState';
+
 import getGamesData from '@/functions/getGamesData';
-import analyseGamesWeight from '@/functions/analyseGamesWeight';
-import checkGamesTags from '@/functions/checkGamesTags';
+import calculateGamesWeight from '@/functions/calculateGamesWeight';
+import parseTags from '@/functions/parseTags';
 import getRecommendations from '@/functions/getRecommendations';
 
-import { TUserGames, TUserInfo } from '@/types/TApi';
-
-import GameRecommendationCard from '@/components/GameRecommendationCard';
-import { TPreferences } from '@/types/TPreferences';
-import preferencesInitialState from '@/arrays/preferencesInitialState';
-import NothingFoundCard from '@/components/NothingFoundCard';
+import RecommendationCard from '@/components/RecommendationCard';
 import UserInfoSection from '@/components/UserInfoSection';
+import NothingFoundContent from '@/components/NothingFoundContent';
 
 type Props = {
     searchParams: {
@@ -49,18 +49,14 @@ export default async function Recommendations({ searchParams }: Props) {
     const gamesData = await getGamesData(userGames.played, userGames.unplayed);
 
     //Calculate the played games weight
-    const gamesWeight = analyseGamesWeight(gamesData.played);
+    const gamesWeight = calculateGamesWeight(gamesData.played);
 
     //Get user's taste
-    const taste = checkGamesTags(gamesWeight, preferences);
+    const taste = parseTags(gamesWeight, preferences);
 
     //Get recommendations
     const recommendations = await getRecommendations(
-        taste.favoriteGenres,
-        taste.favoriteGameplay,
-        taste.favoriteThemes,
-        taste.favoriteMoods,
-        taste.excludedTags,
+        taste,
         userGames.owned,
         gamesData.unplayed,
         preferences
@@ -92,7 +88,7 @@ export default async function Recommendations({ searchParams }: Props) {
                                         </h3>
                                     )}
                                     {recommendations.owned && (
-                                        <GameRecommendationCard
+                                        <RecommendationCard
                                             recommendationsArray={
                                                 recommendations.owned
                                             }
@@ -114,7 +110,7 @@ export default async function Recommendations({ searchParams }: Props) {
                                         </h3>
                                     )}
                                     {recommendations.discover && (
-                                        <GameRecommendationCard
+                                        <RecommendationCard
                                             recommendationsArray={
                                                 recommendations.discover
                                             }
@@ -126,7 +122,7 @@ export default async function Recommendations({ searchParams }: Props) {
                     </>
                 ) : (
                     <div className='w-fit mx-auto'>
-                        <NothingFoundCard />
+                        <NothingFoundContent />
                     </div>
                 )}
             </section>

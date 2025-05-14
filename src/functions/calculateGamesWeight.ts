@@ -4,7 +4,7 @@ import {
     calculateAchievementsScore,
 } from './helpers/calculateScores';
 
-export default function analyseGamesWeight(gamesArray: GameData[]) {
+export default function calculateGamesWeight(gamesArray: GameData[]) {
     const gameWeights: GameWeight[] = [];
 
     gamesArray.forEach((game) => {

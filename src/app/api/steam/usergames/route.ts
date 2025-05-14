@@ -1,10 +1,12 @@
 export const revalidate = 86400;
 
-import isRecentlyPlayed from '@/functions/utils/isRecentlyPlayed';
+import { NextResponse } from 'next/server';
+
 import { GetTopAchievementsForGamesRes, OwnedGamesRes } from '@/types/TSteam';
 import { SteamGame } from '@/types/TGames';
-import { NextResponse } from 'next/server';
-import { ownedGamesMock } from '@/arrays/mock';
+import { ownedGamesMock } from '@/consts/mock';
+
+import isRecentlyPlayed from '@/functions/utils/isRecentlyPlayed';
 
 const BASE_URL = 'https://api.steampowered.com/IPlayerService';
 
@@ -14,7 +16,7 @@ export async function GET(req: Request) {
 
     if (!steamId) {
         return NextResponse.json(
-            { error: 'No Steam id provided.' },
+            { error: 'No SteamID provided.' },
             { status: 400 }
         );
     }

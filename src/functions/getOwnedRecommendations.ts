@@ -3,13 +3,10 @@ import getMatchingTags from './helpers/getMatchingTags';
 import getTagNames from './utils/getTagNames';
 import { GameData } from '@/types/TGames';
 import recommendConditions from './utils/recommendConditions';
+import { TTaste } from '@/types/TTaste';
 
 export default function getOwnedRecomendations(
-    favoriteGenres: [number, number][],
-    favoriteGameplay: [number, number][],
-    favoriteThemes: [number, number][],
-    favoriteMoods: [number, number][],
-    excludedTags: number[],
+    taste: TTaste,
     unplayedGamesData: GameData[],
     preferences: TPreferences
 ) {
@@ -22,15 +19,15 @@ export default function getOwnedRecomendations(
                 matchingMoods,
             } = getMatchingTags(
                 game.tags,
-                favoriteGenres,
-                favoriteGameplay,
-                favoriteThemes,
-                favoriteMoods
+                taste.favoriteGenres,
+                taste.favoriteGameplay,
+                taste.favoriteThemes,
+                taste.favoriteMoods
             );
 
             const hasExcludedTag =
                 game.tags.filter((tag) =>
-                    excludedTags.some((genre) => genre === tag)
+                    taste.excludedTags.some((genre) => genre === tag)
                 ).length > 0;
 
             const hasPrefTags = preferences.include.every((tag) =>

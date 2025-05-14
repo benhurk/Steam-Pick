@@ -1,7 +1,7 @@
 'use client';
 
-import HelpMenu from '@/components/HelpDialog';
-import PreferencesMenu from '@/components/PreferencesDialog';
+import HelpDialog from '@/components/HelpDialog';
+import PreferencesMenu from '@/components/PreferencesMenu';
 import SteamIDInput from '@/components/SteamIDInput';
 import { FaCircleInfo } from 'react-icons/fa6';
 
@@ -27,7 +27,7 @@ export default function Home() {
                 <SteamIDInput />
                 <div className='flex justify-center gap-4'>
                     <PreferencesMenu />
-                    <HelpMenu />
+                    <HelpDialog />
                 </div>
             </div>
         </main>

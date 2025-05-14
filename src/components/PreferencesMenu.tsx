@@ -8,14 +8,9 @@ import {
     DialogTrigger,
 } from './ui/dialog';
 import { Switch } from '@/components/ui/switch';
-import {
-    difficulties,
-    miscellaneousTags,
-    multiplayerTags,
-    pacings,
-} from '@/arrays/gamePreferences';
+import gameTags from '@/consts/gameTags';
 import { usePreferences } from '@/contexts/Preferences';
-import { excludeByDefault } from '@/arrays/preferencesInitialState';
+import { excludeByDefault } from '@/consts/preferencesInitialState';
 
 export default function PreferencesMenu() {
     const { preferences, setPreferences } = usePreferences();
@@ -67,7 +62,7 @@ export default function PreferencesMenu() {
                 <section className='mb-6'>
                     <h3 className='font-semibold mb-2'>Miscellaneous</h3>
                     <div className='grid grid-cols-2 gap-3'>
-                        {miscellaneousTags.map((t) => (
+                        {gameTags.miscellaneous.map((t) => (
                             <div
                                 key={t.tagid}
                                 className='flex items-center gap-2 text-sm'>
@@ -86,7 +81,7 @@ export default function PreferencesMenu() {
                 <section className='mb-6'>
                     <h3 className='font-semibold mb-2'>Difficulties</h3>
                     <div className='grid grid-cols-2 gap-3'>
-                        {difficulties.map((d) => (
+                        {gameTags.difficulties.map((d) => (
                             <div
                                 key={d.tagid}
                                 className='flex items-center gap-2 text-sm'>
@@ -105,7 +100,7 @@ export default function PreferencesMenu() {
                 <section className='mb-6'>
                     <h3 className='font-semibold mb-2'>Pacing</h3>
                     <div className='grid grid-cols-2 gap-3'>
-                        {pacings.map((p) => (
+                        {gameTags.pacings.map((p) => (
                             <div
                                 key={p.tagid}
                                 className='flex items-center gap-2 text-sm'>
@@ -124,7 +119,7 @@ export default function PreferencesMenu() {
                 <section>
                     <h3 className='font-semibold mb-2'>Multiplayer</h3>
                     <div className='grid grid-cols-2 gap-3'>
-                        {multiplayerTags.map((mp) => (
+                        {gameTags.multiplayer.map((mp) => (
                             <div
                                 key={mp.tagid}
                                 className='flex items-center gap-2 text-sm'>

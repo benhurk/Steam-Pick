@@ -1,22 +1,3 @@
-import {
-    difficulties,
-    miscellaneousTags,
-    multiplayerTags,
-} from '@/arrays/gamePreferences';
-import { gameplayStyles, moods, themes } from '@/arrays/gameStyles';
-import { broadGenres, specificGenres } from '@/arrays/genres';
-
-export const allTags = [
-    ...specificGenres,
-    ...broadGenres,
-    ...gameplayStyles,
-    ...themes,
-    ...moods,
-    ...miscellaneousTags,
-    ...difficulties,
-    ...multiplayerTags,
-];
-
 export const groupedTags = [
     //Survival Horror, Psychological Horror
     new Set([3978, 1721]),
@@ -30,10 +11,10 @@ export const groupedTags = [
     new Set([4004, 3916, 1773]),
     //Sports, Racing
     new Set([699, 701]),
-    //Base building, City Builder
-    new Set([4328, 7332]),
     //FPS, Shooter
     new Set([1663, 1774]),
     //Open World, Exploration
     new Set([1695, 3834]),
+    //Open World, Sandbox
+    new Set([1695, 3810]),
 ];

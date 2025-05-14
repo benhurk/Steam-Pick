@@ -1,9 +1,11 @@
 export const revalidate = 86400;
 
-import filterGameTags from '@/functions/utils/filterGameTags';
+import { NextResponse } from 'next/server';
+
 import { TQueryFilters, TQueryData } from '@/types/TApi';
 import { QueryRes } from '@/types/TSteam';
-import { NextResponse } from 'next/server';
+
+import filterGameTags from '@/functions/utils/filterGameTags';
 
 const BASE_URL = `https://api.steampowered.com/IStoreQueryService/Query/v1/?key=${process.env.STEAM_KEY}`;
 const MAX_RETRIES = 5;

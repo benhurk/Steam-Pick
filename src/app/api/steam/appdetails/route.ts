@@ -1,7 +1,8 @@
 export const revalidate = 604800;
 
-import { AppDetailsRes } from '@/types/TSteam';
 import { NextResponse } from 'next/server';
+
+import { AppDetailsRes } from '@/types/TSteam';
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);

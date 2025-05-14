@@ -1,4 +1,4 @@
-import { allTags } from '@/arrays/groupedTags';
+import { allTags } from '@/consts/gameTags';
 
 export default function getTagNames(tagIds: number[]) {
     return allTags

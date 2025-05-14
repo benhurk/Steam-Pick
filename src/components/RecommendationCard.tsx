@@ -2,20 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import Image from 'next/image';
 
 import { AppDetailsRes } from '@/types/TSteam';
 import { TRecommendations } from '@/types/TGames';
 
+import Image from 'next/image';
 import { SquareLoader } from 'react-spinners';
 
 type Props = {
     recommendationsArray: TRecommendations;
 };
 
-export default function GameRecommendationCard({
-    recommendationsArray,
-}: Props) {
+export default function RecommendationCard({ recommendationsArray }: Props) {
     const [loading, setLoading] = useState<boolean>(false);
     const [recommendationIndex, setRecommendationIndex] = useState<number>(0);
     const [gameInfo, setGameInfo] = useState<AppDetailsRes[string]>();
