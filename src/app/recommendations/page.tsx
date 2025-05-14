@@ -63,7 +63,7 @@ export default async function Recommendations({ searchParams }: Props) {
     );
 
     return (
-        <main className='container py-12 flex flex-col gap-16'>
+        <main className='container py-14 flex flex-col gap-14'>
             <UserInfoSection
                 userInfo={userInfo}
                 userTaste={taste}
@@ -83,7 +83,9 @@ export default async function Recommendations({ searchParams }: Props) {
                             {recommendations.owned.length > 0 && (
                                 <div className='w-min'>
                                     {recommendations.discover.length > 0 && (
-                                        <h3 className='block mb-4 text-xl text-center font-semibold text-white'>
+                                        <h3
+                                            className='block mb-4 text-xl text-center font-semibold text-transparent 
+                                            bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
                                             Already in your library
                                         </h3>
                                     )}
@@ -105,7 +107,9 @@ export default async function Recommendations({ searchParams }: Props) {
                             {recommendations.discover.length > 0 && (
                                 <div className='w-min'>
                                     {recommendations.owned.length > 0 && (
-                                        <h3 className='block mb-4 text-xl text-center font-semibold text-white '>
+                                        <h3
+                                            className='block mb-4 text-xl text-center font-semibold text-transparent 
+                                            bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
                                             Discover something new
                                         </h3>
                                     )}

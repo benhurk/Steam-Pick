@@ -73,10 +73,10 @@ export default function RecommendationCard({ recommendationsArray }: Props) {
             </div>
 
             <div
-                className='relative h-[32rem] w-80 border border-slate-300 rounded-sm overflow-hidden shadow-lg shadow-sky-800
-                        bg-gradient-to-bl from-slate-950 via-slate-800 to-slate-950 
-                        hover:scale-105 hover:from-slate-900 hover:via-slate-700 hover:to-slate-900 hover:shadow-sky-700
-                        transition duration-200 ease-in-out'>
+                className='relative h-[32rem] w-80 border border-slate-300 rounded-sm overflow-hidden shadow-lg 
+                bg-gradient-to-bl from-slate-950 via-slate-800 to-slate-950 shadow-sky-800
+                hover:scale-105 hover:from-slate-900 hover:via-slate-700 hover:to-slate-900 hover:shadow-sky-700
+                transition duration-200 ease-in-out'>
                 <AnimatePresence mode='wait'>
                     {loading ? (
                         <motion.div
@@ -126,7 +126,8 @@ export default function RecommendationCard({ recommendationsArray }: Props) {
                                                         tag +
                                                         index * Math.random()
                                                     }
-                                                    className='block text-slate-50 bg-sky-800 text-xs py-0.5 px-1 rounded-sm shadow-sm shadow-gray-800'>
+                                                    className='block text-slate-50 bg-sky-800 text-xs py-0.5 px-1
+                                                    rounded-sm shadow-sm shadow-gray-800'>
                                                     {tag}
                                                 </span>
                                             )

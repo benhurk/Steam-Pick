@@ -24,7 +24,7 @@ export default function RootLayout({
                 <header className='bg-dark-transparent py-4 text-white'>
                     <div className='relative container flex justify-between items-center'>
                         <div>
-                            <Link href={'/'} className='block mb-1'>
+                            <Link href={'/'} className='block'>
                                 <h1 className='flex gap-4 items-center text-5xl font-bold'>
                                     <Image
                                         width={48}
@@ -35,9 +35,6 @@ export default function RootLayout({
                                     Pick
                                 </h1>
                             </Link>
-                            <p className='text-lg text-slate-300'>
-                                Find games <b>for you</b>.
-                            </p>
                         </div>
                         <nav className='font-semibold text-lg'>
                             <ul className='flex items-center gap-16'>

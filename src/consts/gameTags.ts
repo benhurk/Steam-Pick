@@ -163,17 +163,19 @@ const gameTags = {
 };
 
 export const allTags = [
-    ...new Set([
-        ...gameTags.specificGenres,
-        ...gameTags.broadGenres,
-        ...gameTags.gameplay,
-        ...gameTags.themes,
-        ...gameTags.moods,
-        ...gameTags.miscellaneous,
-        ...gameTags.difficulties,
-        ...gameTags.pacings,
-        ...gameTags.multiplayer,
-    ]),
+    ...new Map(
+        [
+            ...gameTags.specificGenres,
+            ...gameTags.broadGenres,
+            ...gameTags.gameplay,
+            ...gameTags.themes,
+            ...gameTags.moods,
+            ...gameTags.miscellaneous,
+            ...gameTags.difficulties,
+            ...gameTags.pacings,
+            ...gameTags.multiplayer,
+        ].map((tag) => [tag.tagid, tag])
+    ).values(),
 ];
 
 export default gameTags;

@@ -22,21 +22,21 @@ export default function UserInfoSection({
         <section
             className='flex justify-between items-center rounded-sm overflow-hidden
             bg-gradient-to-bl from-slate-950 via-slate-800 to-slate-950 shadow-lg 
-            border border-slate-400 shadow-sky-900'>
+            border border-slate-500'>
             <Image
                 src={userInfo.avatar}
                 width={176}
                 height={0}
                 alt={userInfo.personaname + 'avatar'}
             />
-            <div className='p-3 ms-2 w-full'>
+            <div className='p-3 w-full'>
                 <h4
-                    className='mb-4 text-3xl font-bold text-transparent 
+                    className='mb-2 text-3xl font-bold text-transparent 
                     bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
                     {userInfo.personaname}
                 </h4>
                 <div className='flex justify-between'>
-                    <ul className='*:shadow-xl text-slate-300'>
+                    <ul className='*:shadow-xl text-slate-100'>
                         <li>
                             <span className='text-white font-semibold mr-1'>
                                 Genres:
