@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 
 import { TUserGames, TUserInfo } from '@/types/TApi';
 import { TPreferences } from '@/types/TPreferences';
-import preferencesInitialState from '@/consts/preferencesInitialState';
 
 import getGamesData from '@/functions/getGamesData';
 import calculateGamesWeight from '@/functions/calculateGamesWeight';
@@ -16,20 +15,26 @@ import NothingFoundContent from '@/components/NothingFoundContent';
 type Props = {
     searchParams: {
         steamId: string;
-        prefs?: string;
+        include?: string;
+        exclude?: string;
     };
 };
 
 export default async function Recommendations({ searchParams }: Props) {
-    const { steamId, prefs } = await searchParams;
+    const { steamId, include, exclude } = await searchParams;
 
     if (!steamId) {
         redirect('/');
     }
 
-    const preferences: TPreferences = prefs
-        ? JSON.parse(decodeURIComponent(prefs))
-        : preferencesInitialState;
+    //Preferences
+    const includePref = include ? JSON.parse(decodeURIComponent(include)) : [];
+    const excludePref = exclude ? JSON.parse(decodeURIComponent(exclude)) : [];
+
+    const preferences: TPreferences = {
+        exclude: excludePref,
+        include: includePref,
+    };
 
     //Get user info
     const userInfo: TUserInfo = await fetch(
