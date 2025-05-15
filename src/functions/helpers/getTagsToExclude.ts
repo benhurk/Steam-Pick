@@ -1,11 +1,8 @@
 import gameTags from '@/consts/gameTags';
+import { excludeByDefault } from '@/consts/preferencesInitialState';
 import { GameWeight } from '@/types/TGames';
-import { TPreferences } from '@/types/TPreferences';
 
-export default function getTagsToExclude(
-    gamesWeight: GameWeight[],
-    preferences: TPreferences
-) {
+export default function getTagsToExclude(gamesWeight: GameWeight[]) {
     const allTags = gamesWeight.map((g) => g.tags).flat();
     const genres = allTags.filter((tag) =>
         gameTags.specificGenres.some((genre) => genre.tagid === tag)
@@ -21,7 +18,7 @@ export default function getTagsToExclude(
         .map((g) => g.tags)
         .flat();
 
-    const toExclude: number[] = [...preferences.exclude];
+    const toExclude: number[] = [...excludeByDefault];
 
     genres.forEach((tag) => {
         const noWeightCount = noWeightTags.filter((dt) => dt === tag).length;

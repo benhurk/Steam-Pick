@@ -3,19 +3,15 @@ import getTagsToExclude from './helpers/getTagsToExclude';
 import getTagsCount from './helpers/getTagsCount';
 import getTopTags from './helpers/getTopTags';
 import getTagNames from './utils/getTagNames';
-import { TPreferences } from '@/types/TPreferences';
 
-export default function parseTags(
-    gamesWeight: GameWeight[],
-    preferences: TPreferences
-) {
+export default function parseTags(gamesWeight: GameWeight[]) {
     const tagsCount = getTagsCount(gamesWeight.filter((g) => g.weight > 0));
 
     const favoriteGenres = getTopTags([...tagsCount.genres.entries()]);
     const favoriteGameplay = getTopTags([...tagsCount.gameplay.entries()]);
     const favoriteThemes = getTopTags([...tagsCount.themes.entries()]);
     const favoriteMoods = getTopTags([...tagsCount.moods.entries()]);
-    const excludedTags = getTagsToExclude(gamesWeight, preferences);
+    const excludedTags = getTagsToExclude(gamesWeight);
 
     console.log(
         'Favorite genres:',

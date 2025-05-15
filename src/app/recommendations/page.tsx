@@ -50,7 +50,7 @@ export default async function Recommendations({ searchParams }: Props) {
     const gamesWeight = calculateGamesWeight(gamesData.played);
 
     //Get user's taste
-    const taste = parseTags(gamesWeight, preferences);
+    const taste = parseTags(gamesWeight);
 
     //Get recommendations
     const recommendations = await getRecommendations(

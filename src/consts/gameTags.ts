@@ -111,7 +111,6 @@ const gameTags = {
         { tagid: 3942, name: 'Sci-fi' },
         { tagid: 4947, name: 'Romance' },
         { tagid: 4004, name: 'Retro' },
-        { tagid: 4604, name: 'Dark Fantasy' },
         { tagid: 1651, name: 'Satire' },
         { tagid: 4085, name: 'Anime' },
         { tagid: 6378, name: 'Crime' },
@@ -134,13 +133,13 @@ const gameTags = {
         { tagid: 1714, name: 'Psychedelic' },
         { tagid: 5716, name: 'Mystery' },
         { tagid: 4667, name: 'Violent' },
+        { tagid: 4604, name: 'Dark Fantasy' },
     ],
 
     miscellaneous: [
         { tagid: 492, name: 'Indie' },
         { tagid: 21978, name: 'VR' },
         { tagid: 5350, name: 'Family Friendly' },
-        { tagid: 113, name: 'Free to Play' },
         { tagid: 4234, name: 'Short' },
     ],
 
@@ -158,7 +157,6 @@ const gameTags = {
         { tagid: 3859, name: 'Multiplayer' },
         { tagid: 1685, name: 'Co-op' },
         { tagid: 3841, name: 'Local Co-Op' },
-        { tagid: 10816, name: 'Split Screen' },
     ],
 };
 

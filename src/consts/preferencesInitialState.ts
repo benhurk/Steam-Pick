@@ -1,9 +1,9 @@
 import { TPreferences } from '@/types/TPreferences';
 
-export const excludeByDefault = [21978, 113];
+export const excludeByDefault = [21978];
 
 const preferencesInitialState: TPreferences = {
-    exclude: excludeByDefault,
+    exclude: [],
     include: [],
     popularity: '5000',
 };

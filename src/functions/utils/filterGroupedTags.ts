@@ -4,7 +4,7 @@ export default function filterGroupedTags(
     tags: { tagid: number; weight: number }[]
 ) {
     const groupedTagsFound = tags.filter((tag) =>
-        groupedTags.some((set) => set.has(tag.tagid))
+        groupedTags.some((set) => set.includes(tag.tagid))
     );
 
     if (groupedTagsFound.length < 2) {
@@ -15,7 +15,7 @@ export default function filterGroupedTags(
 
     for (const set of groupedTags) {
         const matches = groupedTagsFound
-            .filter((found) => set.has(found.tagid))
+            .filter((found) => set.includes(found.tagid))
             .sort((a, b) => b.weight - a.weight);
 
         if (matches.length > 1) {
