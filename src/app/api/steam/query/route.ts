@@ -47,8 +47,12 @@ async function fetchUrl(url: string) {
 
 export async function POST(request: Request) {
     try {
-        const { includeTags, excludeTags, minRating }: TQueryFilters =
-            await request.json();
+        const {
+            includeTags,
+            excludeTags,
+            popularity,
+            minRating,
+        }: TQueryFilters = await request.json();
 
         const toInclude = includeTags
             .map((t) => JSON.stringify({ tagids: [`${t}`] }))
@@ -63,7 +67,7 @@ export async function POST(request: Request) {
 
         while (hasMorePages) {
             const QUERY = encodeURI(
-                `&input_json={"query":{"start":"${pagination}","count":"1000","sort":"21","filters":{"released_only":true,"type_filters":{"include_games":true},"tagids_must_match":[${toInclude}],"tagids_exclude":["${toExclude}"],"global_top_n_sellers":"1000000"}},"context":{"country_code":"US"},"data_request":{"include_tag_count":"20","include_reviews":true}}`
+                `&input_json={"query":{"start":"${pagination}","count":"1000","sort":"21","filters":{"released_only":true,"type_filters":{"include_games":true},"tagids_must_match":[${toInclude}],"tagids_exclude":["${toExclude}"],"global_top_n_sellers":"${popularity}"}},"context":{"country_code":"US"},"data_request":{"include_tag_count":"20","include_reviews":true}}`
             );
 
             try {

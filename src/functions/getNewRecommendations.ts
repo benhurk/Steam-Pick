@@ -18,7 +18,8 @@ export default async function getNewRecommendations(
             const filtersBody: TQueryFilters = {
                 includeTags: [...preferences.include, genre],
                 excludeTags: taste.excludedTags,
-                minRating: { count: 2000, percentPositive: 85 },
+                popularity: preferences.popularity,
+                minRating: { count: 500, percentPositive: 85 },
             };
 
             const data: TQueryData = await fetch(

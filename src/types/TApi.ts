@@ -20,6 +20,7 @@ export type TQueryData = {
 export type TQueryFilters = {
     includeTags: number[];
     excludeTags: number[];
+    popularity: string;
     minRating: {
         count: number;
         percentPositive: number;

@@ -17,11 +17,12 @@ type Props = {
         steamId: string;
         include?: string;
         exclude?: string;
+        popularity: string;
     };
 };
 
 export default async function Recommendations({ searchParams }: Props) {
-    const { steamId, include, exclude } = await searchParams;
+    const { steamId, include, exclude, popularity } = await searchParams;
 
     if (!steamId) {
         redirect('/');
@@ -34,6 +35,7 @@ export default async function Recommendations({ searchParams }: Props) {
     const preferences: TPreferences = {
         exclude: excludePref,
         include: includePref,
+        popularity: popularity,
     };
 
     //Get user info
