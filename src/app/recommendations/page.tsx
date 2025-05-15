@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { TUserGames, TUserInfo } from '@/types/TApi';
+import { TUserGames } from '@/types/TApi';
 import { TPreferences } from '@/types/TPreferences';
 
 import getGamesData from '@/functions/getGamesData';
@@ -38,15 +38,6 @@ export default async function Recommendations({ searchParams }: Props) {
         popularity: popularity,
     };
 
-    //Get user info
-    const userInfo: TUserInfo = await fetch(
-        `${process.env.URL}/api/steam/userinfo?steamid=${steamId}`
-    ).then((res) => res.json());
-
-    if (!userInfo) {
-        redirect('/');
-    }
-
     //Get user games
     const userGames: TUserGames = await fetch(
         `${process.env.URL}/api/steam/usergames?steamid=${steamId}`
@@ -72,7 +63,7 @@ export default async function Recommendations({ searchParams }: Props) {
     return (
         <main className='container py-14 flex flex-col gap-14'>
             <UserInfoSection
-                userInfo={userInfo}
+                steamID={steamId}
                 userTaste={taste}
                 userGames={userGames}
             />

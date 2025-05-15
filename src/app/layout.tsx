@@ -1,11 +1,10 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
+
+import { PreferencesProvider } from '@/contexts/Preferences';
 
 import Background from '@/components/Background';
-import { BsGithub } from 'react-icons/bs';
-import { PreferencesProvider } from '@/contexts/Preferences';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
     title: 'Steam Unbacklog',
@@ -21,40 +20,7 @@ export default function RootLayout({
         <html lang='en'>
             <body className='relative flex flex-col min-h-screen antialiased font-sans'>
                 <Background />
-                <header className='bg-dark-transparent py-4 text-white'>
-                    <div className='relative container flex justify-between items-center'>
-                        <div>
-                            <Link href={'/'} className='block'>
-                                <h1 className='flex gap-4 items-center text-5xl font-bold'>
-                                    <Image
-                                        width={48}
-                                        height={48}
-                                        src='./steamlogo.svg'
-                                        alt='Steam'
-                                    />
-                                    Pick
-                                </h1>
-                            </Link>
-                        </div>
-                        <nav className='font-semibold text-lg'>
-                            <ul className='flex items-center gap-16'>
-                                <li>
-                                    <Link href={'/'}>About</Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href={
-                                            'https://github.com/benhurk/Steam-Pick'
-                                        }
-                                        target='_blank'
-                                        className='text-white text-4xl'>
-                                        <BsGithub />
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </header>
+                <Header />
                 <PreferencesProvider>{children}</PreferencesProvider>
             </body>
         </html>
