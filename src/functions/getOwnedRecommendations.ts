@@ -70,7 +70,8 @@ export default function getOwnedRecomendations(
             }
         })
         .filter((r) => r != undefined)
-        .sort((a, b) => b.matchingTags.count - a.matchingTags.count);
+        .sort((a, b) => b.matchingTags.count - a.matchingTags.count)
+        .slice(0, 9);
 
     console.log('Already owned game recommendations:', recommendations);
 

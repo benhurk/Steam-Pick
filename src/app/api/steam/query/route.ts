@@ -96,11 +96,6 @@ export async function POST(request: Request) {
                                     .percent_positive >=
                                     minRating.percentPositive
                         )
-                        .sort(
-                            (a, b) =>
-                                b.reviews.summary_filtered.review_count -
-                                a.reviews.summary_filtered.review_count
-                        )
                         .map((g) => ({
                             appid: g.appid,
                             name: g.name,

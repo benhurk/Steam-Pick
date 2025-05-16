@@ -19,4 +19,14 @@ export const groupedTags = [
     [1695, 3810],
     //Anime, Cute
     [4085, 4726],
+    //Cute, LGBTQ+
+    [4726, 44868],
+    //Sports, Life Sim
+    [701, 10235],
+    //Farming Sim, Life Sim
+    [87918, 10235],
+    //Automobile Sim, Life Sim,
+    [1100687, 10235],
+    //RPG, ARPG
+    [122, 4231],
 ];

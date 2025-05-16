@@ -49,28 +49,36 @@ export default async function UserInfoSection({
                 <div className='flex justify-between text-sm'>
                     <ul className='*:shadow-xl text-slate-100'>
                         <li>
-                            <span className='text-white font-semibold mr-1'>
+                            <span className='mr-2 text-white font-semibold'>
                                 Genres:
-                            </span>{' '}
-                            {tagsArrayToString(userTaste.favoriteGenres)}
+                            </span>
+                            <span>
+                                {tagsArrayToString(userTaste.favoriteGenres)}
+                            </span>
                         </li>
                         <li>
-                            <span className='text-white font-semibold mr-1'>
+                            <span className='mr-2 text-white font-semibold'>
                                 Gameplay:
-                            </span>{' '}
-                            {tagsArrayToString(userTaste.favoriteGameplay)}
+                            </span>
+                            <span>
+                                {tagsArrayToString(userTaste.favoriteGameplay)}
+                            </span>
                         </li>
                         <li>
-                            <span className='text-white font-semibold mr-1'>
+                            <span className='mr-2 text-white font-semibold'>
                                 Themes:
-                            </span>{' '}
-                            {tagsArrayToString(userTaste.favoriteThemes)}
+                            </span>
+                            <span>
+                                {tagsArrayToString(userTaste.favoriteThemes)}
+                            </span>
                         </li>
                         <li>
-                            <span className='text-white font-semibold mr-1'>
+                            <span className='mr-2 text-white font-semibold'>
                                 Moods:
-                            </span>{' '}
-                            {tagsArrayToString(userTaste.favoriteMoods)}
+                            </span>
+                            <span>
+                                {tagsArrayToString(userTaste.favoriteMoods)}
+                            </span>
                         </li>
                     </ul>
                     <ul className='pr-4 text-center flex flex-col text-slate-100'>

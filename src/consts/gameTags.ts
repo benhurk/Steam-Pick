@@ -3,11 +3,11 @@ const gameTags = {
         { tagid: 599, name: 'Simulation' },
         { tagid: 9, name: 'Strategy' },
         { tagid: 122, name: 'RPG' },
-        { tagid: 1667, name: 'Horror' },
         { tagid: 1662, name: 'Survival' },
         { tagid: 1663, name: 'FPS' },
         { tagid: 4106, name: 'Action-Adventure' },
         { tagid: 1774, name: 'Shooter' },
+        { tagid: 4231, name: 'Action RPG' },
     ],
 
     specificGenres: [
@@ -109,7 +109,6 @@ const gameTags = {
         { tagid: 3835, name: 'Post-apocalyptic' },
         { tagid: 1671, name: 'Superhero' },
         { tagid: 3942, name: 'Sci-fi' },
-        { tagid: 4947, name: 'Romance' },
         { tagid: 4004, name: 'Retro' },
         { tagid: 1651, name: 'Satire' },
         { tagid: 4085, name: 'Anime' },
@@ -122,7 +121,6 @@ const gameTags = {
 
     moods: [
         { tagid: 1654, name: 'Relaxing' },
-        { tagid: 4136, name: 'Funny' },
         { tagid: 5608, name: 'Emotional' },
         { tagid: 5186, name: 'Psychological' },
         { tagid: 4342, name: 'Dark' },
@@ -134,6 +132,8 @@ const gameTags = {
         { tagid: 5716, name: 'Mystery' },
         { tagid: 4667, name: 'Violent' },
         { tagid: 4604, name: 'Dark Fantasy' },
+        { tagid: 1719, name: 'Comedy' },
+        { tagid: 4947, name: 'Romance' },
     ],
 
     miscellaneous: [

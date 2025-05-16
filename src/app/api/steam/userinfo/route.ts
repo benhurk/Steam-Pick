@@ -23,6 +23,8 @@ export async function GET(req: Request) {
 
         const data: UserSummariesRes = await res.json();
 
+        console.log(data);
+
         return NextResponse.json(
             data.response.players.map((p) => ({
                 personaname: p.personaname,
