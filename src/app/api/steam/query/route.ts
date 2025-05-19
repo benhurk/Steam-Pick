@@ -9,10 +9,10 @@ import filterGameTags from '@/functions/utils/filterGameTags';
 import getYearFromUnix from '@/functions/utils/getYearFromUnix';
 
 const BASE_URL = `https://api.steampowered.com/IStoreQueryService/Query/v1/?key=${process.env.STEAM_KEY}`;
-const MAX_RETRIES = 5;
 const RETRY_DELAY = 1500;
 
 async function fetchUrl(url: string) {
+    const MAX_RETRIES = 2;
     let retries = 0;
     let lastError: Error | null = null;
 
@@ -71,65 +71,86 @@ export async function POST(request: Request) {
                 `&input_json={"query":{"start":"${pagination}","count":"1000","sort":"21","filters":{"released_only":true,"type_filters":{"include_games":true},"tagids_must_match":[${toInclude}],"tagids_exclude":["${toExclude}"],"global_top_n_sellers":"50000"}},"context":{"country_code":"US"},"data_request":{"include_release":true,"include_tag_count":"20","include_reviews":true}}`
             );
 
-            try {
-                const res = await fetchUrl(`${BASE_URL}${QUERY}`);
-                const data: QueryRes = await res.json();
+            const MAX_EMPTY_RETRIES = 3;
+            let retryCount = 0;
+            let data: QueryRes;
 
-                // Handle empty response
-                if (
-                    !data?.response ||
-                    Object.keys(data.response).length === 0
-                ) {
-                    console.log(
-                        `Empty response for tag ${toInclude} pagination ${pagination}`
-                    );
-                    hasMorePages = false;
-                    continue;
-                }
+            // Retry loop for empty response objects
+            while (retryCount <= MAX_EMPTY_RETRIES) {
+                try {
+                    const res = await fetchUrl(`${BASE_URL}${QUERY}`);
+                    data = await res.json();
 
-                if (data && data.response.metadata.count > 0) {
-                    const filteredGamesData = data.response.store_items
-                        .filter(
-                            (item) =>
-                                item.reviews.summary_filtered.review_count >=
-                                    minRating.count &&
-                                item.reviews.summary_filtered
-                                    .percent_positive >=
-                                    minRating.percentPositive &&
-                                getYearFromUnix(
-                                    item.release.original_release_date
-                                        ? item.release.original_release_date
-                                        : item.release.steam_release_date
-                                ) >= minReleaseYear
-                        )
-                        .map((g) => ({
-                            appid: g.appid,
-                            name: g.name,
-                            tagids: filterGameTags(g.tags),
-                        }));
-
-                    games.push(...filteredGamesData);
-
-                    if (data.response.metadata.count < 1000) {
-                        hasMorePages = false;
+                    if (
+                        data?.response &&
+                        Object.keys(data.response).length > 0
+                    ) {
+                        break; // We have data, exit retry loop
                     }
-                } else {
+
+                    // If we get here, it's an empty response object
+                    retryCount++;
+
+                    console.warn(
+                        `Empty response object received, retry ${retryCount}/${MAX_EMPTY_RETRIES}`
+                    );
+
+                    if (retryCount <= MAX_EMPTY_RETRIES) {
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, RETRY_DELAY)
+                        );
+                    }
+                } catch (error) {
+                    console.error(
+                        `Error during fetch attempt ${retryCount}:`,
+                        error
+                    );
+                    retryCount = MAX_EMPTY_RETRIES + 1; // Force exit on fetch errors
+                    break;
+                }
+            }
+
+            // If we exhausted retries and still have empty response
+            if (retryCount > MAX_EMPTY_RETRIES) {
+                console.warn(
+                    `Max empty retries reached for pagination ${pagination}`
+                );
+                hasMorePages = false;
+                continue;
+            }
+
+            // Process the data as before
+            if (data!.response.metadata.count > 0) {
+                const filteredGamesData = data!.response.store_items
+                    .filter(
+                        (item) =>
+                            item.reviews.summary_filtered.review_count >=
+                                minRating.count &&
+                            item.reviews.summary_filtered.percent_positive >=
+                                minRating.percentPositive &&
+                            getYearFromUnix(
+                                item.release.original_release_date ??
+                                    item.release.steam_release_date
+                            ) >= minReleaseYear
+                    )
+                    .map((g) => ({
+                        appid: g.appid,
+                        name: g.name,
+                        tagids: filterGameTags(g.tags),
+                    }));
+
+                games.push(...filteredGamesData);
+
+                if (data!.response.metadata.count < 1000) {
                     hasMorePages = false;
                 }
+            } else {
+                hasMorePages = false;
+            }
 
-                //API returns a max of 1000 items per request. (pagination = 0: items [0]-[1000] | pagination = 1000: items[1000]-[2000]...)
-                pagination += 1000;
-
-                //Delay to avoid rate limits
-                if (hasMorePages) {
-                    await new Promise((resolve) => setTimeout(resolve, 1000));
-                }
-            } catch (error) {
-                console.error(
-                    `Failed after ${MAX_RETRIES} retries for tags ${toInclude} pagination ${pagination}:`,
-                    error
-                );
-                hasMorePages = false; // Stop pagination on persistent failure
+            pagination += 1000;
+            if (hasMorePages) {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
             }
         }
 

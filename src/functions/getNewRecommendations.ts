@@ -20,7 +20,7 @@ export default async function getNewRecommendations(
                 excludeTags: taste.excludedTags,
                 minRating: {
                     count: preferences.popularity,
-                    percentPositive: 85,
+                    percentPositive: 88,
                 },
                 minReleaseYear: preferences.minReleaseYear,
             };
@@ -89,7 +89,7 @@ export default async function getNewRecommendations(
                         )
                 )
                 .sort((a, b) => b.score - a.score)
-                .slice(0, 2);
+                .slice(0, 3);
 
             recommendations.push(
                 ...processedGames.map(
@@ -128,7 +128,9 @@ export default async function getNewRecommendations(
     // Remove duplicates (in case same game appears for multiple genres)
     const uniqueRecommendations = [
         ...new Map(recommendations.map((g) => [g.id, g])).values(),
-    ].sort((a, b) => b.matchingTags.count - a.matchingTags.count);
+    ]
+        .sort((a, b) => b.matchingTags.count - a.matchingTags.count)
+        .slice(0, 6);
 
     console.log('New games recommendations:', uniqueRecommendations);
     return uniqueRecommendations;
