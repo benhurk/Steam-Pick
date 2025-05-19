@@ -6,24 +6,16 @@ import { useState } from 'react';
 import { usePreferences } from '@/contexts/Preferences';
 
 import { LuPickaxe } from 'react-icons/lu';
+import handleRecommendationsUrl from '@/functions/helpers/handleRecommendationsUrl';
 
 export default function SteamIDInput() {
     const [steamId, setSteamId] = useState<string>('');
     const router = useRouter();
     const preferences = usePreferences().preferences;
 
-    const includePref = encodeURIComponent(JSON.stringify(preferences.include));
-    const excludePref = encodeURIComponent(JSON.stringify(preferences.exclude));
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        router.push(
-            `/recommendations?steamId=${steamId}&popularity=${
-                preferences.popularity
-            }${
-                preferences.include.length > 0 ? `&include=${includePref}` : ''
-            }${preferences.exclude.length > 0 ? `&exclude=${excludePref}` : ''}`
-        );
+        router.push(handleRecommendationsUrl(steamId, preferences));
     };
 
     return (

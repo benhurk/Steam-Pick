@@ -18,8 +18,11 @@ export default async function getNewRecommendations(
             const filtersBody: TQueryFilters = {
                 includeTags: [...preferences.include, genre],
                 excludeTags: taste.excludedTags,
-                popularity: preferences.popularity,
-                minRating: { count: 500, percentPositive: 85 },
+                minRating: {
+                    count: preferences.popularity,
+                    percentPositive: 85,
+                },
+                minReleaseYear: preferences.minReleaseYear,
             };
 
             const data: TQueryData = await fetch(
@@ -47,19 +50,18 @@ export default async function getNewRecommendations(
                         matchingGenres,
                         matchingGameplay,
                         matchingThemes,
-                        matchingMoods,
+                        // matchingMoods,
                     } = getMatchingTags(
                         game.tagids,
                         taste.favoriteGenres,
                         taste.favoriteGameplay,
-                        taste.favoriteThemes,
-                        taste.favoriteMoods
+                        taste.favoriteThemes
+                        // taste.favoriteMoods
                     );
 
                     const nonGenreMatchingTags =
-                        matchingGameplay.count +
-                        matchingThemes.count +
-                        matchingMoods.count;
+                        matchingGameplay.count + matchingThemes.count;
+                    //+ matchingMoods.count;
 
                     return {
                         game,
@@ -67,7 +69,7 @@ export default async function getNewRecommendations(
                         matchingGenres,
                         matchingGameplay,
                         matchingThemes,
-                        matchingMoods,
+                        // matchingMoods,
                     };
                 })
                 //Get best matches
@@ -76,18 +78,18 @@ export default async function getNewRecommendations(
                         matchingGenres,
                         matchingGameplay,
                         matchingThemes,
-                        matchingMoods,
+                        // matchingMoods,
                     }) =>
                         recommendConditions(
                             matchingGenres.count,
                             matchingGameplay.count,
                             matchingThemes.count,
-                            matchingMoods.count,
+                            // matchingMoods.count,
                             preferences
                         )
                 )
                 .sort((a, b) => b.score - a.score)
-                .slice(0, 3);
+                .slice(0, 2);
 
             recommendations.push(
                 ...processedGames.map(
@@ -97,7 +99,7 @@ export default async function getNewRecommendations(
                         matchingGenres,
                         matchingGameplay,
                         matchingThemes,
-                        matchingMoods,
+                        //matchingMoods,
                     }) => ({
                         name: game.name,
                         id: game.appid,
@@ -107,7 +109,7 @@ export default async function getNewRecommendations(
                                 ...matchingGenres.tags,
                                 ...matchingGameplay.tags,
                                 ...matchingThemes.tags,
-                                ...matchingMoods.tags,
+                                //...matchingMoods.tags,
                                 ...preferences.include,
                             ]),
                         },

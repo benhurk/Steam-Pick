@@ -16,13 +16,13 @@ export default function getOwnedRecomendations(
                 matchingGenres,
                 matchingGameplay,
                 matchingThemes,
-                matchingMoods,
+                //matchingMoods,
             } = getMatchingTags(
                 game.tags,
                 taste.favoriteGenres,
                 taste.favoriteGameplay,
-                taste.favoriteThemes,
-                taste.favoriteMoods
+                taste.favoriteThemes
+                //taste.favoriteMoods
             );
 
             const hasExcludedTag =
@@ -35,9 +35,8 @@ export default function getOwnedRecomendations(
             );
 
             const nonGenreMatchingTags =
-                matchingGameplay.count +
-                matchingThemes.count +
-                matchingMoods.count;
+                matchingGameplay.count + matchingThemes.count;
+            //+ matchingMoods.count;
 
             const matchingTags =
                 matchingGenres.count * 2 + nonGenreMatchingTags; //Weight genres higher
@@ -47,7 +46,7 @@ export default function getOwnedRecomendations(
                     matchingGenres.count,
                     matchingGameplay.count,
                     matchingThemes.count,
-                    matchingMoods.count,
+                    //matchingMoods.count,
                     preferences,
                     hasPrefTags,
                     hasExcludedTag
@@ -62,7 +61,7 @@ export default function getOwnedRecomendations(
                             ...matchingGenres.tags,
                             ...matchingGameplay.tags,
                             ...matchingThemes.tags,
-                            ...matchingMoods.tags,
+                            //...matchingMoods.tags,
                             ...preferences.include,
                         ]),
                     },

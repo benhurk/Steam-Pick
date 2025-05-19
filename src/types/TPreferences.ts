@@ -1,7 +1,8 @@
 export interface TPreferences {
     exclude: number[];
     include: number[];
-    popularity: string;
+    popularity: number;
+    minReleaseYear: number;
 }
 
 export interface TPreferencesContext {

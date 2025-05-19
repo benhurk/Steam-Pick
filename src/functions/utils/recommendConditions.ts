@@ -4,12 +4,12 @@ export default function recommendConditions(
     genresCount: number,
     gameplayCount: number,
     themesCount: number,
-    moodsCount: number,
+    // moodsCount: number,
     preferences: TPreferences,
     hasPrefTags: boolean = true,
     hasExcludedTag: boolean = false
 ) {
-    const nonGenreMatchingTags = gameplayCount + themesCount + moodsCount;
+    const nonGenreMatchingTags = gameplayCount + themesCount; //+ moodsCount;
 
     if (preferences.include.length > 0) {
         if (

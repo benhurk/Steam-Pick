@@ -209,6 +209,10 @@ export type QueryRes = {
                 tagid: number;
                 weight: number;
             }[];
+            release: {
+                steam_release_date: number;
+                original_release_date?: number;
+            };
         }[];
     };
 };

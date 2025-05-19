@@ -9,21 +9,21 @@ export default function PopularitySlider() {
 
     return (
         <div className='flex items-center gap-2'>
-            <span className='text-sm'>Popular</span>
+            <span className='text-sm'>Obscure</span>
             <Slider
-                min={1000}
-                max={10000}
-                step={1000}
-                value={[Number(preferences.popularity)]}
-                defaultValue={[Number(preferencesInitialState.popularity)]}
+                min={500}
+                max={6500}
+                step={500}
+                value={[preferences.popularity]}
+                defaultValue={[preferencesInitialState.popularity]}
                 onValueChange={(e) =>
                     setPreferences({
                         ...preferences,
-                        popularity: String(e[0]),
+                        popularity: e[0],
                     })
                 }
             />
-            <span className='text-sm'>Obscure</span>
+            <span className='text-sm'>Popular</span>
         </div>
     );
 }

@@ -10,7 +10,7 @@ export default function parseTags(gamesWeight: GameWeight[]) {
     const favoriteGenres = getTopTags([...tagsCount.genres.entries()]);
     const favoriteGameplay = getTopTags([...tagsCount.gameplay.entries()]);
     const favoriteThemes = getTopTags([...tagsCount.themes.entries()]);
-    const favoriteMoods = getTopTags([...tagsCount.moods.entries()]);
+    // const favoriteMoods = getTopTags([...tagsCount.moods.entries()]);
     const excludedTags = getTagsToExclude(gamesWeight);
 
     console.log(
@@ -34,20 +34,20 @@ export default function parseTags(gamesWeight: GameWeight[]) {
             count,
         }))
     );
-    console.log(
-        'Favorite moods:',
-        favoriteMoods.map(([tag, count]) => ({
-            tag: getTagNames([tag]),
-            count,
-        }))
-    );
+    // console.log(
+    //     'Favorite moods:',
+    //     favoriteMoods.map(([tag, count]) => ({
+    //         tag: getTagNames([tag]),
+    //         count,
+    //     }))
+    // );
     console.log('Excluded tags:', getTagNames(excludedTags));
 
     return {
         favoriteGenres,
         favoriteGameplay,
         favoriteThemes,
-        favoriteMoods,
+        // favoriteMoods,
         excludedTags,
     };
 }

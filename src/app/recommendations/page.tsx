@@ -18,11 +18,13 @@ type Props = {
         include?: string;
         exclude?: string;
         popularity: string;
+        minrelease: string;
     };
 };
 
 export default async function Recommendations({ searchParams }: Props) {
-    const { steamId, include, exclude, popularity } = await searchParams;
+    const { steamId, include, exclude, popularity, minrelease } =
+        await searchParams;
 
     if (!steamId) {
         redirect('/');
@@ -35,7 +37,8 @@ export default async function Recommendations({ searchParams }: Props) {
     const preferences: TPreferences = {
         exclude: excludePref,
         include: includePref,
-        popularity: popularity,
+        popularity: Number(popularity),
+        minReleaseYear: Number(minrelease),
     };
 
     //Get user games

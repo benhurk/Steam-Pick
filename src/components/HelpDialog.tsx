@@ -53,7 +53,7 @@ export default function HelpDialog() {
                             <li>
                                 {`
                                 If you've never set a custom Steam Community URL for
-                                your account, your ID will will be shown in
+                                your account, your ID will be shown in
                                 your profile URL. 
                             `}
                             </li>

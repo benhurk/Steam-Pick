@@ -11,6 +11,7 @@ import {
 } from './ui/dialog';
 import PopularitySlider from './PopularitySlider';
 import CategorySwitch from './CategorySwitch';
+import ReleaseYearSelect from './ReleaseYearSelect';
 
 export default function PreferencesMenu() {
     return (
@@ -25,9 +26,9 @@ export default function PreferencesMenu() {
                 <DialogHeader className='border-b border-gray-300 pb-3'>
                     <DialogTitle className='text-lg'>Preferences</DialogTitle>
                 </DialogHeader>
-                <div>
-                    <section className='mb-6'>
-                        <h3 className='font-semibold mb-2 text-lg'>
+                <div className='flex flex-col gap-6'>
+                    <section>
+                        <h3 className='font-semibold mb-1 text-lg'>
                             Popularity
                         </h3>
                         <DialogDescription className='text-md mb-4'>
@@ -37,9 +38,15 @@ export default function PreferencesMenu() {
                         </DialogDescription>
                         <PopularitySlider />
                     </section>
+                    <section className='flex items-center gap-4'>
+                        <h3 className='font-semibold text-lg'>
+                            Min. release date
+                        </h3>
+                        <ReleaseYearSelect />
+                    </section>
                     <div className='flex flex-col gap-4'>
                         <div>
-                            <h3 className='font-semibold mb-2 text-lg'>
+                            <h3 className='font-semibold mb-1 text-lg'>
                                 Categories
                             </h3>
                             <DialogDescription className='text-md'>

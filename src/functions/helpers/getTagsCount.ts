@@ -5,7 +5,7 @@ export default function getTagsCount(games: GameWeight[]) {
     const genresCount = new Map<number, number>();
     const gameplayStylesCount = new Map<number, number>();
     const themesCount = new Map<number, number>();
-    const moodsCount = new Map<number, number>();
+    // const moodsCount = new Map<number, number>();
 
     games.forEach((g) => {
         const tags = g.tags;
@@ -47,20 +47,20 @@ export default function getTagsCount(games: GameWeight[]) {
             }
         });
 
-        gameTags.moods.forEach((mood) => {
-            const currentCount = moodsCount.get(mood.tagid) || 0;
-            const hasTag = tags.includes(mood.tagid);
+        // gameTags.moods.forEach((mood) => {
+        //     const currentCount = moodsCount.get(mood.tagid) || 0;
+        //     const hasTag = tags.includes(mood.tagid);
 
-            if (hasTag) {
-                moodsCount.set(mood.tagid, currentCount + 1 * weight);
-            }
-        });
+        //     if (hasTag) {
+        //         moodsCount.set(mood.tagid, currentCount + 1 * weight);
+        //     }
+        // });
     });
 
     return {
         genres: genresCount,
         gameplay: gameplayStylesCount,
         themes: themesCount,
-        moods: moodsCount,
+        // moods: moodsCount,
     };
 }
