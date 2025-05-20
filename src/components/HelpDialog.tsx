@@ -61,7 +61,7 @@ export default function HelpDialog() {
                     </section>
                     <section>
                         <h4 className='font-semibold'>
-                            How do i make my profile publicly visible?
+                            How do i change my profile privacy settings?
                         </h4>
                         <ol className='list-decimal pl-4 flex flex-col gap-1'>
                             <li>
@@ -72,6 +72,11 @@ export default function HelpDialog() {
                             <li>
                                 Select your privacy state (any settings changed
                                 are saved automatically).
+                            </li>
+                            <li>
+                                {
+                                    'Make sure that "Always keep my total playtime private" is unchecked.'
+                                }
                             </li>
                         </ol>
                     </section>

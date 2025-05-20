@@ -46,7 +46,7 @@ export default async function UserInfoSection({
                     bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
                     {userInfo.personaname}
                 </h4>
-                <div className='flex justify-between text-sm'>
+                <div className='flex justify-between'>
                     <ul className='*:shadow-xl text-slate-100'>
                         <li>
                             <span className='mr-2 text-white font-semibold'>

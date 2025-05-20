@@ -41,6 +41,15 @@ export async function GET(req: Request) {
                           }))
                       );
 
+        //Error if playtimes are private
+        if (
+            owned
+                .map((g) => g.playtime)
+                .filter((pt) => pt != undefined && pt != 0).length === 0
+        ) {
+            throw new Error('Failed to get user playtimes.');
+        }
+
         //Filter played games
         let played = owned.filter((game) => game.playtime >= 120);
 
@@ -60,6 +69,14 @@ export async function GET(req: Request) {
         const achievements: GetTopAchievementsForGamesRes = await fetch(
             `${BASE_URL}/GetTopAchievementsForGames/v1/?key=${process.env.STEAM_KEY}&steamid=${steamId}&max_achievements=5000&${appids}`
         ).then((res) => res.json());
+
+        if (
+            !achievements ||
+            !achievements.response ||
+            !achievements.response.games
+        ) {
+            throw new Error('Failed to get user achievements.');
+        }
 
         //Update played games to include the achievements
         played = achievements.response.games.map((g) => {

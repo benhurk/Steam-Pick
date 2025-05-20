@@ -142,7 +142,7 @@ export default function RecommendationCard({ recommendationsArray }: Props) {
                                         className='w-full py-1 bg-slate-200 text-slate-950 font-semibold rounded-md 
                                         cursor-pointer hover:bg-white transition-colors duration-200 ease-in-out
                                         disabled:opacity-60 disabled:cursor-default'>
-                                        Skip
+                                        Next
                                     </button>
                                 </div>
                             </motion.div>

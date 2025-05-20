@@ -15,7 +15,9 @@ export default function SteamIDInput() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        router.push(handleRecommendationsUrl(steamId, preferences));
+        if (steamId.length === 17) {
+            router.push(handleRecommendationsUrl(steamId, preferences));
+        }
     };
 
     return (
@@ -27,6 +29,7 @@ export default function SteamIDInput() {
                     <input
                         type='text'
                         placeholder='Your SteamID'
+                        maxLength={17}
                         className='relative outline-0 w-full px-3 py-2.5 text-center text-slate-50 bg-transparent 
                                 rounded-tl-md rounded-bl-md border-t border-b border-l border-sky-600
                                 placeholder:text-slate-300 focus:placeholder:text-transparent

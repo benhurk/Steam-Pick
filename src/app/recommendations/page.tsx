@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 
 import { TUserGames } from '@/types/TApi';
-import { TPreferences } from '@/types/TPreferences';
 
 import getGamesData from '@/functions/getGamesData';
 import calculateGamesWeight from '@/functions/calculateGamesWeight';
@@ -11,6 +10,8 @@ import getRecommendations from '@/functions/getRecommendations';
 import RecommendationCard from '@/components/RecommendationCard';
 import UserInfoSection from '@/components/UserInfoSection';
 import NothingFoundContent from '@/components/NothingFoundContent';
+import parsePreferences from '@/functions/utils/parsePreferences';
+import ErrorSection from '@/components/ErrorSection';
 
 type Props = {
     searchParams: {
@@ -31,37 +32,70 @@ export default async function Recommendations({ searchParams }: Props) {
     }
 
     //Preferences
-    const includePref = include ? JSON.parse(decodeURIComponent(include)) : [];
-    const excludePref = exclude ? JSON.parse(decodeURIComponent(exclude)) : [];
+    let preferences;
 
-    const preferences: TPreferences = {
-        exclude: excludePref,
-        include: includePref,
-        popularity: Number(popularity),
-        minReleaseYear: Number(minrelease),
-    };
+    try {
+        preferences = parsePreferences(
+            popularity,
+            minrelease,
+            include,
+            exclude
+        );
+    } catch {
+        return <ErrorSection message='Invalid preferences URL format.' />;
+    }
 
     //Get user games
-    const userGames: TUserGames = await fetch(
-        `${process.env.URL}/api/steam/usergames?steamid=${steamId}`
-    ).then((res) => res.json());
+    let userGames: TUserGames;
+
+    try {
+        const response = await fetch(
+            `${process.env.URL}/api/steam/usergames?steamid=${steamId}`
+        );
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch user games data');
+        }
+
+        userGames = await response.json();
+    } catch {
+        return (
+            <ErrorSection message='Failed to load data from your Steam profile, check your privacy settings and try again.' />
+        );
+    }
 
     //Get game tags
-    const gamesData = await getGamesData(userGames.played, userGames.unplayed);
+    let gamesData;
 
-    //Calculate the played games weight
+    try {
+        gamesData = await getGamesData(userGames.played, userGames.unplayed);
+    } catch {
+        return (
+            <ErrorSection message='Failed to load games data, try again later.' />
+        );
+    }
+
+    //Calculate played games weight
     const gamesWeight = calculateGamesWeight(gamesData.played);
 
     //Get user's taste
     const taste = parseTags(gamesWeight);
 
     //Get recommendations
-    const recommendations = await getRecommendations(
-        taste,
-        userGames.owned,
-        gamesData.unplayed,
-        preferences
-    );
+    let recommendations;
+
+    try {
+        recommendations = await getRecommendations(
+            taste,
+            userGames.owned,
+            gamesData.unplayed,
+            preferences
+        );
+    } catch {
+        return (
+            <ErrorSection message='An error ocurred while processing your recommendations, try again later.' />
+        );
+    }
 
     return (
         <main className='container py-14 flex flex-col gap-14'>
