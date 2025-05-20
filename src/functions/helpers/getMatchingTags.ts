@@ -3,7 +3,6 @@ export default function getMatchingTags(
     favoriteGenres: [number, number][],
     favoriteGameplay: [number, number][],
     favoriteThemes: [number, number][]
-    // favoriteMoods: [number, number][]
 ) {
     const matchingGenresTags = gameTags.filter((tag) =>
         favoriteGenres.some(([genre]) => genre === tag)
@@ -32,19 +31,9 @@ export default function getMatchingTags(
         tags: matchingThemesTags,
     };
 
-    // const matchingMoodsTags = gameTags.filter((tag) =>
-    //     favoriteMoods.some(([mood]) => mood === tag)
-    // );
-
-    // const matchingMoods = {
-    //     count: matchingMoodsTags.length,
-    //     tags: matchingMoodsTags,
-    // };
-
     return {
         matchingGenres,
         matchingGameplay,
         matchingThemes,
-        //matchingMoods
     };
 }

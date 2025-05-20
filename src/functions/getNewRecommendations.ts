@@ -46,22 +46,16 @@ export default async function getNewRecommendations(
                 )
                 //Parse tags
                 .map((game) => {
-                    const {
-                        matchingGenres,
-                        matchingGameplay,
-                        matchingThemes,
-                        // matchingMoods,
-                    } = getMatchingTags(
-                        game.tagids,
-                        taste.favoriteGenres,
-                        taste.favoriteGameplay,
-                        taste.favoriteThemes
-                        // taste.favoriteMoods
-                    );
+                    const { matchingGenres, matchingGameplay, matchingThemes } =
+                        getMatchingTags(
+                            game.tagids,
+                            taste.favoriteGenres,
+                            taste.favoriteGameplay,
+                            taste.favoriteThemes
+                        );
 
                     const nonGenreMatchingTags =
                         matchingGameplay.count + matchingThemes.count;
-                    //+ matchingMoods.count;
 
                     return {
                         game,
@@ -69,22 +63,15 @@ export default async function getNewRecommendations(
                         matchingGenres,
                         matchingGameplay,
                         matchingThemes,
-                        // matchingMoods,
                     };
                 })
                 //Get best matches
                 .filter(
-                    ({
-                        matchingGenres,
-                        matchingGameplay,
-                        matchingThemes,
-                        // matchingMoods,
-                    }) =>
+                    ({ matchingGenres, matchingGameplay, matchingThemes }) =>
                         recommendConditions(
                             matchingGenres.count,
                             matchingGameplay.count,
                             matchingThemes.count,
-                            // matchingMoods.count,
                             preferences
                         )
                 )
@@ -99,7 +86,6 @@ export default async function getNewRecommendations(
                         matchingGenres,
                         matchingGameplay,
                         matchingThemes,
-                        //matchingMoods,
                     }) => ({
                         name: game.name,
                         id: game.appid,
@@ -109,7 +95,6 @@ export default async function getNewRecommendations(
                                 ...matchingGenres.tags,
                                 ...matchingGameplay.tags,
                                 ...matchingThemes.tags,
-                                //...matchingMoods.tags,
                                 ...preferences.include,
                             ]),
                         },

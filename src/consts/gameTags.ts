@@ -125,23 +125,6 @@ const gameTags = {
         { tagid: 4145, name: 'Cinematic' },
     ],
 
-    moods: [
-        // { tagid: 1654, name: 'Relaxing' },
-        // { tagid: 5608, name: 'Emotional' },
-        // { tagid: 5186, name: 'Psychological' },
-        // { tagid: 4342, name: 'Dark' },
-        // { tagid: 4145, name: 'Cinematic' },
-        // { tagid: 552282, name: 'Wholesome' },
-        // { tagid: 4726, name: 'Cute' },
-        // { tagid: 5984, name: 'Drama' },
-        // { tagid: 1714, name: 'Psychedelic' },
-        // { tagid: 5716, name: 'Mystery' },
-        // { tagid: 4667, name: 'Violent' },
-        // { tagid: 4604, name: 'Dark Fantasy' },
-        // { tagid: 1719, name: 'Comedy' },
-        // { tagid: 4947, name: 'Romance' },
-    ],
-
     miscellaneous: [
         { tagid: 492, name: 'Indie' },
         { tagid: 21978, name: 'VR' },
@@ -173,7 +156,6 @@ export const allTags = [
             ...gameTags.broadGenres,
             ...gameTags.gameplay,
             ...gameTags.themes,
-            ...gameTags.moods,
             ...gameTags.miscellaneous,
             ...gameTags.difficulties,
             ...gameTags.pacings,

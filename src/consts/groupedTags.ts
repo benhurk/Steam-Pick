@@ -17,10 +17,6 @@ export const groupedTags = [
     [1695, 3834],
     //Open World, Sandbox
     [1695, 3810],
-    //Anime, Cute
-    [4085, 4726],
-    //Cute, LGBTQ+
-    [4726, 44868],
     //Sports, Life Sim
     [701, 10235],
     //Farming Sim, Life Sim

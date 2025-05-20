@@ -12,18 +12,13 @@ export default function getOwnedRecomendations(
 ) {
     const recommendations = unplayedGamesData
         .map((game) => {
-            const {
-                matchingGenres,
-                matchingGameplay,
-                matchingThemes,
-                //matchingMoods,
-            } = getMatchingTags(
-                game.tags,
-                taste.favoriteGenres,
-                taste.favoriteGameplay,
-                taste.favoriteThemes
-                //taste.favoriteMoods
-            );
+            const { matchingGenres, matchingGameplay, matchingThemes } =
+                getMatchingTags(
+                    game.tags,
+                    taste.favoriteGenres,
+                    taste.favoriteGameplay,
+                    taste.favoriteThemes
+                );
 
             const hasExcludedTag =
                 game.tags.filter((tag) =>
@@ -36,7 +31,6 @@ export default function getOwnedRecomendations(
 
             const nonGenreMatchingTags =
                 matchingGameplay.count + matchingThemes.count;
-            //+ matchingMoods.count;
 
             const matchingTags =
                 matchingGenres.count * 2 + nonGenreMatchingTags; //Weight genres higher
@@ -46,7 +40,6 @@ export default function getOwnedRecomendations(
                     matchingGenres.count,
                     matchingGameplay.count,
                     matchingThemes.count,
-                    //matchingMoods.count,
                     preferences,
                     hasPrefTags,
                     hasExcludedTag
@@ -61,7 +54,6 @@ export default function getOwnedRecomendations(
                             ...matchingGenres.tags,
                             ...matchingGameplay.tags,
                             ...matchingThemes.tags,
-                            //...matchingMoods.tags,
                             ...preferences.include,
                         ]),
                     },

@@ -72,14 +72,6 @@ export default async function UserInfoSection({
                                 {tagsArrayToString(userTaste.favoriteThemes)}
                             </span>
                         </li>
-                        {/* <li>
-                            <span className='mr-2 text-white font-semibold'>
-                                Moods:
-                            </span>
-                            <span>
-                                {tagsArrayToString(userTaste.favoriteMoods)}
-                            </span>
-                        </li> */}
                     </ul>
                     <ul className='pr-4 text-center flex flex-col text-slate-100'>
                         <li>
