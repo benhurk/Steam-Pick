@@ -22,7 +22,7 @@ export default function Header() {
                 <nav className='font-semibold text-lg'>
                     <ul className='flex items-center gap-16'>
                         <li>
-                            <Link href={'/'}>About</Link>
+                            <Link href={'/about'}>About</Link>
                         </li>
                         <li>
                             <Link

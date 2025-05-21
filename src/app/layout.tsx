@@ -5,9 +5,10 @@ import { PreferencesProvider } from '@/contexts/Preferences';
 
 import Background from '@/components/Background';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-    title: 'Steam Unbacklog',
+    title: 'Steam Pick',
     description: 'A tool to help you choose your next game.',
 };
 
@@ -22,6 +23,7 @@ export default function RootLayout({
                 <Background />
                 <Header />
                 <PreferencesProvider>{children}</PreferencesProvider>
+                <Footer />
             </body>
         </html>
     );
