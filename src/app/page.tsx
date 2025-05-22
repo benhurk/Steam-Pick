@@ -1,5 +1,3 @@
-'use client';
-
 import HelpDialog from '@/components/HelpDialog';
 import PreferencesMenu from '@/components/PreferencesMenu';
 import SteamIDInput from '@/components/SteamIDInput';

@@ -1,4 +1,9 @@
+import { Metadata } from 'next';
 import PrivacyPolicySection from '@/components/PrivacyPolicySection';
+
+export const metadata: Metadata = {
+    title: 'Steam Pick | About',
+};
 
 export default function About() {
     return (

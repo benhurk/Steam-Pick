@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 
 import { GetTopAchievementsForGamesRes, OwnedGamesRes } from '@/types/TSteam';
 import { SteamGame } from '@/types/TGames';
-import { ownedGamesMock } from '@/consts/mock';
 
 import isRecentlyPlayed from '@/functions/utils/isRecentlyPlayed';
 
@@ -23,23 +22,18 @@ export async function GET(req: Request) {
 
     try {
         //Get owned games
-        const owned: SteamGame[] =
-            ownedGamesMock.length > 0
-                ? ownedGamesMock
-                : await fetch(
-                      `${BASE_URL}/GetOwnedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&include_appinfo=true&include_played_free_games&format=json`
-                  )
-                      .then((res) => res.json())
-                      .then((data: OwnedGamesRes) =>
-                          data.response.games.map((game) => ({
-                              appid: game.appid,
-                              name: game.name.toLowerCase(),
-                              playtime: game.playtime_forever,
-                              recentlyPlayed: isRecentlyPlayed(
-                                  game.rtime_last_played
-                              ),
-                          }))
-                      );
+        const owned: SteamGame[] = await fetch(
+            `${BASE_URL}/GetOwnedGames/v0001/?key=${process.env.STEAM_KEY}&steamid=${steamId}&include_appinfo=true&include_played_free_games&format=json`
+        )
+            .then((res) => res.json())
+            .then((data: OwnedGamesRes) =>
+                data.response.games.map((game) => ({
+                    appid: game.appid,
+                    name: game.name.toLowerCase(),
+                    playtime: game.playtime_forever,
+                    recentlyPlayed: isRecentlyPlayed(game.rtime_last_played),
+                }))
+            );
 
         //Error if playtimes are private
         if (

@@ -1,3 +1,5 @@
+'use client';
+
 import gameTags from '@/consts/gameTags';
 
 import { RiListSettingsFill } from 'react-icons/ri';
