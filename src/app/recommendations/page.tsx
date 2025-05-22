@@ -13,17 +13,19 @@ import NothingFoundContent from '@/components/NothingFoundContent';
 import parsePreferences from '@/functions/utils/parsePreferences';
 import ErrorSection from '@/components/ErrorSection';
 
-type Props = {
-    searchParams: {
-        steamId: string;
-        include?: string;
-        exclude?: string;
-        popularity: string;
-        minrelease: string;
-    };
+type SearchParams = {
+    steamId?: string;
+    include?: string;
+    exclude?: string;
+    popularity?: string;
+    minrelease?: string;
 };
 
-export default async function Recommendations({ searchParams }: Props) {
+export default async function Recommendations({
+    searchParams,
+}: {
+    searchParams: Promise<SearchParams>;
+}) {
     const { steamId, include, exclude, popularity, minrelease } =
         await searchParams;
 
