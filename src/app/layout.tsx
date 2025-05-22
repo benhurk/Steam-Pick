@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
     title: 'Steam Pick',
-    description: 'A tool to help you choose your next game.',
+    description: 'Get personalized game recommendations for you.',
 };
 
 export default function RootLayout({

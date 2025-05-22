@@ -37,7 +37,7 @@ export default async function UserInfoSection({
             <Image
                 src={userInfo.avatar}
                 width={176}
-                height={0}
+                height={176}
                 alt={userInfo.personaname + 'avatar'}
             />
             <div className='p-3 w-full'>

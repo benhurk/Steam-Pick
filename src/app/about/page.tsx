@@ -11,10 +11,10 @@ export default function About() {
                 </h2>
                 <div className='flex flex-col gap-4'>
                     <p>
-                        Steam Pick is a tool to help you pick your next game by
-                        analyzing your profile and finding games that best match
-                        your taste. To gather data we use the offical Steam Web
-                        API and{' '}
+                        Steam Pick is a tool to help you find games you like by
+                        analyzing your profile and processing personalized
+                        recommendations for you. To gather data we use the
+                        offical Steam Web API and{' '}
                         <a
                             href='https://steamspy.com/about'
                             target='_blank'
