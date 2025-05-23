@@ -15,11 +15,16 @@ export default async function UserInfoSection({
     userTaste,
     userGames,
 }: Props) {
-    const res = await fetch(
-        `${process.env.URL}/api/steam/userinfo?steamid=${steamID}`
-    );
+    let userInfo: TUserInfo;
+    try {
+        const res = await fetch(
+            `${process.env.URL}/api/steam/userinfo?steamid=${steamID}`
+        );
 
-    const userInfo: TUserInfo = await res.json();
+        userInfo = await res.json();
+    } catch {
+        return <></>;
+    }
 
     if (!userInfo) {
         redirect('/');

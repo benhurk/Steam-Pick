@@ -22,7 +22,7 @@ export default function RecommendationCard({ recommendationsArray }: Props) {
         const fetchGameDetails = async () => {
             try {
                 const res = await fetch(
-                    `${process.env.URL}/api/steam/appdetails?id=${recommendationsArray[recommendationIndex].id}`
+                    `/api/steam/appdetails?id=${recommendationsArray[recommendationIndex].id}`
                 );
 
                 const data: AppDetailsRes = await res.json();
