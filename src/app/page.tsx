@@ -6,8 +6,10 @@ export default function Home() {
     return (
         <main className='container relative flex flex-col grow justify-center items-center'>
             <div className='w-fit'>
-                <span className='block mb-4 text-white text-lg text-shadow-2xs text-shadow-gray-700'>
-                    Enter your SteamID below to find your next game
+                <span
+                    className='block mb-4 text-center text-lg font-semibold text-transparent 
+                    bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                    Enter a SteamID below to find games
                 </span>
                 <SteamIDInput />
                 <div className='flex justify-center gap-4'>

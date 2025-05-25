@@ -10,9 +10,9 @@ export default function PrivacyPolicySection() {
                 <div>
                     <div className='flex flex-col gap-3 text-slate-100'>
                         <p className='font-semibold'>
-                            The following Steam data is retrieved only when
-                            explicitly requested by the user when a SteamID is
-                            submited through this application:
+                            The following Steam data is retrieved when requested
+                            by the user when a SteamID is submited through this
+                            application:
                         </p>
                         <ul className='list-disc pl-4'>
                             <li>Public persona name and avatar picture.</li>

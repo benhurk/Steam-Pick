@@ -16,25 +16,26 @@ export default function About() {
                 </h2>
                 <div className='flex flex-col gap-4'>
                     <p>
-                        Steam Pick is a tool to help you find games you like by
-                        analyzing your profile and processing personalized
-                        recommendations for you. To gather data we use the
-                        offical Steam Web API and{' '}
+                        Steam Pick is a tool that helps you pick games for you
+                        or for gifting someone. It analyzes a Steam profile and
+                        provides personalized recommendations by using data from
+                        the official Steam Web API and{' '}
                         <a
                             href='https://steamspy.com/about'
                             target='_blank'
                             className='underline text-sky-400'>
                             SteamSpy
                         </a>{' '}
-                        API. This is a passion project and is{' '}
-                        <b className='font-semibold'>
-                            not affiliated with Valve or Steam
-                        </b>
-                        , or any game publisher/developer.
+                        API.
                     </p>
                     <p>
-                        The project is open source, if you find bugs, have
-                        suggestions or want to see how it works, go to the{' '}
+                        This is a passion project and is{' '}
+                        <b className='font-semibold'>
+                            not affiliated with Valve or Steam, or any game
+                            publisher/developer.
+                        </b>{' '}
+                        It is open source, if you find bugs, have suggestions or
+                        want to see how it works, go to the{' '}
                         <a
                             href='https://github.com/benhurk/Steam-Pick'
                             target='_blank'
