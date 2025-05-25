@@ -36,22 +36,51 @@ export default async function UserInfoSection({
 
     return (
         <section
-            className='flex justify-between rounded-sm overflow-hidden
+            className='flex flex-col md:flex-row rounded-sm overflow-hidden
             bg-gradient-to-bl from-slate-950 via-slate-800 to-slate-950 shadow-2xl 
             border border-slate-300'>
-            <Image
-                src={userInfo.avatar}
-                width={176}
-                height={176}
-                alt={userInfo.personaname + 'avatar'}
-            />
-            <div className='p-3 w-full'>
+            <div className='flex gap-4'>
+                <Image
+                    src={userInfo.avatar}
+                    width={176}
+                    height={176}
+                    alt={userInfo.personaname + 'avatar'}
+                />
+                <div className='md:hidden py-3'>
+                    <h4
+                        className='mb-4 text-3xl font-bold text-transparent 
+                        bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
+                        {userInfo.personaname}
+                    </h4>
+                    <ul className='pr-4 text-center flex flex-col text-slate-100'>
+                        <li>
+                            <span className='mr-2 text-white font-semibold'>
+                                Games:
+                            </span>
+                            <span>{userGames.owned.length}</span>
+                        </li>
+                        <li>
+                            <span className='mr-2 text-white font-semibold'>
+                                Played:
+                            </span>
+                            <span>{userGames.played.length}</span>
+                        </li>
+                        <li>
+                            <span className='mr-2 text-white font-semibold'>
+                                Unplayed:
+                            </span>
+                            <span>{userGames.unplayed.length}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div className='p-3 grow'>
                 <h4
-                    className='mb-4 text-3xl font-bold text-transparent 
+                    className='hidden md:block mb-4 text-3xl font-bold text-transparent 
                     bg-gradient-to-br from-cyan-100 via-sky-200 to-blue-300 bg-clip-text'>
                     {userInfo.personaname}
                 </h4>
-                <div className='flex justify-between'>
+                <div className='flex flex-col md:flex-row gap-2 md:gap-0 text-sm md:text-base justify-between'>
                     <ul className='*:shadow-xl text-slate-100'>
                         <li>
                             <span className='mr-2 text-white font-semibold'>
@@ -78,7 +107,7 @@ export default async function UserInfoSection({
                             </span>
                         </li>
                     </ul>
-                    <ul className='pr-4 text-center flex flex-col text-slate-100'>
+                    <ul className='hidden md:flex pr-4 text-center gap-1 md:flex-col md:gap-0 text-slate-100'>
                         <li>
                             <span className='mr-2 text-white font-semibold'>
                                 Games:

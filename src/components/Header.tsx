@@ -19,8 +19,8 @@ export default function Header() {
                         </h1>
                     </Link>
                 </div>
-                <nav className='font-semibold text-lg'>
-                    <ul className='flex items-center gap-16'>
+                <nav className='font-semibold sm:text-md md:text-lg'>
+                    <ul className='flex items-center gap-6 md:gap-16'>
                         <li>
                             <Link href={'/about'}>About</Link>
                         </li>

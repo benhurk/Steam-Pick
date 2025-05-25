@@ -12,6 +12,12 @@ body {
     margin-inline: auto;
 }
 
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
+}
+
 .bg-dark-transparent {
     position: relative;
 }

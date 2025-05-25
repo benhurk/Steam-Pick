@@ -111,7 +111,7 @@ export default async function Recommendations({
                     .length > 0 ? (
                     <>
                         <div
-                            className={`flex ${
+                            className={`flex flex-col md:flex-row gap-8 md:gap-0 items-center md:items-start ${
                                 recommendations.owned.length > 0 &&
                                 recommendations.discover.length > 0
                                     ? 'justify-between'

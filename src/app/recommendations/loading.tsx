@@ -3,7 +3,7 @@ import { TbLoader3 } from 'react-icons/tb';
 
 export default function LoadingRecommendations() {
     return (
-        <main className='container py-12'>
+        <main className='container py-12 grow'>
             <Skeleton
                 className='w-full mb-16 h-44 rounded-sm border border-slate-500 opacity-90
                 bg-gradient-to-bl from-slate-800 via-slate-700 to-slate-800'
@@ -18,7 +18,7 @@ export default function LoadingRecommendations() {
                         This can take a few seconds
                     </span>
                 </div>
-                <div className='flex justify-between'>
+                <div className='hidden md:flex justify-between'>
                     <Skeleton
                         className='w-80 h-[32rem] rounded-sm border border-slate-500 opacity-90
                     bg-gradient-to-bl from-slate-800 via-slate-700 to-slate-800'
