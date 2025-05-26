@@ -1,18 +1,51 @@
-## How does it work?
+# Steam Pick
 
-### Fixing tags
+Steam Pick is a tool that analyzes a Steam profile and generates personalized recommendations for it.
 
-#### Broad genres
+The goal of this project is to create a game recommendation system that improves on some issues with Steam's system:
 
-Are Disco Elysium and Elden Ring similar games? No. But they're both _RPGs_. To get a more precise idea of what someone's favorite genres are, we [split genres into 'broad' and 'specific'](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/arrays/genres.ts), then, [when getting the games tags we only consider broad genres if the game has no specific genre tagged](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/utils/filterGameTags.ts). So Disco Elysium is a _CRPG_ and Elden Ring is a _Souls-like_, while The Elder Scrolls IV is a _RPG_.
+- Steam only recommends games in the shop, meaning that all those games you bought on sales and never touched will remain forgotten.
+- It says _"Similar to games you've played"_ but:
+	- [It's not similar at all.](https://i.imgur.com/al4cCgE.png)
+	- [It uses games that you've not actually played.](https://i.imgur.com/uNhLNDk.png)
 
-#### Inflated tags
+## How it works
 
-A good example of a inflated tag is _Souls-like_. Even tough a game plays very differently from actual _Souls_ games, if it has melee combat or a more unforgiving difficulty it might be tagged that, take Cuphead for example. Luckly, Steam has a tag weight system, so we can [group the inflated tags with their common pairs](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/arrays/groupedTags.ts) and [pick only the one with the highest weight](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/utils/filterGroupedTags.ts), this will result in, Cuphead for example, not being considered _Souls-like_, only a _Shmup_.
+#### Tag system
 
-### Game weight logic
+To make an improved game similarity aspect we need to deal with game tags. Some tags are not reliable for that matter, like _Action_ for example, it's an extremely generic and not really necessary tag, since other, more specific tags, can suggest if a game has action in it while being more descriptive.
 
-A simple system that attribute games a score, the score is used to identify which type of games the user [likes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getTagsCount.ts) or [dislikes](https://github.com/benhurk/Steam-Unbacklog/blob/main/src/functions/helpers/getTagsToExclude.ts).
+First we create a new tag set that doesn't include super broad tags, nor too specific ones, and we categorize them into genres, gameplay and themes, so we can weight them differently when processing recommendations.
+
+[SteamDB](https://steamdb.info/tags/) lists all tags on Steam and how many games have them, to get the Steam tag id and name we can use the [GetTagList](https://steamapi.xpaw.me/#IStoreService/GetTagList) Steam API endpoint.
+
+- [Tag arrays](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/gameTags.ts)
+
+##### Broad genres
+
+However, we can't just rule out all broad tags, some of them are very important genres that we have to include, here is a case:
+
+Are Disco Elysium and Elden Ring similar games? No. But they're both _RPGs_.
+
+To properly handle cases like this we split the genre tags into 'broad' and 'specific', then when getting a game's tags, we only consider broad genres if the game has no specific genre tagged. So in this case, Disco Elysium will count only as a _CRPG_ and Elden Ring as a _Souls-like_, while a game like Bannerlord just as a _RPG_.
+
+##### Misused tags
+
+Some tags are misused as synonyms of other tags, like _Sandbox_ with _Open World_. Others are basically inflated tags.
+
+A good example of an inflated tag is _Souls-like_. We've all seen people calling a game "The Dark Souls of something" even tough it has no similarity at all with _Souls_ games.
+
+We can fix these problems using Steam's tag weight system, by grouping misused tags with their common pairs, we call them **grouped tags**, then when processing a game's tags, we pick only the one with the highest weight.
+
+- [Filter tags](https://github.com/benhurk/Steam-Pick/blob/main/src/functions/utils/filterGameTags.ts)
+- [Grouped tags](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/groupedTags.ts)
+- [Filter misused tags](https://github.com/benhurk/Steam-Pick/blob/main/src/functions/utils/filterGroupedTags.ts)
+
+#### Game weight logic
+
+In order to know what type of games the user likes we first need to know... what games the user likes.
+
+We do this by attributing games a score based on the user's playtime and achievements, this score is used to identify the user's favorite genres, gameplay and themes.
 
 | Playtime | Points |
 | :------- | :----- |
@@ -20,6 +53,7 @@ A simple system that attribute games a score, the score is used to identify whic
 | 10~20h   | 1      |
 | 20~50h   | 2      |
 | ≥ 50h +  | 3      |
+> Including higher playtime scores can cause unsatisfying cases where a single multiplayer or infinitely playable game changes the final result.
 
 | Best achievement global % | Total achievements | Points |
 | :------------------------ | :----------------- | :----- |
@@ -29,87 +63,12 @@ A simple system that attribute games a score, the score is used to identify whic
 | < 25%                     | ≥ 50%              | 2      |
 | < 25%                     | 100%               | 3      |
 
-## Steam API
+## APIs
 
-### IStoreQueryService/Query/v1
-
-> [!NOTE]  
-> **This endpoint is not officially documented, below is only what i tested and know how it works.** You can check and test everything i didn't document [here](https://steamapi.xpaw.me/#IStoreQueryService/Query).
-
-```http
-  GET https://api.steampowered.com/IStoreQueryService/Query/v1/?key=&input_json=
-```
-
-Returns the Steam store data for up to 1000 apps per request.
-
-| Param        | Type     | Description                       |
-| :----------- | :------- | :-------------------------------- |
-| `key`        | `string` | A Steam Web API Key. **Required** |
-| `input_json` | `string` | URI encoded json. **Required**    |
-
-#### input_json:
-
-```json
-{
-    "query": {},
-    "context": {},
-    "data_request": {}
-}
-```
-
--   **"query"**:
-    | Property | Type | Description |
-    | :---------- | :--------- | :------------------------------------------ |
-    | `start` | `number` | From which item the response begins, used as pagination. |
-    | `count` | `number` | Max of items to return (default: 10, max: 1000). |
-    | `sort` | `number` | An id for sorting. Tells the response how to sort the data.|
-    | `filter` | `object` | An object with filter configuration.|
-
-    `sort`:
-
-    -   **1** - Alphabetical order.
-    -   **2** - Ascending appid.
-    -   **20** - Most recent.
-    -   **21** - Percentage of positive reviews (desc).
-
-    `filter`:
-    | Property | Type | Description |
-    | :---------- | :--------- | :------------------------------------------ |
-    | `released_only` | `boolean` | Return only released apps.|
-    | `coming_soon_only` | `boolean` | Return only coming soon apps. |
-    | `type_filters` | `object` | Which app types to return.|
-    | `tagids_must_match` | `object[]` | Return only apps that contains the specified tag ids. |
-    | `tagids_exclude` | `number[]` | Don't return apps that contains the specified tag ids. |
-    | `global_top_n_sellers` | `number` | Return only apps in the top "n" most selled. |
-
-    `type_filter`:
-
-    -   "include_apps" `boolean`
-    -   "include_packages" `boolean`
-    -   "include_bundles" `boolean`
-    -   "include_games" `boolean`
-    -   "include_demos" `boolean`
-    -   "include_mods" `boolean`
-    -   "include_dlc" `boolean`
-    -   "include_software" `boolean`
-    -   "include_video" `boolean`
-    -   "include_hardware" `boolean`
-    -   "include_series" `boolean`
-    -   "include_music" `boolean`
-
-    `tagids_must_match`:
-
-    To specify the tag ids you must pass in objects with the property `tagids`. Each `tagids` can only include 1 tag, to specify multiple tags you need to pass in multiple objects with `tagids`.
-
-    ```json
-    "tagids_must_match": [{"tagids": ["1628"]}, {"tagids": ["1664"]}]
-    ```
-
--   **"context"**:
-    | Property | Type | Description |
-    | :---------- | :--------- | :------------------------------------------ |
-    | `elanguage` | `number` | An ID for the language that the data will be returned in (if avaiable). Defaults to 0 (english). |
-    | `country_code` | `string` | e.g. 'US', 'FR', 'DE', 'BR'. Which country to pull data from. **Required**|
-
-> [!NOTE]  
-> When testing `country_code` the data looked the same every time, so i'm not sure what it does, but **if you don't include it, no data will be returned**. My guess is that it just won't return data from apps banned or not released in X country.
+- [SteamSpy API](https://steamspy.com/api.php)
+- Steam Web API:
+	- [ISteamUser/GetPlayerSummaries](https://partner.steamgames.com/doc/webapi/ISteamUser#GetPlayerSummaries)
+	- [IPlayerService/GetOwnedGames](https://partner.steamgames.com/doc/webapi/IPlayerService#GetOwnedGames)
+	- [IPlayerService/GetTopAchievementsForGames](https://steamapi.xpaw.me/#IPlayerService/GetTopAchievementsForGames)
+	- [IStoreQueryService/Query](https://github.com/benhurk/IStoreQueryService-Query-v1-Documentation/tree/main)
+	- [store.steampowered.com/api/appdetails](https://github.com/Revadike/InternalSteamWebAPI/wiki/Get-App-Details)
