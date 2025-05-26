@@ -15,7 +15,7 @@ export default async function getGamesData(
         limit(async () => {
             return await fetch(
                 `https://steamspy.com/api.php?request=appdetails&appid=${game.appid}`,
-                { next: { revalidate: 86400 } }
+                { next: { revalidate: 604800 } }
             ).then((res) => res.json());
         })
     );

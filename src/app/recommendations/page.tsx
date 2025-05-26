@@ -1,3 +1,5 @@
+export const revalidate = 86400;
+
 import { redirect } from 'next/navigation';
 
 import { TUserGames } from '@/types/TApi';
@@ -6,11 +8,11 @@ import getGamesData from '@/functions/getGamesData';
 import calculateGamesWeight from '@/functions/calculateGamesWeight';
 import parseTags from '@/functions/parseTags';
 import getRecommendations from '@/functions/getRecommendations';
+import parsePreferences from '@/functions/utils/parsePreferences';
 
 import RecommendationCard from '@/components/RecommendationCard';
 import UserInfoSection from '@/components/UserInfoSection';
 import NothingFoundContent from '@/components/NothingFoundContent';
-import parsePreferences from '@/functions/utils/parsePreferences';
 import ErrorSection from '@/components/ErrorSection';
 
 type SearchParams = {
