@@ -11,7 +11,7 @@ The goal of this project is to create a game recommendation system that improves
 
 ## How it works
 
-#### Tag system
+### Tag system
 
 To make an improved game similarity aspect we need to deal with game tags. Some tags are not reliable for that matter, like _Action_ for example, it's an extremely generic and not really necessary tag, since other, more specific tags, can suggest if a game has action in it while being more descriptive.
 
@@ -21,7 +21,7 @@ First we create a new tag set that doesn't include super broad tags, nor too spe
 
 - [Tag arrays](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/gameTags.ts)
 
-##### Broad genres
+#### Broad genres
 
 However, we can't just rule out all broad tags, some of them are very important genres that we have to include, here is a case:
 
@@ -29,7 +29,7 @@ Are Disco Elysium and Elden Ring similar games? No. But they're both _RPGs_.
 
 To properly handle cases like this we split the genre tags into 'broad' and 'specific', then when getting a game's tags, we only consider broad genres if the game has no specific genre tagged. So in this case, Disco Elysium will count only as a _CRPG_ and Elden Ring as a _Souls-like_, while a game like Bannerlord just as a _RPG_.
 
-##### Misused tags
+#### Misused tags
 
 Some tags are misused as synonyms of other tags, like _Sandbox_ with _Open World_. Others are basically inflated tags.
 
@@ -41,7 +41,7 @@ We can fix these problems using Steam's tag weight system, by grouping misused t
 - [Grouped tags](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/groupedTags.ts)
 - [Filter misused tags](https://github.com/benhurk/Steam-Pick/blob/main/src/functions/utils/filterGroupedTags.ts)
 
-#### Game weight logic
+### Game weight logic
 
 In order to know what type of games the user likes we first need to know... what games the user likes.
 
@@ -54,6 +54,8 @@ We do this by attributing games a score based on the user's playtime and achieve
 | 20~50h   | 2      |
 | ≥ 50h +  | 3      |
 > Including higher playtime scores can cause unsatisfying cases where a single multiplayer or infinitely playable game changes the final result.
+
+<br>
 
 | Best achievement global % | Total achievements | Points |
 | :------------------------ | :----------------- | :----- |
