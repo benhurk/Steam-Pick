@@ -4,22 +4,28 @@ Steam Pick is a tool that analyzes a Steam profile and generates personalized re
 
 The goal of this project is to create a game recommendation system that improves on some issues with Steam's system:
 
-- Steam only recommends games in the shop, meaning that all those games you bought on sales and never touched will remain forgotten.
-- It says _"Similar to games you've played"_ but:
-	- [It's not similar at all.](https://i.imgur.com/al4cCgE.png)
-	- [It uses games that you've not actually played.](https://i.imgur.com/uNhLNDk.png)
+-   Steam only recommends games in the shop, meaning that all those games you bought on sales and never touched will remain forgotten.
+-   It says _"Similar to games you've played"_ but:
+    -   [It's not similar at all.](https://i.imgur.com/al4cCgE.png)
+    -   [It uses games that you've not actually played.](https://i.imgur.com/uNhLNDk.png)
 
 ## How it works
 
+The user submits their SteamID, then the application:
+
+1. Analyzes their library, attributing a score for each game based on playtime and achievements, making a ranking.
+2. Uses this ranking to get the user's favorite genres, gameplay styles and themes.
+3. Get games with good reviews that better fit the user's taste.
+
 ### Tag system
 
-To make an improved game similarity aspect we need to deal with game tags. Some tags are not reliable for that matter, like _Action_ for example, it's an extremely generic and not really necessary tag, since other, more specific tags, can suggest if a game has action in it while being more descriptive.
+The Steam tag system is great, but for our purpose it needs some work. The issue is, some tags are not reliable for that matter, like _Action_ for example, it's an extremely generic and not really necessary tag, since other, more specific tags, can suggest if a game has action in it while being more descriptive.
 
 First we create a new tag set that doesn't include super broad tags, nor too specific ones, and we categorize them into genres, gameplay and themes, so we can weight them differently when processing recommendations.
 
 [SteamDB](https://steamdb.info/tags/) lists all tags on Steam and how many games have them, to get the Steam tag id and name we can use the [GetTagList](https://steamapi.xpaw.me/#IStoreService/GetTagList) Steam API endpoint.
 
-- [Tag arrays](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/gameTags.ts)
+-   [Tag arrays](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/gameTags.ts)
 
 #### Broad genres
 
@@ -37,9 +43,9 @@ A good example of an inflated tag is _Souls-like_. We've all seen people calling
 
 We can fix these problems using Steam's tag weight system, by grouping misused tags with their common pairs, we call them **grouped tags**, then when processing a game's tags, we pick only the one with the highest weight.
 
-- [Filter tags](https://github.com/benhurk/Steam-Pick/blob/main/src/functions/utils/filterGameTags.ts)
-- [Grouped tags](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/groupedTags.ts)
-- [Filter misused tags](https://github.com/benhurk/Steam-Pick/blob/main/src/functions/utils/filterGroupedTags.ts)
+-   [Filter tags](https://github.com/benhurk/Steam-Pick/blob/main/src/functions/utils/filterGameTags.ts)
+-   [Grouped tags](https://github.com/benhurk/Steam-Pick/blob/main/src/consts/groupedTags.ts)
+-   [Filter misused tags](https://github.com/benhurk/Steam-Pick/blob/main/src/functions/utils/filterGroupedTags.ts)
 
 ### Game weight logic
 
@@ -53,6 +59,7 @@ We do this by attributing games a score based on the user's playtime and achieve
 | 10~20h   | 1      |
 | 20~50h   | 2      |
 | ≥ 50h +  | 3      |
+
 > Including higher playtime scores can cause unsatisfying cases where a single multiplayer or infinitely playable game changes the final result.
 
 <br>
@@ -67,10 +74,10 @@ We do this by attributing games a score based on the user's playtime and achieve
 
 ## APIs
 
-- [SteamSpy API](https://steamspy.com/api.php)
-- Steam Web API:
-	- [ISteamUser/GetPlayerSummaries](https://partner.steamgames.com/doc/webapi/ISteamUser#GetPlayerSummaries)
-	- [IPlayerService/GetOwnedGames](https://partner.steamgames.com/doc/webapi/IPlayerService#GetOwnedGames)
-	- [IPlayerService/GetTopAchievementsForGames](https://steamapi.xpaw.me/#IPlayerService/GetTopAchievementsForGames)
-	- [IStoreQueryService/Query](https://github.com/benhurk/IStoreQueryService-Query-v1-Documentation/tree/main)
-	- [store.steampowered.com/api/appdetails](https://github.com/Revadike/InternalSteamWebAPI/wiki/Get-App-Details)
+-   [SteamSpy API](https://steamspy.com/api.php)
+-   Steam Web API:
+    -   [ISteamUser/GetPlayerSummaries](https://partner.steamgames.com/doc/webapi/ISteamUser#GetPlayerSummaries)
+    -   [IPlayerService/GetOwnedGames](https://partner.steamgames.com/doc/webapi/IPlayerService#GetOwnedGames)
+    -   [IPlayerService/GetTopAchievementsForGames](https://steamapi.xpaw.me/#IPlayerService/GetTopAchievementsForGames)
+    -   [IStoreQueryService/Query](https://github.com/benhurk/IStoreQueryService-Query-v1-Documentation/tree/main)
+    -   [store.steampowered.com/api/appdetails](https://github.com/Revadike/InternalSteamWebAPI/wiki/Get-App-Details)
